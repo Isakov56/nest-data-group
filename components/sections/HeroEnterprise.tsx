@@ -25,6 +25,7 @@ export default function HeroEnterprise() {
   // Carousel state
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isHoveringCarousel, setIsHoveringCarousel] = useState(false)
+  const [videoKey, setVideoKey] = useState(0)
 
   const codeContainerRef2 = useRef<HTMLDivElement>(null)
   const codeContainerRef3 = useRef<HTMLDivElement>(null)
@@ -288,20 +289,31 @@ export default function HeroEnterprise() {
       name: '',
       role: '',
       image: '',
-      video: 'https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4',
+      video: 'https://www.youtube.com/embed/VCPGMjCW0is?autoplay=1&mute=1&loop=1&playlist=VCPGMjCW0is&controls=0&showinfo=0&rel=0&modestbranding=1',
     },
   ]
 
-  // Auto-rotate carousel
+  // Restart video when visiting the video slide
+  useEffect(() => {
+    if (currentSlide === 3) {
+      setVideoKey(prev => prev + 1)
+    }
+  }, [currentSlide])
+
+  // Auto-rotate carousel - longer duration for video slide
   useEffect(() => {
     if (isHoveringCarousel) return
 
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
-    }, 5500)
+    // Check if current slide is video type (index 3)
+    const isVideoSlide = currentSlide === 3
+    const duration = isVideoSlide ? 45000 : 5500 // 45 seconds for video, 5.5s for others
 
-    return () => clearInterval(interval)
-  }, [isHoveringCarousel, carouselSlides.length])
+    const timeout = setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
+    }, duration)
+
+    return () => clearTimeout(timeout)
+  }, [isHoveringCarousel, carouselSlides.length, currentSlide])
 
   const getPreTypedLines = (index: number) => {
     if (index === 0) return preTypedLines1
@@ -349,7 +361,7 @@ export default function HeroEnterprise() {
   return (
     <section
       ref={heroRef}
-      className="relative overflow-hidden bg-navy-950"
+      className="relative overflow-x-clip bg-navy-950"
     >
       {/* Background dot pattern like Insights section */}
       <div className="absolute inset-0">
@@ -543,11 +555,11 @@ export default function HeroEnterprise() {
             </div>
 
             {/* Content Section - Right aligned */}
-            <div className="max-w-2xl relative z-20 ml-auto text-right">
+            <div className="max-w-2xl relative z-20 ml-auto text-right overflow-visible">
               <div
-                className={`flex items-center justify-end gap-4 mb-10 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`flex items-center justify-end gap-4 mb-10 transition-all duration-700 relative z-30 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-navy-700/50 border border-teal-500/30">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-navy-700/50 border border-teal-500/30 relative z-30">
                   <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                   <span className="text-teal-400 text-xs font-medium tracking-wider uppercase">
                     Enterprise Solutions
@@ -557,7 +569,7 @@ export default function HeroEnterprise() {
 
               {/* 3D Carousel */}
               <div
-                className={`relative h-[280px] transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`relative h-[280px] overflow-visible transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
                 onMouseEnter={() => setIsHoveringCarousel(true)}
                 onMouseLeave={() => setIsHoveringCarousel(false)}
                 style={{ perspective: '800px', perspectiveOrigin: '70% 50%' }}
@@ -570,7 +582,7 @@ export default function HeroEnterprise() {
                   return (
                     <div
                       key={index}
-                      className="absolute inset-0 flex items-center justify-end"
+                      className="absolute inset-0 flex items-center justify-end overflow-visible"
                       style={{
                         transform: isActive
                           ? 'translateZ(0) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(1)'
@@ -609,28 +621,48 @@ export default function HeroEnterprise() {
                           ))}
                         </h1>
                       ) : slide.type === 'video' ? (
-                        <div className="relative w-full h-[280px] flex items-center justify-end overflow-hidden rounded-2xl">
+                        <div
+                          className="absolute flex items-center justify-center overflow-visible"
+                          style={{
+                            left: '-80%',
+                            right: '-20%',
+                            top: '-50%',
+                            bottom: '-50%',
+                            width: 'auto',
+                            height: 'auto',
+                          }}
+                        >
+                          {/* Outer glow/shadow for depth */}
                           <div
-                            className="absolute inset-0 overflow-hidden rounded-2xl"
+                            className="absolute inset-0"
                             style={{
-                              maskImage: 'linear-gradient(to left, black 0%, black 40%, transparent 100%), linear-gradient(to top, transparent 0%, black 30%, black 100%)',
+                              background: 'radial-gradient(ellipse 60% 50% at 60% 50%, rgba(93, 201, 201, 0.06) 0%, transparent 70%)',
+                              filter: 'blur(60px)',
+                            }}
+                          />
+                          <div
+                            className="absolute inset-0 overflow-visible"
+                            style={{
+                              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.7) 45%, black 60%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
+                              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.7) 45%, black 60%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
                               maskComposite: 'intersect',
-                              WebkitMaskImage: 'linear-gradient(to left, black 0%, black 40%, transparent 100%), linear-gradient(to top, transparent 0%, black 30%, black 100%)',
                               WebkitMaskComposite: 'source-in',
+                              opacity: 0.75,
                             }}
                           >
-                            <video
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              className="w-full h-full object-cover"
-                            >
-                              <source src={slide.video} type="video/mp4" />
-                            </video>
-                          </div>
-                          <div className="relative z-10 text-right pr-4">
-                            <span className="text-teal-400 text-sm font-medium tracking-wider uppercase">Innovation in Motion</span>
+                            <iframe
+                              key={videoKey}
+                              src={slide.video}
+                              className="w-full h-full"
+                              style={{
+                                filter: 'brightness(0.6) contrast(1.1) saturate(0.8)',
+                                border: 'none',
+                                transform: 'scale(1.2)',
+                                pointerEvents: 'none',
+                              }}
+                              allow="autoplay; encrypted-media"
+                              allowFullScreen
+                            />
                           </div>
                         </div>
                       ) : (
@@ -666,20 +698,46 @@ export default function HeroEnterprise() {
                   )
                 })}
 
-                {/* Carousel indicators */}
-                <div className="absolute -bottom-8 right-0 flex items-center gap-2">
-                  {carouselSlides.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentSlide
-                          ? 'bg-teal-400 w-6'
-                          : 'bg-slate-600 hover:bg-slate-500'
-                      }`}
-                    />
-                  ))}
+                {/* Carousel indicators with progress */}
+                <div className="absolute -bottom-10 right-0 flex items-center gap-3">
+                  {carouselSlides.map((slide, index) => {
+                    const isActive = index === currentSlide
+                    const duration = index === 3 ? 45 : 5.5 // video slide is longer
+
+                    return (
+                      <button
+                        key={`indicator-${index}-${currentSlide === index ? 'active' : 'inactive'}`}
+                        onClick={() => setCurrentSlide(index)}
+                        className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
+                          isActive ? 'w-14' : 'w-4'
+                        }`}
+                        style={{
+                          backgroundColor: isActive ? 'rgba(30, 41, 59, 0.8)' : 'rgba(148, 163, 184, 0.5)',
+                        }}
+                      >
+                        {isActive && !isHoveringCarousel && (
+                          <div
+                            key={`progress-${currentSlide}`}
+                            className="absolute inset-0 bg-teal-400 rounded-full origin-left"
+                            style={{
+                              animation: `progressFill ${duration}s linear forwards`,
+                            }}
+                          />
+                        )}
+                        {isActive && isHoveringCarousel && (
+                          <div className="absolute inset-0 bg-teal-400/60 rounded-full" />
+                        )}
+                      </button>
+                    )
+                  })}
                 </div>
+
+                <style jsx>{`
+                  @keyframes progressFill {
+                    from { transform: scaleX(0); }
+                    to { transform: scaleX(1); }
+                  }
+                `}</style>
               </div>
 
               <p
