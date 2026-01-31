@@ -54,8 +54,8 @@ export default function AboutPage() {
       <Header />
       <main>
         {/* Hero section */}
-        <section className="relative pt-32 pb-20 bg-navy-900 overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
+        <section className="relative pt-32 pb-20 bg-navy-900 overflow-visible">
+          <div className="absolute inset-0 opacity-[0.25]">
             <div
               className="absolute inset-0"
               style={{
@@ -64,20 +64,43 @@ export default function AboutPage() {
               }}
             />
           </div>
-          
+
+          {/* Video Background - Right Side */}
+          <div
+            className="absolute top-20 right-0 w-[60%] h-[120%] hidden lg:block"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.6) 40%, black 60%), linear-gradient(to bottom, black 0%, black 50%, transparent 85%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.6) 40%, black 60%), linear-gradient(to bottom, black 0%, black 50%, transparent 85%)',
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
+          >
+            <iframe
+              src="https://www.youtube.com/embed/VCPGMjCW0is?autoplay=1&mute=1&loop=1&playlist=VCPGMjCW0is&controls=0&showinfo=0&rel=0&modestbranding=1"
+              className="w-full h-full"
+              style={{
+                filter: 'brightness(0.4) contrast(1.1) saturate(0.7)',
+                border: 'none',
+                transform: 'scale(1.5)',
+                pointerEvents: 'none',
+              }}
+              allow="autoplay; encrypted-media"
+            />
+          </div>
+
           <div className="section-container relative z-10">
             <div className="max-w-3xl">
-              <span className="inline-flex items-center gap-2 font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase mb-4">
-                <span className="w-8 h-px bg-teal-400" />
+              <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase mb-4">
+                <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
                 About Us
               </span>
               <h1 className="font-display text-display-lg lg:text-display-xl text-white mb-6">
                 Architecture for the Data That Matters
               </h1>
               <p className="font-body text-body-lg text-navy-200 leading-relaxed">
-                Nest Data Group designs and builds enterprise data systems for organizations 
-                where precision isn&apos;t optional. We partner with government agencies, defense 
-                contractors, and Fortune 500 companies to create data architectures that 
+                Nest Data Group designs and builds enterprise data systems for organizations
+                where precision isn&apos;t optional. We partner with government agencies, defense
+                contractors, and Fortune 500 companies to create data architectures that
                 power critical decisions.
               </p>
             </div>
@@ -85,15 +108,21 @@ export default function AboutPage() {
         </section>
 
         {/* Stats bar */}
-        <section className="py-12 bg-navy-800 border-t border-navy-700">
+        <section className="py-14 bg-navy-900 border-y border-navy-700/50">
           <div className="section-container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-navy-700/50">
               {stats.map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="font-display text-3xl md:text-4xl font-bold text-teal-400 mb-1">
+                <div
+                  key={i}
+                  className="group px-8 py-4 text-center relative"
+                >
+                  {/* Subtle bottom indicator */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-teal-500/0 group-hover:bg-teal-500 transition-all duration-300" />
+
+                  <div className="font-display text-4xl md:text-5xl font-semibold text-white mb-2 tracking-tight">
                     {stat.value}
                   </div>
-                  <div className="font-body text-sm text-navy-300">
+                  <div className="font-body text-sm text-navy-400 group-hover:text-teal-400 transition-colors duration-300">
                     {stat.label}
                   </div>
                 </div>

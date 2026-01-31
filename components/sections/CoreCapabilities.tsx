@@ -143,8 +143,8 @@ export default function CoreCapabilities() {
       <div className="section-container relative">
         {/* Header */}
         <div ref={headerRef} className="max-w-3xl mb-20">
-          <span className="inline-flex items-center gap-3 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
-            <span className="w-12 h-px bg-teal-400" />
+          <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
+            <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
             Core Capabilities
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6 opacity-0">
@@ -169,7 +169,7 @@ export default function CoreCapabilities() {
             >
               <div className="relative h-full p-8 lg:p-10 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 overflow-hidden group">
                 {/* Circuit-style network effect */}
-                <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 pointer-events-none z-0">
                   {/* Animated circuit lines unique to each card */}
                   {index === 0 && (
                     <>
@@ -267,23 +267,23 @@ export default function CoreCapabilities() {
                 </div>
 
                 {/* Number indicator */}
-                <div className="absolute top-8 right-8 font-display text-7xl font-bold text-navy-100 select-none">
+                <div className="absolute top-8 right-8 font-display text-7xl font-bold text-navy-100 select-none z-0">
                   {String(index + 1).padStart(2, '0')}
                 </div>
 
                 {/* Icon */}
-                <div className="relative w-16 h-16 mb-6 transition-transform duration-500 group-hover:scale-110">
+                <div className="relative z-10 w-16 h-16 mb-6 transition-transform duration-500 group-hover:scale-110">
                   {capability.icon}
                 </div>
 
                 {/* Content */}
-                <h3 className="font-display text-heading-lg text-navy-900 mb-2">
+                <h3 className="relative z-10 font-display text-heading-lg text-navy-900 mb-2">
                   {capability.title}
                 </h3>
-                <p className="font-body text-body text-teal-600 font-medium mb-4">
+                <p className="relative z-10 font-body text-body text-teal-600 font-medium mb-4">
                   {capability.description}
                 </p>
-                <p className="font-body text-body text-navy-500 leading-relaxed">
+                <p className="relative z-10 font-body text-body text-navy-500 leading-relaxed">
                   {capability.detail}
                 </p>
               </div>

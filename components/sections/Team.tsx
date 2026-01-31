@@ -151,10 +151,10 @@ export default function Team() {
       <div className="section-container relative z-10">
         {/* Section heading */}
         <div ref={headingRef} className="text-center mb-16 lg:mb-20">
-          <span className="inline-flex items-center gap-2 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-4">
-            <span className="w-8 h-px bg-teal-500" />
+          <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-4">
+            <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
             Our Team
-            <span className="w-8 h-px bg-teal-500" />
+            <span className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6">
             Leadership & Expertise

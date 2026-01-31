@@ -26,6 +26,8 @@ export default function HeroEnterprise() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isHoveringCarousel, setIsHoveringCarousel] = useState(false)
   const [videoKey, setVideoKey] = useState(0)
+  const elapsedTimeRef = useRef<number>(0)
+  const startTimeRef = useRef<number>(Date.now())
 
   const codeContainerRef2 = useRef<HTMLDivElement>(null)
   const codeContainerRef3 = useRef<HTMLDivElement>(null)
@@ -253,8 +255,8 @@ export default function HeroEnterprise() {
   const carouselSlides = [
     {
       type: 'headline' as const,
-      title: ['We Engineer the Data', 'Infrastructure That Powers', 'Tomorrow\u2019s Enterprises'],
-      highlight: 'Tomorrow\u2019s',
+      title: ['We Engineer Mission-Critical Data Infrastructure That Powers Tomorrow\u2019s Enterprises'],
+      highlight: 'Enterprises',
       quote: '',
       name: '',
       role: '',
@@ -300,20 +302,43 @@ export default function HeroEnterprise() {
     }
   }, [currentSlide])
 
-  // Auto-rotate carousel - longer duration for video slide
+  // Video slide: fixed 16 second timer (no pause/resume)
   useEffect(() => {
-    if (isHoveringCarousel) return
-
-    // Check if current slide is video type (index 3)
-    const isVideoSlide = currentSlide === 3
-    const duration = isVideoSlide ? 45000 : 5500 // 45 seconds for video, 5.5s for others
+    if (currentSlide !== 3) return
 
     const timeout = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
-    }, duration)
+    }, 16000)
+
+    return () => clearTimeout(timeout)
+  }, [currentSlide, carouselSlides.length])
+
+  // Other slides: pause/resume behavior
+  useEffect(() => {
+    if (currentSlide === 3) return // Skip for video slide
+
+    const totalDuration = 5500
+
+    if (isHoveringCarousel) {
+      elapsedTimeRef.current = elapsedTimeRef.current + (Date.now() - startTimeRef.current)
+      return
+    }
+
+    startTimeRef.current = Date.now()
+    const remainingTime = Math.max(0, totalDuration - elapsedTimeRef.current)
+
+    const timeout = setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
+    }, remainingTime)
 
     return () => clearTimeout(timeout)
   }, [isHoveringCarousel, carouselSlides.length, currentSlide])
+
+  // Reset elapsed time when slide changes
+  useEffect(() => {
+    elapsedTimeRef.current = 0
+    startTimeRef.current = Date.now()
+  }, [currentSlide])
 
   const getPreTypedLines = (index: number) => {
     if (index === 0) return preTypedLines1
@@ -345,17 +370,73 @@ export default function HeroEnterprise() {
     return codeContainerRef3
   }
 
-  const getLineClassName = (line: string) => {
-    if (line.includes('import') || line.includes('export') || line.includes('async') || line.includes('return') || line.includes('class') || line.includes('private') || line.includes('constructor') || line.includes('spec') || line.includes('SELECT') || line.includes('FROM') || line.includes('JOIN') || line.includes('WHERE') || line.includes('ORDER') || line.includes('GROUP') || line.includes('apiVersion') || line.includes('kind') || line.includes('WITH')) {
-      return 'text-teal-400'
+  const highlightCode = (line: string) => {
+    // Token patterns and their colors
+    const patterns: [RegExp, string][] = [
+      // Keywords (blue)
+      [/\b(import|export|class|const|let|var|function|interface|type|extends|implements)\b/g, 'text-sky-400'],
+      // Control flow (pink/magenta)
+      [/\b(async|await|return|if|else|for|while|try|catch|throw|new)\b/g, 'text-pink-400'],
+      // Access modifiers (purple)
+      [/\b(private|public|protected|static)\b/g, 'text-purple-400'],
+      // Built-in/this (red)
+      [/\b(this|super|true|false|null|undefined)\b/g, 'text-red-400'],
+      // Types (green) - capitalized words that look like types
+      [/\b([A-Z][a-zA-Z]*(?:Config|Stream|Pipeline|Processor|Engine|Data)?)\b/g, 'text-emerald-400'],
+      // Function/method names (yellow) - word followed by (
+      [/\b([a-z][a-zA-Z]*)\s*\(/g, 'text-yellow-300'],
+      // Strings (orange)
+      [/(['"`][^'"`]*['"`])/g, 'text-orange-300'],
+      // Numbers (light blue)
+      [/\b(\d+)\b/g, 'text-cyan-300'],
+      // SQL keywords (cyan)
+      [/\b(SELECT|FROM|JOIN|WHERE|ORDER|GROUP|BY|WITH|LIMIT|AS|HAVING|ON|AND|OR|IN|COUNT|DESC|ASC)\b/g, 'text-cyan-400'],
+      // YAML keys (orange)
+      [/^(\s*)([a-zA-Z_-]+)(:)/gm, 'text-orange-400'],
+    ]
+
+    let result = line
+    const tokens: { start: number; end: number; color: string }[] = []
+
+    patterns.forEach(([pattern, color]) => {
+      let match
+      const regex = new RegExp(pattern.source, pattern.flags)
+      while ((match = regex.exec(line)) !== null) {
+        tokens.push({ start: match.index, end: match.index + match[0].length, color })
+      }
+    })
+
+    // If no tokens found, return plain text
+    if (tokens.length === 0) {
+      return <span className="text-slate-300">{line || ' '}</span>
     }
-    if (line.includes('from') || line.includes('new') || line.includes('await') || line.includes('replicas') || line.includes('LIMIT') || line.includes('metadata') || line.includes('AS')) {
-      return 'text-purple-400'
+
+    // Sort by start position and remove overlaps (keep first match)
+    tokens.sort((a, b) => a.start - b.start)
+    const filtered: typeof tokens = []
+    tokens.forEach(t => {
+      if (filtered.length === 0 || t.start >= filtered[filtered.length - 1].end) {
+        filtered.push(t)
+      }
+    })
+
+    // Build JSX with colored spans
+    const parts: JSX.Element[] = []
+    let lastEnd = 0
+
+    filtered.forEach((token, i) => {
+      if (token.start > lastEnd) {
+        parts.push(<span key={`plain-${i}`} className="text-slate-300">{line.slice(lastEnd, token.start)}</span>)
+      }
+      parts.push(<span key={`token-${i}`} className={token.color}>{line.slice(token.start, token.end)}</span>)
+      lastEnd = token.end
+    })
+
+    if (lastEnd < line.length) {
+      parts.push(<span key="end" className="text-slate-300">{line.slice(lastEnd)}</span>)
     }
-    if (line.includes(':') && !line.includes('//')) {
-      return 'text-navy-200'
-    }
-    return 'text-navy-300'
+
+    return <>{parts}</>
   }
 
   return (
@@ -460,27 +541,27 @@ export default function HeroEnterprise() {
                         className="rounded-3xl overflow-hidden"
                         style={{
                           background: index === 0
-                            ? 'linear-gradient(145deg, rgba(38, 66, 105, 0.98) 0%, rgba(28, 50, 82, 0.99) 100%)'
+                            ? 'linear-gradient(145deg, rgba(45, 65, 90, 0.97) 0%, rgba(35, 52, 75, 0.98) 100%)'
                             : index === 1
-                              ? 'linear-gradient(145deg, rgba(33, 58, 95, 0.98) 0%, rgba(24, 44, 72, 0.99) 100%)'
-                              : 'linear-gradient(145deg, rgba(28, 52, 85, 0.98) 0%, rgba(20, 38, 62, 0.99) 100%)',
+                              ? 'linear-gradient(145deg, rgba(40, 58, 82, 0.96) 0%, rgba(30, 46, 68, 0.97) 100%)'
+                              : 'linear-gradient(145deg, rgba(35, 52, 75, 0.94) 0%, rgba(26, 40, 60, 0.96) 100%)',
                           boxShadow: cardShadow,
-                          border: index === 0 ? '1px solid rgba(93, 201, 201, 0.4)' : index === 1 ? '1px solid rgba(93, 201, 201, 0.3)' : '1px solid rgba(93, 201, 201, 0.22)',
+                          border: index === 0 ? '1px solid rgba(100, 150, 180, 0.35)' : index === 1 ? '1px solid rgba(100, 150, 180, 0.25)' : '1px solid rgba(100, 150, 180, 0.18)',
                           maskImage: 'linear-gradient(to right, black 0%, black 50%, transparent 85%), linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
                           maskComposite: 'intersect',
                           WebkitMaskImage: 'linear-gradient(to right, black 0%, black 50%, transparent 85%), linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
                           WebkitMaskComposite: 'source-in',
                         }}
                       >
-                        <div className="flex items-center justify-between px-10 py-6 border-b border-teal-500/10">
+                        <div className="flex items-center justify-between px-10 py-6 border-b border-slate-400/20">
                           <div className="flex items-center gap-3">
-                            <div className="w-4 h-4 rounded-full bg-red-400/60" />
-                            <div className="w-4 h-4 rounded-full bg-yellow-400/60" />
-                            <div className="w-4 h-4 rounded-full bg-teal-400/60" />
+                            <div className="w-4 h-4 rounded-full bg-red-400/70" />
+                            <div className="w-4 h-4 rounded-full bg-yellow-400/70" />
+                            <div className="w-4 h-4 rounded-full bg-teal-400/70" />
                           </div>
                           <div className="flex items-center gap-4">
-                            <span className="text-white/90 text-lg font-mono">{fileName}</span>
-                            <span className="text-teal-400/80 text-sm px-3 py-1.5 rounded bg-navy-800/70 border border-teal-500/20">
+                            <span className="text-slate-200 text-lg font-mono">{fileName}</span>
+                            <span className="text-teal-300 text-sm px-3 py-1.5 rounded bg-teal-900/30 border border-teal-500/30">
                               {fileType}
                             </span>
                             <span className="flex items-center gap-1.5 text-teal-400 text-xs">
@@ -498,7 +579,7 @@ export default function HeroEnterprise() {
                           {/* Line numbers column */}
                           <div className="py-8 pl-6 pr-4 select-none">
                             {preTyped.map((_, lineIndex) => (
-                              <div key={`pre-num-${lineIndex}`} className={`text-right w-8 ${index === 0 ? 'text-teal-500/40' : 'text-teal-500/30'}`}>
+                              <div key={`pre-num-${lineIndex}`} className={`text-right w-8 ${index === 0 ? 'text-slate-400/60' : 'text-slate-400/50'}`}>
                                 {lineIndex + 1}
                               </div>
                             ))}
@@ -508,7 +589,7 @@ export default function HeroEnterprise() {
                               return (
                                 <div
                                   key={`live-num-${lineIndex}`}
-                                  className={`text-right w-8 ${isCurrentLine ? 'text-teal-400' : (index === 0 ? 'text-teal-500/40' : 'text-teal-500/30')}`}
+                                  className={`text-right w-8 ${isCurrentLine ? 'text-teal-400' : (index === 0 ? 'text-slate-400/60' : 'text-slate-400/50')}`}
                                 >
                                   {preTyped.length + lineIndex + 1}
                                 </div>
@@ -518,11 +599,11 @@ export default function HeroEnterprise() {
 
                           {/* Code content */}
                           <div className="py-8 px-6 flex-1">
-                            <pre className="text-slate-300">
+                            <pre>
                               <code>
                                 {preTyped.map((line, lineIndex) => (
                                   <div key={`pre-${lineIndex}`}>
-                                    <span className={getLineClassName(line)}>{line || ' '}</span>
+                                    {highlightCode(line)}
                                   </div>
                                 ))}
                                 {liveCode.map((line, lineIndex) => {
@@ -534,12 +615,10 @@ export default function HeroEnterprise() {
 
                                   return (
                                     <div key={`live-${lineIndex}`}>
-                                      <span className={getLineClassName(line)}>
-                                        {isTypedLine ? line : typedLine}
-                                        {isCurrentLine && (
-                                          <span className="inline-block w-2 h-5 bg-teal-400 ml-0.5 animate-pulse" />
-                                        )}
-                                      </span>
+                                      {highlightCode(isTypedLine ? line : typedLine)}
+                                      {isCurrentLine && (
+                                        <span className="inline-block w-2 h-5 bg-teal-400 ml-0.5 animate-pulse" />
+                                      )}
                                     </div>
                                   )
                                 })}
@@ -606,11 +685,11 @@ export default function HeroEnterprise() {
                             >
                               {slide.highlight && line.includes(slide.highlight) ? (
                                 <>
-                                  <span className="text-slate-500">
+                                  <span className="text-white">
                                     {line.split(slide.highlight)[0]}
                                   </span>
-                                  <span className="text-white">{slide.highlight}</span>
-                                  <span className="text-slate-500">
+                                  <span className="text-teal-400">{slide.highlight}</span>
+                                  <span className="text-white">
                                     {line.split(slide.highlight)[1]}
                                   </span>
                                 </>
@@ -625,8 +704,8 @@ export default function HeroEnterprise() {
                           className="absolute flex items-center justify-center overflow-visible"
                           style={{
                             left: '-80%',
-                            right: '-20%',
-                            top: '-50%',
+                            right: 'calc(-50vw + 50%)',
+                            top: '-41%',
                             bottom: '-50%',
                             width: 'auto',
                             height: 'auto',
@@ -643,11 +722,11 @@ export default function HeroEnterprise() {
                           <div
                             className="absolute inset-0 overflow-visible"
                             style={{
-                              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.7) 45%, black 60%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
-                              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.7) 45%, black 60%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
+                              maskImage: 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
+                              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
                               maskComposite: 'intersect',
                               WebkitMaskComposite: 'source-in',
-                              opacity: 0.75,
+                              opacity: 0.85,
                             }}
                           >
                             <iframe
@@ -666,24 +745,24 @@ export default function HeroEnterprise() {
                           </div>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-6 justify-end">
-                          <div className="text-right max-w-lg">
+                        <div className="flex items-center gap-8 justify-end -mt-8">
+                          <div className="text-right max-w-xl">
                             <svg
-                              className={`w-8 h-8 ml-auto mb-4 ${slide.type === 'ceo' ? 'text-teal-400/60' : 'text-teal-500/40'}`}
+                              className={`w-10 h-10 ml-auto mb-5 ${slide.type === 'ceo' ? 'text-teal-400/60' : 'text-teal-500/40'}`}
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
                               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                             </svg>
-                            <p className={`text-[clamp(1.25rem,3vw,1.75rem)] font-display leading-snug mb-6 ${slide.type === 'ceo' ? 'text-white italic' : 'text-white'}`}>
+                            <p className={`text-[clamp(1.5rem,3.5vw,2.25rem)] font-display leading-snug mb-8 ${slide.type === 'ceo' ? 'text-white italic' : 'text-white'}`}>
                               {slide.quote}
                             </p>
-                            <div className="flex items-center gap-4 justify-end">
+                            <div className="flex items-center gap-5 justify-end">
                               <div>
-                                <div className="text-white font-medium">{slide.name}</div>
-                                <div className={`text-sm ${slide.type === 'ceo' ? 'text-teal-400' : 'text-teal-400/80'}`}>{slide.role}</div>
+                                <div className="text-white font-semibold text-lg">{slide.name}</div>
+                                <div className={`text-base ${slide.type === 'ceo' ? 'text-teal-400' : 'text-teal-400/80'}`}>{slide.role}</div>
                               </div>
-                              <div className={`w-14 h-14 rounded-full overflow-hidden border-2 ${slide.type === 'ceo' ? 'border-teal-400/50' : 'border-teal-500/30'}`}>
+                              <div className={`w-16 h-16 rounded-full overflow-hidden border-2 ${slide.type === 'ceo' ? 'border-teal-400/50' : 'border-teal-500/30'}`}>
                                 <img
                                   src={slide.image}
                                   alt={slide.name}
@@ -698,34 +777,94 @@ export default function HeroEnterprise() {
                   )
                 })}
 
-                {/* Carousel indicators with progress */}
-                <div className="absolute -bottom-10 right-0 flex items-center gap-3">
+                {/* Elegant Node Indicators */}
+                <div className="absolute -bottom-12 right-0 flex items-center gap-1">
+                  {/* Connecting line behind */}
+                  <div
+                    className="absolute top-1/2 left-3 right-3 h-[1px] -translate-y-1/2 rounded-full"
+                    style={{ background: 'rgba(51, 65, 85, 0.5)' }}
+                  />
+
                   {carouselSlides.map((slide, index) => {
                     const isActive = index === currentSlide
-                    const duration = index === 3 ? 45 : 5.5 // video slide is longer
+                    const duration = index === 3 ? 16 : 5.5
+                    const circumference = 2 * Math.PI * 11
 
                     return (
                       <button
-                        key={`indicator-${index}-${currentSlide === index ? 'active' : 'inactive'}`}
+                        key={`indicator-${index}`}
                         onClick={() => setCurrentSlide(index)}
-                        className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
-                          isActive ? 'w-14' : 'w-4'
-                        }`}
+                        className="relative z-10 flex items-center justify-center cursor-pointer group"
                         style={{
-                          backgroundColor: isActive ? 'rgba(30, 41, 59, 0.8)' : 'rgba(148, 163, 184, 0.5)',
+                          width: '28px',
+                          height: '28px',
                         }}
                       >
-                        {isActive && !isHoveringCarousel && (
-                          <div
-                            key={`progress-${currentSlide}`}
-                            className="absolute inset-0 bg-teal-400 rounded-full origin-left"
-                            style={{
-                              animation: `progressFill ${duration}s linear forwards`,
-                            }}
-                          />
+                        {/* Outer ring - progress for active */}
+                        <div
+                          className="absolute inset-0 rounded-full transition-all duration-500"
+                          style={{
+                            background: isActive ? 'rgba(71, 85, 105, 0.2)' : 'transparent',
+                            transform: isActive ? 'scale(1)' : 'scale(0.6)',
+                            opacity: isActive ? 1 : 0,
+                          }}
+                        />
+
+                        {/* SVG Progress Ring */}
+                        {isActive && (
+                          <svg
+                            className="absolute inset-0 w-full h-full"
+                            viewBox="0 0 28 28"
+                            style={{ transform: 'rotate(-90deg)' }}
+                          >
+                            <circle
+                              cx="14"
+                              cy="14"
+                              r="11"
+                              fill="none"
+                              stroke="rgba(71, 85, 105, 0.4)"
+                              strokeWidth="2"
+                            />
+                            <circle
+                              key={`ring-${currentSlide}`}
+                              cx="14"
+                              cy="14"
+                              r="11"
+                              fill="none"
+                              stroke="rgba(94, 234, 212, 0.7)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeDasharray={circumference}
+                              strokeDashoffset={circumference}
+                              style={{
+                                animation: `ringProgress ${duration}s linear forwards`,
+                                animationPlayState: (isHoveringCarousel && index !== 3) ? 'paused' : 'running',
+                              }}
+                            />
+                          </svg>
                         )}
-                        {isActive && isHoveringCarousel && (
-                          <div className="absolute inset-0 bg-teal-400/60 rounded-full" />
+
+                        {/* Center dot */}
+                        <div
+                          className="rounded-full transition-all duration-400"
+                          style={{
+                            width: isActive ? '8px' : '6px',
+                            height: isActive ? '8px' : '6px',
+                            background: isActive
+                              ? 'rgba(94, 234, 212, 0.8)'
+                              : 'rgba(100, 116, 139, 0.6)',
+                            boxShadow: isActive
+                              ? '0 0 8px rgba(94, 234, 212, 0.4)'
+                              : 'none',
+                          }}
+                        />
+
+                        {/* Hover effect for inactive */}
+                        {!isActive && (
+                          <div
+                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            style={{ background: 'rgba(71, 85, 105, 0.2)' }}
+                          />
                         )}
                       </button>
                     )
@@ -737,11 +876,15 @@ export default function HeroEnterprise() {
                     from { transform: scaleX(0); }
                     to { transform: scaleX(1); }
                   }
+                  @keyframes ringProgress {
+                    from { stroke-dashoffset: 69.115; }
+                    to { stroke-dashoffset: 0; }
+                  }
                 `}</style>
               </div>
 
               <p
-                className={`mt-16 text-lg text-slate-300 leading-relaxed max-w-xl ml-auto text-right transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-14 font-body text-[17px] text-navy-300 leading-relaxed max-w-lg ml-auto text-right transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 From real-time analytics to distributed systems architecture,
                 we deliver end-to-end IT solutions that transform how
@@ -749,11 +892,11 @@ export default function HeroEnterprise() {
               </p>
 
               <div
-                className={`mt-10 flex flex-wrap items-center justify-end gap-4 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-8 flex flex-wrap items-center justify-end gap-4 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 <Link
                   href="#contact"
-                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 overflow-hidden rounded-lg bg-teal-500 text-navy-950 font-medium text-sm transition-all duration-300 hover:bg-teal-400"
+                  className="group relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden rounded-sm bg-teal-500 text-navy-950 font-body font-semibold text-body transition-all duration-300 hover:bg-teal-400"
                 >
                   <span>Get Started</span>
                   <svg
@@ -768,23 +911,23 @@ export default function HeroEnterprise() {
 
                 <Link
                   href="#capabilities"
-                  className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-lg border border-teal-500/30 text-teal-400 hover:text-teal-300 hover:border-teal-500/50 hover:bg-teal-500/5 font-medium text-sm transition-all duration-300"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm border border-navy-600 text-white hover:text-teal-400 hover:border-teal-500/50 font-body font-medium text-body transition-all duration-300"
                 >
                   <span>View Solutions</span>
                 </Link>
               </div>
 
               <div
-                className={`mt-12 flex items-center justify-end gap-12 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-10 flex items-center justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {[
                   { value: '500+', label: 'Enterprises' },
                   { value: '99.99%', label: 'Uptime' },
                   { value: '50PB+', label: 'Data Processed' },
                 ].map((stat, i) => (
-                  <div key={i}>
-                    <div className="text-2xl font-semibold text-white">{stat.value}</div>
-                    <div className="text-teal-500/60 text-sm mt-1">{stat.label}</div>
+                  <div key={i} className="group px-6 first:pl-0 last:pr-0 text-right">
+                    <div className="font-display text-2xl font-semibold text-white tracking-tight">{stat.value}</div>
+                    <div className="font-body text-sm text-navy-400 group-hover:text-teal-400 transition-colors duration-300">{stat.label}</div>
                   </div>
                 ))}
               </div>

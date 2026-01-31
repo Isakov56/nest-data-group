@@ -36,13 +36,11 @@ export default function Header({ className = '' }: HeaderProps) {
       // Check which section we're in
       const insightsSection = document.getElementById('insights')
       const partnersSection = document.getElementById('partners')
-      const caseStudiesSection = document.getElementById('case-studies')
-      const teamSection = document.getElementById('team')
       const philosophySection = document.getElementById('philosophy')
-      const contactSection = document.getElementById('contact')
-      
-      // Get the sections that have dark backgrounds
-      const darkSections = [insightsSection, partnersSection, caseStudiesSection, teamSection, philosophySection, contactSection].filter(Boolean)
+
+      // Get the sections that have dark backgrounds (navy-950)
+      // Note: team (bg-gray-50) and contact (bg-white/gray-50) are light sections
+      const darkSections = [insightsSection, partnersSection, philosophySection].filter(Boolean)
       
       // Get viewport position (header height offset)
       const headerOffset = 80
@@ -77,6 +75,7 @@ export default function Header({ className = '' }: HeaderProps) {
 
   const navLinks = [
     { href: '/#capabilities', label: 'Capabilities' },
+    { href: '/insights', label: 'Insights' },
     { href: '/about', label: 'About' },
     { href: '/team', label: 'Team' },
     { href: '/#contact', label: 'Contact' },

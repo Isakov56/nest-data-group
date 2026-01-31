@@ -58,6 +58,7 @@ export default function Philosophy() {
   return (
     <section
       ref={sectionRef}
+      id="philosophy"
       className="relative section-padding overflow-hidden"
     >
       {/* Background */}

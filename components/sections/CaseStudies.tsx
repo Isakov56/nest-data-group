@@ -142,10 +142,10 @@ export default function CaseStudies() {
       <div className="section-container relative">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-20">
-          <span className="inline-flex items-center gap-3 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
-            <span className="w-8 h-px bg-teal-400" />
+          <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
+            <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
             Sectors
-            <span className="w-8 h-px bg-teal-400" />
+            <span className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6 opacity-0">
             Proven impact across critical industries
