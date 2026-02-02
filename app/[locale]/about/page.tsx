@@ -1,19 +1,22 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function AboutPage() {
+  const t = useTranslations('pages.about')
   const stats = [
-    { value: '15+', label: 'Years of Excellence' },
-    { value: '200+', label: 'Enterprise Clients' },
-    { value: '$2B+', label: 'Data Processed Daily' },
-    { value: '99.99%', label: 'System Uptime' },
+    { value: '15+', label: t('stats.yearsOfExcellence') },
+    { value: '200+', label: t('stats.enterpriseClients') },
+    { value: '$2B+', label: t('stats.dataProcessedDaily') },
+    { value: '99.99%', label: t('stats.systemUptime') },
   ]
 
   const values = [
     {
-      title: 'Precision',
-      description: 'We believe in doing things right the first time. Every system we build is engineered for accuracy and reliability.',
+      title: t('precision.title'),
+      description: t('precision.description'),
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -21,8 +24,8 @@ export default function AboutPage() {
       ),
     },
     {
-      title: 'Security',
-      description: 'Data protection isn\'t an afterthought—it\'s foundational. We build security into every layer of our solutions.',
+      title: t('securityValue.title'),
+      description: t('securityValue.description'),
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -30,8 +33,8 @@ export default function AboutPage() {
       ),
     },
     {
-      title: 'Partnership',
-      description: 'We\'re not vendors—we\'re partners. Your success is our success, and we\'re committed for the long term.',
+      title: t('partnership.title'),
+      description: t('partnership.description'),
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -39,8 +42,8 @@ export default function AboutPage() {
       ),
     },
     {
-      title: 'Innovation',
-      description: 'We stay ahead of the curve, continuously evolving our practices to leverage the latest in data technology.',
+      title: t('innovation.title'),
+      description: t('innovation.description'),
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -92,16 +95,13 @@ export default function AboutPage() {
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase mb-4">
                 <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-                About Us
+                {t('sectionLabel')}
               </span>
               <h1 className="font-display text-display-lg lg:text-display-xl text-white mb-6">
-                Architecture for the Data That Matters
+                {t('title')}
               </h1>
               <p className="font-body text-body-lg text-navy-200 leading-relaxed">
-                Nest Data Group designs and builds enterprise data systems for organizations
-                where precision isn&apos;t optional. We partner with government agencies, defense
-                contractors, and Fortune 500 companies to create data architectures that
-                power critical decisions.
+                {t('description')}
               </p>
             </div>
           </div>
@@ -137,34 +137,23 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="font-display text-display text-navy-900 mb-6">
-                  Our Story
+                  {t('ourStory')}
                 </h2>
                 <div className="space-y-4 font-body text-body text-navy-600 leading-relaxed">
-                  <p>
-                    Founded in 2010, Nest Data Group emerged from a simple observation: 
-                    enterprises were drowning in data but starving for insight. Legacy 
-                    systems couldn&apos;t keep pace with the volume, velocity, and variety 
-                    of modern data.
-                  </p>
-                  <p>
-                    Our founders—veterans of Deloitte, AWS, and Goldman Sachs—came 
-                    together with a shared vision: build data systems that are as 
-                    reliable as the decisions they power.
-                  </p>
-                  <p>
-                    Today, we serve over 200 enterprise clients across government, 
-                    defense, financial services, and healthcare. Our systems process 
-                    over $2 billion in transactions daily, with 99.99% uptime.
-                  </p>
+                  <p>{t('storyParagraph1')}</p>
+                  <p>{t('storyParagraph2')}</p>
+                  <p>{t('storyParagraph3')}</p>
                 </div>
               </div>
-              
+
               <div className="relative">
-                <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl">
-                  <img
+                <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl relative">
+                  <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1470&auto=format&fit=crop"
                     alt="Team collaboration"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
                 <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-teal-500/10 rounded-xl -z-10" />
@@ -179,10 +168,10 @@ export default function AboutPage() {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="font-display text-display text-navy-900 mb-4">
-                Our Values
+                {t('ourValues')}
               </h2>
               <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-                The principles that guide everything we do
+                {t('valuesSubtitle')}
               </p>
             </div>
 
@@ -213,31 +202,31 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-navy-800 rounded-xl p-8 text-center">
                 <h3 className="font-display text-xl text-white mb-3">
-                  Meet Our Team
+                  {t('meetOurTeam')}
                 </h3>
                 <p className="font-body text-navy-300 mb-6">
-                  Learn about the experts behind our platform
+                  {t('meetOurTeamDesc')}
                 </p>
                 <Link
                   href="/team"
                   className="inline-flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-body font-medium rounded-sm hover:bg-teal-400 transition-colors"
                 >
-                  View Team
+                  {t('viewTeam')}
                 </Link>
               </div>
-              
+
               <div className="bg-navy-800 rounded-xl p-8 text-center">
                 <h3 className="font-display text-xl text-white mb-3">
-                  Start a Conversation
+                  {t('startConversation')}
                 </h3>
                 <p className="font-body text-navy-300 mb-6">
-                  Let&apos;s discuss how we can help your organization
+                  {t('startConversationDesc')}
                 </p>
                 <Link
                   href="/#contact"
                   className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-body font-medium rounded-sm hover:bg-white/10 transition-colors"
                 >
-                  Contact Us
+                  {t('contactUs')}
                 </Link>
               </div>
             </div>

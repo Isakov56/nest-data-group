@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTranslations } from 'next-intl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,49 +17,6 @@ interface Insight {
   views: string
   icon: string
 }
-
-const insights: Insight[] = [
-  {
-    id: 1,
-    category: 'Architecture',
-    title: 'Data Architecture',
-    description: 'Systems that scale with your mission. We design resilient data foundations that transform complexity into clarity.',
-    date: '',
-    readTime: '',
-    views: '',
-    icon: 'database',
-  },
-  {
-    id: 2,
-    category: 'Cloud',
-    title: 'Cloud Strategy',
-    description: 'Infrastructure designed for permanence. Cloud ecosystems with flexibility and reliability your mission demands.',
-    date: '',
-    readTime: '',
-    views: '',
-    icon: 'cloud',
-  },
-  {
-    id: 3,
-    category: 'Intelligence',
-    title: 'Analytics & AI',
-    description: 'Intelligence embedded, not bolted on. ML and analytics woven into systems, surfacing insights where they matter.',
-    date: '',
-    readTime: '',
-    views: '',
-    icon: 'chart',
-  },
-  {
-    id: 4,
-    category: 'Security',
-    title: 'Security',
-    description: 'Protection at the foundation. Zero-trust architectures and defense-in-depth securing data without compromising velocity.',
-    date: '',
-    readTime: '',
-    views: '',
-    icon: 'shield',
-  },
-]
 
 // Professional SVG icons
 const IconComponent = ({ type }: { type: string }) => {
@@ -97,10 +55,57 @@ const IconComponent = ({ type }: { type: string }) => {
 }
 
 export default function Insights() {
+  const t = useTranslations('insights')
+  const tCap = useTranslations('capabilities')
+  const tCat = useTranslations('categories')
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
+  // Localized insights for the cards
+  const localizedInsights: Insight[] = [
+    {
+      id: 1,
+      category: tCat('architecture'),
+      title: tCap('dataArchitecture.title'),
+      description: tCap('dataArchitecture.tagline'),
+      date: '',
+      readTime: '',
+      views: '',
+      icon: 'database',
+    },
+    {
+      id: 2,
+      category: tCat('cloud'),
+      title: tCap('cloudStrategy.title'),
+      description: tCap('cloudStrategy.tagline'),
+      date: '',
+      readTime: '',
+      views: '',
+      icon: 'cloud',
+    },
+    {
+      id: 3,
+      category: tCat('intelligence'),
+      title: tCap('analyticsAI.title'),
+      description: tCap('analyticsAI.tagline'),
+      date: '',
+      readTime: '',
+      views: '',
+      icon: 'chart',
+    },
+    {
+      id: 4,
+      category: tCat('security'),
+      title: tCap('security.title'),
+      description: tCap('security.tagline'),
+      date: '',
+      readTime: '',
+      views: '',
+      icon: 'shield',
+    },
+  ]
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -148,14 +153,14 @@ export default function Insights() {
         <div ref={headingRef} className="text-center mb-2">
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-            <span className="font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase">Trusted Partners</span>
+            <span className="font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase">{t('sectionLabel')}</span>
             <div className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
           </div>
           <h2 className="font-display text-display md:text-display-lg text-white mb-6">
-            Where Failure Is Not an Option
+            {t('title')}
           </h2>
           <p className="font-body text-body-lg text-navy-300 max-w-2xl mx-auto leading-relaxed">
-            Trusted by organizations operating in the most demanding environments, where data integrity and system reliability are mission-critical.
+            {t('description')}
           </p>
         </div>
 
@@ -198,13 +203,13 @@ export default function Insights() {
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-white">Trusted Sectors</div>
-                        <div className="text-xs text-navy-400">Mission-critical industries</div>
+                        <div className="text-sm font-medium text-white">{t('trustedSectors')}</div>
+                        <div className="text-xs text-navy-400">{t('missionCritical')}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-                      <span className="text-xs text-teal-400">Verified</span>
+                      <span className="text-xs text-teal-400">{t('verified')}</span>
                     </div>
                   </div>
 
@@ -213,25 +218,25 @@ export default function Insights() {
                     {/* Sector icons grid */}
                     <div className="grid grid-cols-2 gap-4">
                       {[
-                        { name: 'Defense', icon: (
+                        { name: t('defense'), icon: (
                           <svg viewBox="0 0 24 24" className="w-6 h-6">
                             <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <circle cx="12" cy="12" r="2" fill="currentColor" />
                           </svg>
                         )},
-                        { name: 'Finance', icon: (
+                        { name: t('finance'), icon: (
                           <svg viewBox="0 0 24 24" className="w-6 h-6">
                             <rect x="3" y="6" width="18" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5" />
                           </svg>
                         )},
-                        { name: 'Healthcare', icon: (
+                        { name: t('healthcare'), icon: (
                           <svg viewBox="0 0 24 24" className="w-6 h-6">
                             <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                           </svg>
                         )},
-                        { name: 'Government', icon: (
+                        { name: t('government'), icon: (
                           <svg viewBox="0 0 24 24" className="w-6 h-6">
                             <path d="M4 9L12 4L20 9" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <line x1="6" y1="11" x2="6" y2="18" stroke="currentColor" strokeWidth="1.5" />
@@ -250,9 +255,9 @@ export default function Insights() {
 
                     {/* Trusted by badges */}
                     <div className="space-y-3 pt-2">
-                      <div className="text-xs text-navy-300 mb-3">Trusted By</div>
+                      <div className="text-xs text-navy-300 mb-3">{t('trustedBy')}</div>
                       <div className="flex flex-wrap gap-2">
-                        {['Federal Agencies', 'Fortune 500', 'Defense Contractors', 'Healthcare Systems'].map((badge, i) => (
+                        {[t('federalAgencies'), t('fortune500'), t('defenseContractors'), t('healthcareSystems')].map((badge, i) => (
                           <span key={i} className="px-3 py-1.5 bg-navy-800/70 rounded text-[11px] text-navy-300 border border-navy-700/50">
                             {badge}
                           </span>
@@ -297,7 +302,7 @@ export default function Insights() {
                 pointerEvents: 'none',
               }}
             >
-              {[...insights].reverse().map((insight, index) => {
+              {[...localizedInsights].reverse().map((insight, index) => {
                 // index 0 = front card (closest), index 2 = back card (furthest)
                 const isHovered = hoveredIndex === insight.id
                 const baseX = index * -85 // Horizontal offset
@@ -387,7 +392,7 @@ export default function Insights() {
                         {/* Bottom row: Learn more */}
                         <div className="flex items-center text-[10px] text-navy-500 font-medium">
                           <span className={`flex items-center gap-1 transition-colors duration-200 ${isHovered ? 'text-teal-400' : ''}`}>
-                            Learn more
+                            {t('learnMore')}
                             <svg className={`w-3 h-3 transition-transform duration-200 ${isHovered ? 'translate-x-0.5' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
@@ -409,11 +414,11 @@ export default function Insights() {
             href="/insights"
             className="inline-flex items-center gap-2 font-body text-body font-medium text-teal-400 hover:text-teal-300 transition-colors group"
           >
-            View All Insights
-            <svg 
-              className="w-4 h-4 transition-transform group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            {t('viewAllInsights')}
+            <svg
+              className="w-4 h-4 transition-transform group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

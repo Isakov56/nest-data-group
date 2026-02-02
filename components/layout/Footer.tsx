@@ -1,22 +1,24 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Logo from '@/components/ui/Logo'
+import { useTranslations } from 'next-intl'
 
 export default function Footer() {
+  const t = useTranslations('footer')
   const currentYear = new Date().getFullYear()
 
   const footerLinks = {
     company: [
-      { href: '/#capabilities', label: 'Capabilities' },
-      { href: '/about', label: 'About Us' },
-      { href: '/team', label: 'Our Team' },
-      { href: '/#contact', label: 'Contact' },
+      { href: '/#capabilities', labelKey: 'capabilities' },
+      { href: '/about', labelKey: 'aboutUs' },
+      { href: '/team', labelKey: 'ourTeam' },
+      { href: '/#contact', labelKey: 'contact' },
     ],
     legal: [
-      { href: '/privacy', label: 'Privacy Policy' },
-      { href: '/terms', label: 'Terms of Service' },
-      { href: '/security', label: 'Security' },
+      { href: '/privacy', labelKey: 'privacyPolicy' },
+      { href: '/terms', labelKey: 'termsOfService' },
+      { href: '/security', labelKey: 'security' },
     ],
   }
 
@@ -38,8 +40,7 @@ export default function Footer() {
             </div>
 
             <p className="font-body text-body text-navy-300 max-w-sm mb-8 leading-relaxed">
-              Architecture for the data that matters. We design systems that power
-              critical decisions across government, defense, and enterprise.
+              {t('tagline')}
             </p>
 
             {/* Security badges */}
@@ -48,13 +49,13 @@ export default function Footer() {
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
                 </svg>
-                <span>SOC 2 Compliant</span>
+                <span>{t('soc2Compliant')}</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 bg-navy-900/50 rounded text-xs">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span>FedRAMP Ready</span>
+                <span>{t('fedRampReady')}</span>
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@ export default function Footer() {
           {/* Navigation columns */}
           <div className="lg:col-span-3 lg:col-start-7">
             <h4 className="font-body text-sm font-medium uppercase tracking-wider text-navy-400 mb-5">
-              Company
+              {t('company')}
             </h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
@@ -71,7 +72,7 @@ export default function Footer() {
                     href={link.href}
                     className="font-body text-body-sm text-navy-300 hover:text-white transition-colors duration-300"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -80,7 +81,7 @@ export default function Footer() {
 
           <div className="lg:col-span-3">
             <h4 className="font-body text-sm font-medium uppercase tracking-wider text-navy-400 mb-5">
-              Legal
+              {t('legal')}
             </h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -89,7 +90,7 @@ export default function Footer() {
                     href={link.href}
                     className="font-body text-body-sm text-navy-300 hover:text-white transition-colors duration-300"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -98,7 +99,7 @@ export default function Footer() {
             {/* Contact */}
             <div className="mt-8">
               <h4 className="font-body text-sm font-medium uppercase tracking-wider text-navy-400 mb-3">
-                Contact
+                {t('contact')}
               </h4>
               <a
                 href="mailto:contact@nestdatagroup.com"
@@ -113,7 +114,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-navy-800 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="font-body text-body-sm text-navy-500">
-            &copy; {currentYear} Nest Data Group. All rights reserved.
+            &copy; {currentYear} Nest Data Group. {t('allRightsReserved')}
           </p>
 
           <div className="flex items-center gap-6">

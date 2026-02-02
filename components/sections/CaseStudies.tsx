@@ -5,21 +5,17 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltCard from '@/components/ui/TiltCard'
 import NoiseTexture from '@/components/ui/NoiseTexture'
+import { useTranslations } from 'next-intl'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const caseStudies = [
+const caseStudyData = [
   {
     id: 'defense',
-    sector: 'Defense',
-    title: 'Mission-Critical Intelligence',
-    description: 'Real-time data fusion across distributed sensor networks enabling faster, more accurate decision-making in complex operational environments.',
-    metrics: [
-      { value: '94%', label: 'Faster Processing' },
-      { value: '2.3B', label: 'Daily Events' },
-    ],
+    translationKey: 'defense',
+    metricValues: ['94%', '2.3B'],
     gradient: 'from-navy-900 via-navy-800 to-navy-700',
     accentColor: '#4a9b9b',
     icon: (
@@ -32,13 +28,8 @@ const caseStudies = [
   },
   {
     id: 'finance',
-    sector: 'Finance',
-    title: 'Regulatory Compliance at Scale',
-    description: 'Automated compliance monitoring and reporting infrastructure processing millions of transactions while maintaining audit-ready documentation.',
-    metrics: [
-      { value: '99.97%', label: 'Accuracy' },
-      { value: '85M', label: 'Daily Txns' },
-    ],
+    translationKey: 'finance',
+    metricValues: ['99.97%', '85M'],
     gradient: 'from-navy-800 via-navy-700 to-teal-700',
     accentColor: '#7acbcb',
     icon: (
@@ -52,13 +43,8 @@ const caseStudies = [
   },
   {
     id: 'healthcare',
-    sector: 'Healthcare',
-    title: 'Patient Data Interoperability',
-    description: 'Unified data platform connecting disparate health systems to improve care coordination and enable advanced analytics for population health.',
-    metrics: [
-      { value: '340+', label: 'Systems Unified' },
-      { value: '12M', label: 'Patient Records' },
-    ],
+    translationKey: 'healthcare',
+    metricValues: ['340+', '12M'],
     gradient: 'from-teal-600 via-teal-500 to-teal-400',
     accentColor: '#1e3a5f',
     icon: (
@@ -72,6 +58,7 @@ const caseStudies = [
 ]
 
 export default function CaseStudies() {
+  const t = useTranslations('caseStudies')
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
@@ -144,15 +131,14 @@ export default function CaseStudies() {
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-20">
           <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
             <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-            Sectors
+            {t('sectionLabel')}
             <span className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6 opacity-0">
-            Proven impact across critical industries
+            {t('title')}
           </h2>
           <p className="font-body text-body-lg text-navy-500 opacity-0">
-            We partner with organizations where the stakes are highest and the
-            margin for error is zero.
+            {t('description')}
           </p>
         </div>
 
@@ -161,7 +147,7 @@ export default function CaseStudies() {
           ref={cardsRef}
           className="grid grid-cols-1 lg:grid-cols-3 gap-8"
         >
-          {caseStudies.map((study) => (
+          {caseStudyData.map((study) => (
             <TiltCard
               key={study.id}
               className="case-card opacity-0"
@@ -198,22 +184,25 @@ export default function CaseStudies() {
                       color: 'white',
                     }}
                   >
-                    {study.sector}
+                    {t(`${study.translationKey}.sector`)}
                   </span>
 
                   {/* Title */}
                   <h3 className="font-display text-heading-lg text-white mb-4">
-                    {study.title}
+                    {t(`${study.translationKey}.title`)}
                   </h3>
 
                   {/* Description */}
                   <p className="font-body text-body text-white/80 mb-8 flex-grow">
-                    {study.description}
+                    {t(`${study.translationKey}.description`)}
                   </p>
 
                   {/* Metrics */}
                   <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/20">
-                    {study.metrics.map((metric, i) => (
+                    {[
+                      { value: study.metricValues[0], label: t(`${study.translationKey}.metric1Label`) },
+                      { value: study.metricValues[1], label: t(`${study.translationKey}.metric2Label`) },
+                    ].map((metric, i) => (
                       <div key={i}>
                         <div className="font-display text-heading-lg text-white">
                           {metric.value}

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTranslations } from 'next-intl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -66,6 +67,7 @@ const team: TeamMember[] = [
 ]
 
 export default function Team() {
+  const t = useTranslations('team')
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const leadershipRef = useRef<HTMLDivElement>(null)
@@ -153,22 +155,21 @@ export default function Team() {
         <div ref={headingRef} className="text-center mb-16 lg:mb-20">
           <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-4">
             <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-            Our Team
+            {t('sectionLabel')}
             <span className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6">
-            Leadership & Expertise
+            {t('title')}
           </h2>
           <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-            Our team combines decades of experience from leading technology companies, 
-            government agencies, and financial institutions.
+            {t('description')}
           </p>
         </div>
 
         {/* Leadership section */}
         <div ref={leadershipRef} className="mb-20">
           <h3 className="font-display text-heading text-navy-800 mb-8 text-center">
-            Executive Leadership
+            {t('executiveLeadership')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {leadership.map((member, i) => (
@@ -218,7 +219,7 @@ export default function Team() {
         {/* Extended team */}
         <div ref={teamRef}>
           <h3 className="font-display text-heading text-navy-800 mb-8 text-center">
-            Senior Team
+            {t('seniorTeam')}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, i) => (
@@ -259,7 +260,7 @@ export default function Team() {
             href="/team"
             className="inline-flex items-center gap-2 font-body text-body font-medium text-teal-600 hover:text-teal-700 transition-colors"
           >
-            View Full Team
+            {t('viewFullTeam')}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

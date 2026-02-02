@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "title": "Nest Data Group | Enterprise Data Architecture & IT Solutions",
+    "description": "We design the systems that power critical decisions. Enterprise data architecture, cloud strategy, and IT solutions for government, defense, and Fortune 500."
+  },
+  "nav": {
+    "capabilities": "Capabilities",
+    "insights": "Insights",
+    "about": "About",
+    "team": "Team",
+    "contact": "Contact",
+    "theme": "Theme",
+    "language": "Language",
+    "heroStyle": "Hero Style",
+    "classic": "Classic",
+    "minimal": "Minimal",
+    "enterprise": "Enterprise",
+    "globeNetwork": "Globe & network",
+    "cleanModern": "Clean & modern",
+    "fourPillars": "Four pillars",
+    "beginConversation": "Begin a Conversation"
+  },
+  "hero": {
+    "badge": "Enterprise Solutions",
+    "headline": "We Engineer Mission-Critical Data Infrastructure That Powers Tomorrow's Enterprises",
+    "highlightWord": "Enterprises",
+    "description": "From real-time analytics to distributed systems architecture, we deliver end-to-end IT solutions that transform how organizations harness their data at scale.",
+    "getStarted": "Get Started",
+    "viewSolutions": "View Solutions",
+    "enterprises": "Enterprises",
+    "uptime": "Uptime",
+    "dataProcessed": "Data Processed",
+    "compliant": "Compliant",
+    "testimonial1": {
+      "quote": "They transformed our entire data architecture in months, not years. The ROI has been extraordinary.",
+      "name": "Sarah Chen",
+      "role": "CTO, Fortune 500 Healthcare"
+    },
+    "testimonial2": {
+      "quote": "We don't just build systems. We build the foundation for your next decade of growth.",
+      "name": "Michael Torres",
+      "role": "CEO & Founder"
+    }
+  },
+  "capabilities": {
+    "sectionLabel": "Core Capabilities",
+    "title": "Four pillars of enterprise excellence",
+    "description": "Each capability is designed to integrate seamlessly, creating systems greater than the sum of their parts.",
+    "dataArchitecture": {
+      "title": "Data Architecture",
+      "tagline": "Systems that scale with your mission",
+      "detail": "We design resilient data foundations that transform complexity into clarity, enabling organizations to make decisions at the speed of relevance."
+    },
+    "cloudStrategy": {
+      "title": "Cloud Strategy",
+      "tagline": "Infrastructure designed for permanence",
+      "detail": "Beyond migration — we architect cloud ecosystems that provide the flexibility of modern infrastructure with the reliability your mission demands."
+    },
+    "analyticsAI": {
+      "title": "Analytics & AI",
+      "tagline": "Intelligence embedded, not bolted on",
+      "detail": "Machine learning and advanced analytics woven into the fabric of your systems, surfacing insights when and where they matter most."
+    },
+    "security": {
+      "title": "Security",
+      "tagline": "Protection at the foundation",
+      "detail": "Zero-trust architectures and defense-in-depth strategies that secure your data without compromising operational velocity."
+    }
+  },
+  "insights": {
+    "sectionLabel": "Trusted Partners",
+    "title": "Where Failure Is Not an Option",
+    "description": "Trusted by organizations operating in the most demanding environments, where data integrity and system reliability are mission-critical.",
+    "trustedSectors": "Trusted Sectors",
+    "missionCritical": "Mission-critical industries",
+    "verified": "Verified",
+    "defense": "Defense",
+    "finance": "Finance",
+    "healthcare": "Healthcare",
+    "government": "Government",
+    "trustedBy": "Trusted By",
+    "federalAgencies": "Federal Agencies",
+    "fortune500": "Fortune 500",
+    "defenseContractors": "Defense Contractors",
+    "healthcareSystems": "Healthcare Systems",
+    "viewAllInsights": "View All Insights",
+    "learnMore": "Learn more"
+  },
+  "caseStudies": {
+    "sectionLabel": "Sectors",
+    "title": "Proven impact across critical industries",
+    "description": "We partner with organizations where the stakes are highest and the margin for error is zero.",
+    "defense": {
+      "sector": "Defense",
+      "title": "Mission-Critical Intelligence",
+      "description": "Real-time data fusion across distributed sensor networks enabling faster, more accurate decision-making in complex operational environments.",
+      "metric1Label": "Faster Processing",
+      "metric2Label": "Daily Events"
+    },
+    "finance": {
+      "sector": "Finance",
+      "title": "Regulatory Compliance at Scale",
+      "description": "Automated compliance monitoring and reporting infrastructure processing millions of transactions while maintaining audit-ready documentation.",
+      "metric1Label": "Accuracy",
+      "metric2Label": "Daily Txns"
+    },
+    "healthcare": {
+      "sector": "Healthcare",
+      "title": "Patient Data Interoperability",
+      "description": "Unified data platform connecting disparate health systems to improve care coordination and enable advanced analytics for population health.",
+      "metric1Label": "Systems Unified",
+      "metric2Label": "Patient Records"
+    }
+  },
+  "team": {
+    "sectionLabel": "Our Team",
+    "title": "Leadership & Expertise",
+    "description": "Our team combines decades of experience from leading technology companies, government agencies, and financial institutions.",
+    "executiveLeadership": "Executive Leadership",
+    "seniorTeam": "Senior Team",
+    "viewFullTeam": "View Full Team"
+  },
+  "philosophy": {
+    "quote": "We don't build systems for today's problems. We build foundations that outlast the questions they were designed to answer."
+  },
+  "contact": {
+    "sectionLabel": "Let's Connect",
+    "title": "Ready to discuss your data architecture?",
+    "description": "Every transformation begins with a conversation. Let's explore how we can build the foundation for your organization's future.",
+    "startConversation": "Start a Conversation",
+    "scheduleCall": "Schedule a Call",
+    "email": "Email",
+    "location": "Location",
+    "inquiries": "Inquiries",
+    "federalEnterprise": "Federal & Enterprise",
+    "washingtonDC": "Washington, D.C."
+  },
+  "footer": {
+    "tagline": "Architecture for the data that matters. We design enterprise systems that power critical decisions for government, defense, and Fortune 500 organizations.",
+    "company": "Company",
+    "legal": "Legal",
+    "contact": "Contact",
+    "aboutUs": "About Us",
+    "ourTeam": "Our Team",
+    "capabilities": "Capabilities",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "security": "Security",
+    "soc2Compliant": "SOC 2 Compliant",
+    "fedRampReady": "FedRAMP Ready",
+    "allRightsReserved": "All rights reserved."
+  },
+  "pages": {
+    "about": {
+      "sectionLabel": "About Us",
+      "title": "Architecture for the Data That Matters",
+      "description": "Nest Data Group designs and builds enterprise data systems for organizations where precision isn't optional. We partner with government agencies, defense contractors, and Fortune 500 companies to create data architectures that power critical decisions.",
+      "stats": {
+        "yearsOfExcellence": "Years of Excellence",
+        "enterpriseClients": "Enterprise Clients",
+        "dataProcessedDaily": "Data Processed Daily",
+        "systemUptime": "System Uptime"
+      },
+      "ourStory": "Our Story",
+      "storyParagraph1": "Founded in 2010, Nest Data Group emerged from a simple observation: enterprises were drowning in data but starving for insight. Legacy systems couldn't keep pace with the volume, velocity, and variety of modern data.",
+      "storyParagraph2": "Our founders—veterans of Deloitte, AWS, and Goldman Sachs—came together with a shared vision: build data systems that are as reliable as the decisions they power.",
+      "storyParagraph3": "Today, we serve over 200 enterprise clients across government, defense, financial services, and healthcare. Our systems process over $2 billion in transactions daily, with 99.99% uptime.",
+      "ourValues": "Our Values",
+      "valuesSubtitle": "The principles that guide everything we do",
+      "precision": {
+        "title": "Precision",
+        "description": "We believe in doing things right the first time. Every system we build is engineered for accuracy and reliability."
+      },
+      "securityValue": {
+        "title": "Security",
+        "description": "Data protection isn't an afterthought—it's foundational. We build security into every layer of our solutions."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "description": "We're not vendors—we're partners. Your success is our success, and we're committed for the long term."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "We stay ahead of the curve, continuously evolving our practices to leverage the latest in data technology."
+      },
+      "meetOurTeam": "Meet Our Team",
+      "meetOurTeamDesc": "Learn about the experts behind our platform",
+      "startConversation": "Start a Conversation",
+      "startConversationDesc": "Let's discuss how we can help your organization",
+      "viewTeam": "View Team",
+      "contactUs": "Contact Us"
+    },
+    "team": {
+      "sectionLabel": "Our Team",
+      "title": "The People Behind the Platform",
+      "description": "Our team combines decades of experience from leading technology companies, government agencies, and financial institutions. We're united by a shared commitment to building data systems that matter.",
+      "stats": {
+        "teamMembers": "Team Members",
+        "yearsCombinedExperience": "Years Combined Experience",
+        "countriesRepresented": "Countries Represented",
+        "employeeRetention": "Employee Retention"
+      },
+      "executiveLeadership": "Executive Leadership",
+      "executiveSubtitle": "Visionary leaders with proven track records in enterprise technology",
+      "seniorLeadership": "Senior Leadership",
+      "seniorSubtitle": "Experts driving excellence across every discipline",
+      "joinOurTeam": "Join Our Team",
+      "joinDesc": "We're always looking for exceptional talent to help us build the future of enterprise data.",
+      "viewOpenPositions": "View Open Positions"
+    },
+    "insights": {
+      "sectionLabel": "Our Capabilities",
+      "title": "Where Failure Is Not an Option",
+      "description": "Trusted by organizations operating in the most demanding environments, where data integrity and system reliability are mission-critical. Our capabilities span the full spectrum of enterprise data needs.",
+      "stats": {
+        "systemUptime": "System Uptime",
+        "eventsPerSecond": "Events/Second",
+        "systemsIntegrated": "Systems Integrated",
+        "avgLatency": "Avg. Latency"
+      },
+      "coreCapabilities": "Core Capabilities",
+      "coreCapabilitiesDesc": "Comprehensive solutions for organizations where every millisecond and every byte matters",
+      "industriesWeServe": "Industries We Serve",
+      "industriesDesc": "We partner with organizations where the stakes are highest and the margin for error is zero",
+      "defenseDesc": "Mission-critical intelligence systems for national security",
+      "financeDesc": "Regulatory compliance and real-time transaction processing",
+      "healthcareDesc": "Patient data interoperability and HIPAA compliance",
+      "governmentDesc": "FedRAMP-authorized solutions for federal agencies",
+      "viewCaseStudies": "View Case Studies",
+      "viewCaseStudiesDesc": "See how we've delivered results for our clients across defense, finance, and healthcare sectors.",
+      "exploreSectors": "Explore Sectors",
+      "startConversation": "Start a Conversation",
+      "startConversationDesc": "Let's discuss how we can help transform your organization's data infrastructure.",
+      "contactUs": "Contact Us",
+      "dataArchitecture": {
+        "title": "Data Architecture",
+        "description": "Systems that scale with your mission. We design resilient data foundations that transform complexity into clarity.",
+        "detail1": "Enterprise-grade data modeling and schema design optimized for performance and scalability",
+        "detail2": "Real-time data pipelines processing millions of events per second with sub-millisecond latency",
+        "detail3": "Hybrid cloud architectures that seamlessly bridge on-premises and cloud environments",
+        "detail4": "Data governance frameworks ensuring compliance with GDPR, HIPAA, and federal regulations"
+      },
+      "cloudStrategy": {
+        "title": "Cloud Strategy",
+        "description": "Infrastructure designed for permanence. Cloud ecosystems with flexibility and reliability your mission demands.",
+        "detail1": "Multi-cloud and hybrid cloud strategies tailored to your security and performance requirements",
+        "detail2": "Infrastructure as Code (IaC) enabling reproducible, version-controlled environments",
+        "detail3": "Cost optimization achieving 40-60% reduction in cloud spend without compromising performance",
+        "detail4": "Zero-downtime migration strategies for legacy system modernization"
+      },
+      "analyticsAI": {
+        "title": "Analytics & AI",
+        "description": "Intelligence embedded, not bolted on. ML and analytics woven into systems, surfacing insights where they matter.",
+        "detail1": "Predictive analytics models with 95%+ accuracy for demand forecasting and risk assessment",
+        "detail2": "Natural language processing for automated document analysis and entity extraction",
+        "detail3": "Real-time anomaly detection protecting against fraud and security threats",
+        "detail4": "MLOps infrastructure for continuous model training, deployment, and monitoring"
+      },
+      "securityCompliance": {
+        "title": "Security & Compliance",
+        "description": "Protection at the foundation. Zero-trust architectures and defense-in-depth securing data without compromising velocity.",
+        "detail1": "Zero-trust security architectures with continuous verification and least-privilege access",
+        "detail2": "End-to-end encryption for data at rest and in transit using AES-256 and TLS 1.3",
+        "detail3": "Compliance automation for FedRAMP, SOC 2, HIPAA, and PCI-DSS requirements",
+        "detail4": "Security operations center (SOC) integration with 24/7 threat monitoring and response"
+      }
+    },
+    "privacy": {
+      "sectionLabel": "Legal",
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: January 1, 2024"
+    },
+    "terms": {
+      "sectionLabel": "Legal",
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: January 1, 2024"
+    },
+    "security": {
+      "sectionLabel": "Legal",
+      "title": "Security",
+      "lastUpdated": "Last updated: January 1, 2024"
+    }
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "readMore": "Read more",
+    "viewAll": "View All"
+  },
+  "partners": {
+    "title": "Partners & Clients",
+    "strategicPartners": "Strategic Partners",
+    "enterpriseClients": "Enterprise Clients",
+    "countriesServed": "Countries Served",
+    "dataManaged": "Data Managed",
+    "uptimeSLA": "Uptime SLA",
+    "yearsExperience": "Years Experience"
+  },
+  "categories": {
+    "architecture": "Architecture",
+    "cloud": "Cloud",
+    "intelligence": "Intelligence",
+    "security": "Security"
+  }
+}

@@ -5,17 +5,16 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltCard from '@/components/ui/TiltCard'
 import NoiseTexture from '@/components/ui/NoiseTexture'
+import { useTranslations } from 'next-intl'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const capabilities = [
+const capabilityData = [
   {
     id: 'data-architecture',
-    title: 'Data Architecture',
-    description: 'Systems that scale with your mission',
-    detail: 'We design resilient data foundations that transform complexity into clarity, enabling organizations to make decisions at the speed of relevance.',
+    translationKey: 'dataArchitecture',
     icon: (
       <svg viewBox="0 0 64 64" className="w-full h-full">
         <rect x="8" y="8" width="18" height="18" rx="2" fill="#1e3a5f" />
@@ -29,9 +28,7 @@ const capabilities = [
   },
   {
     id: 'cloud-strategy',
-    title: 'Cloud Strategy',
-    description: 'Infrastructure designed for permanence',
-    detail: 'Beyond migration — we architect cloud ecosystems that provide the flexibility of modern infrastructure with the reliability your mission demands.',
+    translationKey: 'cloudStrategy',
     icon: (
       <svg viewBox="0 0 64 64" className="w-full h-full">
         <rect x="12" y="36" width="14" height="14" rx="2" fill="#1e3a5f" />
@@ -44,9 +41,7 @@ const capabilities = [
   },
   {
     id: 'analytics-ai',
-    title: 'Analytics & AI',
-    description: 'Intelligence embedded, not bolted on',
-    detail: 'Machine learning and advanced analytics woven into the fabric of your systems, surfacing insights when and where they matter most.',
+    translationKey: 'analyticsAI',
     icon: (
       <svg viewBox="0 0 64 64" className="w-full h-full">
         <circle cx="20" cy="32" r="10" fill="#1e3a5f" />
@@ -60,9 +55,7 @@ const capabilities = [
   },
   {
     id: 'security',
-    title: 'Security',
-    description: 'Protection at the foundation',
-    detail: 'Zero-trust architectures and defense-in-depth strategies that secure your data without compromising operational velocity.',
+    translationKey: 'security',
     icon: (
       <svg viewBox="0 0 64 64" className="w-full h-full">
         <path d="M32 6 L52 16 L52 32 C52 44 42 54 32 58 C22 54 12 44 12 32 L12 16 Z" fill="#1e3a5f" />
@@ -74,6 +67,7 @@ const capabilities = [
 ]
 
 export default function CoreCapabilities() {
+  const t = useTranslations('capabilities')
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
@@ -145,13 +139,13 @@ export default function CoreCapabilities() {
         <div ref={headerRef} className="max-w-3xl mb-20">
           <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
             <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-            Core Capabilities
+            {t('sectionLabel')}
           </span>
           <h2 className="font-display text-display md:text-display-lg text-navy-900 mb-6 opacity-0">
-            Four pillars of enterprise excellence
+            {t('title')}
           </h2>
           <p className="font-body text-body-lg text-navy-500 opacity-0">
-            Each capability is designed to integrate seamlessly, creating systems greater than the sum of their parts.
+            {t('description')}
           </p>
         </div>
 
@@ -160,7 +154,7 @@ export default function CoreCapabilities() {
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {capabilities.map((capability, index) => (
+          {capabilityData.map((capability, index) => (
             <TiltCard
               key={capability.id}
               className="capability-card opacity-0"
@@ -278,13 +272,13 @@ export default function CoreCapabilities() {
 
                 {/* Content */}
                 <h3 className="relative z-10 font-display text-heading-lg text-navy-900 mb-2">
-                  {capability.title}
+                  {t(`${capability.translationKey}.title`)}
                 </h3>
                 <p className="relative z-10 font-body text-body text-teal-600 font-medium mb-4">
-                  {capability.description}
+                  {t(`${capability.translationKey}.tagline`)}
                 </p>
                 <p className="relative z-10 font-body text-body text-navy-500 leading-relaxed">
-                  {capability.detail}
+                  {t(`${capability.translationKey}.detail`)}
                 </p>
               </div>
             </TiltCard>

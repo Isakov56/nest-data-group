@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTranslations } from 'next-intl'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -116,6 +117,7 @@ function MarqueeRow({ partnerNames, direction = 'left', duration = 40 }: { partn
 }
 
 export default function Partners() {
+  const t = useTranslations('partners')
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -180,14 +182,14 @@ export default function Partners() {
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-4xl mx-auto px-6 mb-10 md:mb-12">
           <h2 className="animate-item font-display text-3xl md:text-4xl lg:text-5xl text-white font-light">
-            Partners & Clients
+            {t('title')}
           </h2>
         </div>
 
         {/* Strategic Partners - Featured row */}
         <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-6">
-            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">Strategic Partners</span>
+            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">{t('strategicPartners')}</span>
           </div>
           <div className="flex justify-center items-center px-6">
             {strategicPartners.map((partner, i) => (
@@ -217,7 +219,7 @@ export default function Partners() {
         {/* Enterprise Partners - Marquee rows */}
         <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-6">
-            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">Enterprise Clients</span>
+            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">{t('enterpriseClients')}</span>
           </div>
           
           {/* First marquee row */}
@@ -240,10 +242,10 @@ export default function Partners() {
           <div className="max-w-4xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 py-8 border-t border-navy-800/50">
               {[
-                { value: '50+', label: 'Countries Served' },
-                { value: '$2B+', label: 'Data Managed' },
-                { value: '99.9%', label: 'Uptime SLA' },
-                { value: '15+', label: 'Years Experience' },
+                { value: '50+', label: t('countriesServed') },
+                { value: '$2B+', label: t('dataManaged') },
+                { value: '99.9%', label: t('uptimeSLA') },
+                { value: '15+', label: t('yearsExperience') },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="font-display text-2xl md:text-3xl font-light text-white mb-1">

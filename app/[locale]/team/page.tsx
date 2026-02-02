@@ -1,6 +1,8 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface TeamMember {
   name: string
@@ -90,6 +92,7 @@ const seniorTeam: TeamMember[] = [
 ]
 
 export default function TeamPage() {
+  const t = useTranslations('pages.team')
   return (
     <>
       <Header />
@@ -133,15 +136,13 @@ export default function TeamPage() {
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase mb-4">
                 <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-                Our Team
+                {t('sectionLabel')}
               </span>
               <h1 className="font-display text-display-lg lg:text-display-xl text-white mb-6">
-                The People Behind the Platform
+                {t('title')}
               </h1>
               <p className="font-body text-body-lg text-navy-200 leading-relaxed">
-                Our team combines decades of experience from leading technology companies,
-                government agencies, and financial institutions. We&apos;re united by a shared
-                commitment to building data systems that matter.
+                {t('description')}
               </p>
             </div>
           </div>
@@ -152,10 +153,10 @@ export default function TeamPage() {
           <div className="section-container">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-navy-700/50">
               {[
-                { value: '50+', label: 'Team Members' },
-                { value: '150+', label: 'Years Combined Experience' },
-                { value: '12', label: 'Countries Represented' },
-                { value: '98%', label: 'Employee Retention' },
+                { value: '50+', label: t('stats.teamMembers') },
+                { value: '150+', label: t('stats.yearsCombinedExperience') },
+                { value: '12', label: t('stats.countriesRepresented') },
+                { value: '98%', label: t('stats.employeeRetention') },
               ].map((stat, i) => (
                 <div
                   key={i}
@@ -181,10 +182,10 @@ export default function TeamPage() {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="font-display text-display text-navy-900 mb-4">
-                Executive Leadership
+                {t('executiveLeadership')}
               </h2>
               <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-                Visionary leaders with proven track records in enterprise technology
+                {t('executiveSubtitle')}
               </p>
             </div>
 
@@ -193,13 +194,15 @@ export default function TeamPage() {
                 <div key={i} className="group">
                   {/* Image */}
                   <div className="relative h-80 mb-6 rounded-xl overflow-hidden shadow-lg">
-                    <img
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/20 to-transparent" />
-                    
+
                     {/* LinkedIn */}
                     {member.linkedin && (
                       <a
@@ -223,7 +226,7 @@ export default function TeamPage() {
                   <p className="font-body text-body text-navy-600 mb-4 leading-relaxed">
                     {member.bio}
                   </p>
-                  
+
                   {/* Expertise tags */}
                   {member.expertise && (
                     <div className="flex flex-wrap gap-2">
@@ -248,10 +251,10 @@ export default function TeamPage() {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="font-display text-display text-navy-900 mb-4">
-                Senior Leadership
+                {t('seniorLeadership')}
               </h2>
               <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-                Experts driving excellence across every discipline
+                {t('seniorSubtitle')}
               </p>
             </div>
 
@@ -263,10 +266,12 @@ export default function TeamPage() {
                 >
                   {/* Image */}
                   <div className="relative h-56 overflow-hidden">
-                    <img
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/50 to-transparent" />
                   </div>
@@ -282,7 +287,7 @@ export default function TeamPage() {
                     <p className="font-body text-body-sm text-navy-600 mb-4 leading-relaxed">
                       {member.bio}
                     </p>
-                    
+
                     {/* Expertise tags */}
                     {member.expertise && (
                       <div className="flex flex-wrap gap-2">
@@ -307,16 +312,16 @@ export default function TeamPage() {
         <section className="py-20 bg-navy-900">
           <div className="section-container text-center">
             <h2 className="font-display text-display text-white mb-4">
-              Join Our Team
+              {t('joinOurTeam')}
             </h2>
             <p className="font-body text-body-lg text-navy-200 max-w-2xl mx-auto mb-8">
-              We&apos;re always looking for exceptional talent to help us build the future of enterprise data.
+              {t('joinDesc')}
             </p>
             <a
               href="/careers"
               className="inline-flex items-center justify-center px-8 py-4 bg-teal-500 text-white font-body font-medium rounded-sm hover:bg-teal-400 transition-colors"
             >
-              View Open Positions
+              {t('viewOpenPositions')}
               <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

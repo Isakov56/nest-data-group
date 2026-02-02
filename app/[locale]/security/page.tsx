@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { useTranslations } from 'next-intl'
 
 export const metadata: Metadata = {
   title: 'Security | Nest Data Group',
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default function Security() {
+  const t = useTranslations('pages.security')
   const securityFeatures = [
     {
       title: 'SOC 2 Type II Compliant',
@@ -76,11 +78,11 @@ export default function Security() {
             <div className="text-center mb-20">
               <span className="inline-flex items-center gap-3 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6">
                 <span className="w-8 h-px bg-teal-400" />
-                Security
+                {t('sectionLabel')}
                 <span className="w-8 h-px bg-teal-400" />
               </span>
               <h1 className="font-display text-display md:text-display-lg text-navy-900 mb-6">
-                Enterprise-Grade Security
+                {t('title')}
               </h1>
               <p className="font-body text-body-lg text-navy-500 max-w-3xl mx-auto">
                 Security is foundational to everything we do. We maintain the highest standards to protect your data and ensure compliance with government and industry requirements.

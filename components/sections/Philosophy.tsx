@@ -6,12 +6,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import GradientMesh from '@/components/ui/GradientMesh'
 import NoiseTexture from '@/components/ui/NoiseTexture'
 import Logo from '@/components/ui/Logo'
+import { useTranslations } from 'next-intl'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
 export default function Philosophy() {
+  const t = useTranslations('philosophy')
   const sectionRef = useRef<HTMLElement>(null)
   const quoteRef = useRef<HTMLQuoteElement>(null)
   const wordsRef = useRef<HTMLSpanElement[]>([])
@@ -52,7 +54,7 @@ export default function Philosophy() {
     }
   }, [])
 
-  const quoteText = "We don't build systems for today's problems. We build foundations that outlast the questions they were designed to answer."
+  const quoteText = t('quote')
   const quoteWords = quoteText.split(' ')
 
   return (

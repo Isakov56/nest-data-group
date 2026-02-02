@@ -5,12 +5,14 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import NoiseTexture from '@/components/ui/NoiseTexture'
 import GradientMesh from '@/components/ui/GradientMesh'
+import { useTranslations } from 'next-intl'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
 export default function Contact() {
+  const t = useTranslations('contact')
   const sectionRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -64,17 +66,16 @@ export default function Contact() {
           <div className="text-center mb-16">
             <span className="animate-item inline-flex items-center gap-4 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6 opacity-0">
               <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-              Let&apos;s Connect
+              {t('sectionLabel')}
               <span className="w-24 h-[1px] bg-gradient-to-l from-transparent to-teal-500/50" />
             </span>
 
             <h2 className="animate-item font-display text-display md:text-display-lg text-navy-900 mb-6 opacity-0">
-              Ready to discuss your data architecture?
+              {t('title')}
             </h2>
 
             <p className="animate-item font-body text-body-lg text-navy-500 max-w-2xl mx-auto mb-12 opacity-0">
-              Every transformation begins with a conversation. Let&apos;s explore how
-              we can build the foundation for your organization&apos;s future.
+              {t('description')}
             </p>
 
             {/* CTA Buttons */}
@@ -91,7 +92,7 @@ export default function Contact() {
                 <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
                 <span className="relative font-body text-body-lg font-medium text-white">
-                  Start a Conversation
+                  {t('startConversation')}
                 </span>
               </a>
 
@@ -112,7 +113,7 @@ export default function Contact() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                Schedule a Call
+                {t('scheduleCall')}
               </a>
             </div>
           </div>
@@ -121,7 +122,7 @@ export default function Contact() {
           <div className="animate-item grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0">
             {[
               {
-                label: 'Email',
+                label: t('email'),
                 value: 'contact@nestdatagroup.com',
                 href: 'mailto:contact@nestdatagroup.com',
                 icon: (
@@ -131,8 +132,8 @@ export default function Contact() {
                 ),
               },
               {
-                label: 'Location',
-                value: 'Washington, D.C.',
+                label: t('location'),
+                value: t('washingtonDC'),
                 href: null,
                 icon: (
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -142,8 +143,8 @@ export default function Contact() {
                 ),
               },
               {
-                label: 'Inquiries',
-                value: 'Federal & Enterprise',
+                label: t('inquiries'),
+                value: t('federalEnterprise'),
                 href: null,
                 icon: (
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

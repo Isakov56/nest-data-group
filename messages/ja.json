@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "title": "Nest Data Group | エンタープライズデータアーキテクチャ＆ITソリューション",
+    "description": "私たちは重要な意思決定を支えるシステムを設計します。政府、防衛、フォーチュン500企業向けのエンタープライズデータアーキテクチャ、クラウド戦略、ITソリューション。"
+  },
+  "nav": {
+    "capabilities": "機能",
+    "insights": "インサイト",
+    "about": "会社概要",
+    "team": "チーム",
+    "contact": "お問い合わせ",
+    "theme": "テーマ",
+    "language": "言語",
+    "heroStyle": "ヒーロースタイル",
+    "classic": "クラシック",
+    "minimal": "ミニマル",
+    "enterprise": "エンタープライズ",
+    "globeNetwork": "グローブ＆ネットワーク",
+    "cleanModern": "クリーン＆モダン",
+    "fourPillars": "4つの柱",
+    "beginConversation": "お問い合わせ"
+  },
+  "hero": {
+    "badge": "エンタープライズソリューション",
+    "headline": "明日の企業を支えるミッションクリティカルなデータインフラを構築",
+    "highlightWord": "企業",
+    "description": "リアルタイム分析から分散システムアーキテクチャまで、組織が大規模にデータを活用する方法を変革するエンドツーエンドのITソリューションを提供します。",
+    "getStarted": "始める",
+    "viewSolutions": "ソリューションを見る",
+    "enterprises": "企業",
+    "uptime": "稼働率",
+    "dataProcessed": "処理データ",
+    "compliant": "準拠",
+    "testimonial1": {
+      "quote": "彼らは数年ではなく数ヶ月で私たちのデータアーキテクチャ全体を変革しました。ROIは驚異的でした。",
+      "name": "サラ・チェン",
+      "role": "CTO、フォーチュン500ヘルスケア"
+    },
+    "testimonial2": {
+      "quote": "私たちは単にシステムを構築するのではありません。次の10年の成長の基盤を構築します。",
+      "name": "マイケル・トーレス",
+      "role": "CEO兼創設者"
+    }
+  },
+  "capabilities": {
+    "sectionLabel": "コア機能",
+    "title": "エンタープライズエクセレンスの4つの柱",
+    "description": "各機能はシームレスに統合され、部分の総和を超えるシステムを構築するよう設計されています。",
+    "dataArchitecture": {
+      "title": "データアーキテクチャ",
+      "tagline": "ミッションとともにスケールするシステム",
+      "detail": "複雑さを明確さに変換する堅牢なデータ基盤を設計し、組織がタイムリーに意思決定を行えるようにします。"
+    },
+    "cloudStrategy": {
+      "title": "クラウド戦略",
+      "tagline": "永続性を考慮したインフラ",
+      "detail": "移行を超えて—ミッションが要求する信頼性を備えた現代的なインフラの柔軟性を提供するクラウドエコシステムを設計します。"
+    },
+    "analyticsAI": {
+      "title": "分析＆AI",
+      "tagline": "後付けではなく組み込みのインテリジェンス",
+      "detail": "機械学習と高度な分析をシステムの中核に織り込み、最も重要な時と場所で洞察を表面化させます。"
+    },
+    "security": {
+      "title": "セキュリティ",
+      "tagline": "基盤レベルでの保護",
+      "detail": "ゼロトラストアーキテクチャと多層防御戦略により、運用速度を損なうことなくデータを保護します。"
+    }
+  },
+  "insights": {
+    "sectionLabel": "信頼されるパートナー",
+    "title": "失敗が許されない場所で",
+    "description": "データの整合性とシステムの信頼性がミッションクリティカルな、最も要求の厳しい環境で活動する組織から信頼されています。",
+    "trustedSectors": "信頼されるセクター",
+    "missionCritical": "ミッションクリティカル産業",
+    "verified": "認証済み",
+    "defense": "防衛",
+    "finance": "金融",
+    "healthcare": "ヘルスケア",
+    "government": "政府",
+    "trustedBy": "信頼される",
+    "federalAgencies": "連邦機関",
+    "fortune500": "フォーチュン500",
+    "defenseContractors": "防衛請負業者",
+    "healthcareSystems": "医療システム",
+    "viewAllInsights": "すべてのインサイトを見る",
+    "learnMore": "詳細を見る"
+  },
+  "caseStudies": {
+    "sectionLabel": "セクター",
+    "title": "重要産業における実績",
+    "description": "私たちは、リスクが最も高く、エラーの余地がゼロの組織とパートナーシップを結びます。",
+    "defense": {
+      "sector": "防衛",
+      "title": "ミッションクリティカルインテリジェンス",
+      "description": "分散センサーネットワーク全体でのリアルタイムデータ融合により、複雑な運用環境でより迅速かつ正確な意思決定を可能にします。",
+      "metric1Label": "高速処理",
+      "metric2Label": "日次イベント"
+    },
+    "finance": {
+      "sector": "金融",
+      "title": "大規模な規制コンプライアンス",
+      "description": "監査対応ドキュメントを維持しながら、数百万件のトランザクションを処理する自動化されたコンプライアンス監視およびレポートインフラ。",
+      "metric1Label": "精度",
+      "metric2Label": "日次取引"
+    },
+    "healthcare": {
+      "sector": "ヘルスケア",
+      "title": "患者データの相互運用性",
+      "description": "異種の医療システムを接続し、ケアの調整を改善し、人口健康のための高度な分析を可能にする統合データプラットフォーム。",
+      "metric1Label": "統合システム",
+      "metric2Label": "患者記録"
+    }
+  },
+  "team": {
+    "sectionLabel": "チーム",
+    "title": "リーダーシップと専門知識",
+    "description": "私たちのチームは、主要なテクノロジー企業、政府機関、金融機関での数十年の経験を組み合わせています。",
+    "executiveLeadership": "経営陣",
+    "seniorTeam": "シニアチーム",
+    "viewFullTeam": "チーム全体を見る"
+  },
+  "philosophy": {
+    "quote": "私たちは今日の問題のためにシステムを構築するのではありません。答えるべき質問よりも長く続く基盤を構築します。"
+  },
+  "contact": {
+    "sectionLabel": "お問い合わせ",
+    "title": "データアーキテクチャについて相談しませんか？",
+    "description": "すべての変革は会話から始まります。あなたの組織の未来のための基盤をどのように構築できるか、一緒に探りましょう。",
+    "startConversation": "会話を始める",
+    "scheduleCall": "通話を予約",
+    "email": "メール",
+    "location": "所在地",
+    "inquiries": "お問い合わせ",
+    "federalEnterprise": "連邦＆エンタープライズ",
+    "washingtonDC": "ワシントンD.C."
+  },
+  "footer": {
+    "tagline": "重要なデータのためのアーキテクチャ。政府、防衛、フォーチュン500組織の重要な意思決定を支えるエンタープライズシステムを設計します。",
+    "company": "会社",
+    "legal": "法的情報",
+    "contact": "お問い合わせ",
+    "aboutUs": "会社概要",
+    "ourTeam": "チーム",
+    "capabilities": "機能",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "security": "セキュリティ",
+    "soc2Compliant": "SOC 2準拠",
+    "fedRampReady": "FedRAMP対応",
+    "allRightsReserved": "全著作権所有。"
+  },
+  "pages": {
+    "about": {
+      "sectionLabel": "会社概要",
+      "title": "重要なデータのためのアーキテクチャ",
+      "description": "Nest Data Groupは、精度が選択肢ではない組織のためにエンタープライズデータシステムを設計・構築します。政府機関、防衛請負業者、フォーチュン500企業とパートナーシップを結び、重要な意思決定を支えるデータアーキテクチャを構築します。",
+      "stats": {
+        "yearsOfExcellence": "卓越性の年数",
+        "enterpriseClients": "エンタープライズクライアント",
+        "dataProcessedDaily": "日次処理データ",
+        "systemUptime": "システム稼働率"
+      },
+      "ourStory": "私たちのストーリー",
+      "storyParagraph1": "2010年に設立されたNest Data Groupは、シンプルな観察から生まれました：企業はデータに溺れていたが、洞察には飢えていた。レガシーシステムは、現代のデータの量、速度、多様性に対応できませんでした。",
+      "storyParagraph2": "創設者たち—デロイト、AWS、ゴールドマン・サックスの出身者—は、共通のビジョンを持って集まりました：彼らが支える意思決定と同じくらい信頼できるデータシステムを構築すること。",
+      "storyParagraph3": "今日、私たちは政府、防衛、金融サービス、ヘルスケア分野で200以上のエンタープライズクライアントにサービスを提供しています。私たちのシステムは、99.99%の稼働率で、毎日20億ドル以上の取引を処理しています。",
+      "ourValues": "私たちの価値観",
+      "valuesSubtitle": "私たちのすべての行動を導く原則",
+      "precision": {
+        "title": "精度",
+        "description": "私たちは最初から正しく行うことを信じています。構築するすべてのシステムは、精度と信頼性のために設計されています。"
+      },
+      "securityValue": {
+        "title": "セキュリティ",
+        "description": "データ保護は後付けではなく、基盤です。ソリューションのすべての層にセキュリティを組み込んでいます。"
+      },
+      "partnership": {
+        "title": "パートナーシップ",
+        "description": "私たちはベンダーではなく、パートナーです。あなたの成功は私たちの成功であり、長期的にコミットしています。"
+      },
+      "innovation": {
+        "title": "イノベーション",
+        "description": "私たちは常に先を行き、最新のデータ技術を活用するために実践を継続的に進化させています。"
+      },
+      "meetOurTeam": "チームに会う",
+      "meetOurTeamDesc": "プラットフォームを支える専門家について学ぶ",
+      "startConversation": "会話を始める",
+      "startConversationDesc": "あなたの組織をどのように支援できるか話し合いましょう",
+      "viewTeam": "チームを見る",
+      "contactUs": "お問い合わせ"
+    },
+    "team": {
+      "sectionLabel": "チーム",
+      "title": "プラットフォームを支える人々",
+      "description": "私たちのチームは、主要なテクノロジー企業、政府機関、金融機関での数十年の経験を組み合わせています。重要なデータシステムを構築するという共通のコミットメントで結ばれています。",
+      "stats": {
+        "teamMembers": "チームメンバー",
+        "yearsCombinedExperience": "合計経験年数",
+        "countriesRepresented": "代表国",
+        "employeeRetention": "従業員定着率"
+      },
+      "executiveLeadership": "経営陣",
+      "executiveSubtitle": "エンタープライズテクノロジーで実績のあるビジョナリーリーダー",
+      "seniorLeadership": "シニアリーダーシップ",
+      "seniorSubtitle": "あらゆる分野で卓越性を推進する専門家",
+      "joinOurTeam": "チームに参加",
+      "joinDesc": "私たちは常に、エンタープライズデータの未来を構築する手助けをしてくれる優秀な人材を探しています。",
+      "viewOpenPositions": "募集職種を見る"
+    },
+    "insights": {
+      "sectionLabel": "機能",
+      "title": "失敗が許されない場所で",
+      "description": "データの整合性とシステムの信頼性がミッションクリティカルな、最も要求の厳しい環境で活動する組織から信頼されています。私たちの機能は、エンタープライズデータのニーズの全範囲をカバーしています。",
+      "stats": {
+        "systemUptime": "システム稼働率",
+        "eventsPerSecond": "イベント/秒",
+        "systemsIntegrated": "統合システム",
+        "avgLatency": "平均レイテンシー"
+      },
+      "coreCapabilities": "コア機能",
+      "coreCapabilitiesDesc": "すべてのミリ秒とすべてのバイトが重要な組織のための包括的なソリューション",
+      "industriesWeServe": "サービス対象産業",
+      "industriesDesc": "私たちは、リスクが最も高く、エラーの余地がゼロの組織とパートナーシップを結びます",
+      "defenseDesc": "国家安全保障のためのミッションクリティカルインテリジェンスシステム",
+      "financeDesc": "規制コンプライアンスとリアルタイム取引処理",
+      "healthcareDesc": "患者データの相互運用性とHIPAAコンプライアンス",
+      "governmentDesc": "連邦機関向けFedRAMP認証ソリューション",
+      "viewCaseStudies": "ケーススタディを見る",
+      "viewCaseStudiesDesc": "防衛、金融、ヘルスケア分野のクライアントにどのような成果をもたらしたかをご覧ください。",
+      "exploreSectors": "セクターを探索",
+      "startConversation": "会話を始める",
+      "startConversationDesc": "あなたの組織のデータインフラをどのように変革できるか話し合いましょう。",
+      "contactUs": "お問い合わせ",
+      "dataArchitecture": {
+        "title": "データアーキテクチャ",
+        "description": "ミッションとともにスケールするシステム。複雑さを明確さに変換する堅牢なデータ基盤を設計します。",
+        "detail1": "パフォーマンスとスケーラビリティに最適化されたエンタープライズグレードのデータモデリングとスキーマ設計",
+        "detail2": "サブミリ秒のレイテンシーで毎秒数百万のイベントを処理するリアルタイムデータパイプライン",
+        "detail3": "オンプレミスとクラウド環境をシームレスに橋渡しするハイブリッドクラウドアーキテクチャ",
+        "detail4": "GDPR、HIPAA、連邦規制へのコンプライアンスを確保するデータガバナンスフレームワーク"
+      },
+      "cloudStrategy": {
+        "title": "クラウド戦略",
+        "description": "永続性を考慮したインフラ。ミッションが要求する柔軟性と信頼性を備えたクラウドエコシステム。",
+        "detail1": "セキュリティとパフォーマンス要件に合わせたマルチクラウドおよびハイブリッドクラウド戦略",
+        "detail2": "再現可能でバージョン管理された環境を可能にするInfrastructure as Code（IaC）",
+        "detail3": "パフォーマンスを損なうことなくクラウド支出を40-60%削減するコスト最適化",
+        "detail4": "レガシーシステムモダナイゼーションのためのゼロダウンタイム移行戦略"
+      },
+      "analyticsAI": {
+        "title": "分析＆AI",
+        "description": "後付けではなく組み込みのインテリジェンス。MLと分析をシステムに織り込み、重要な場所で洞察を表面化。",
+        "detail1": "需要予測とリスク評価のための95%以上の精度を持つ予測分析モデル",
+        "detail2": "自動文書分析とエンティティ抽出のための自然言語処理",
+        "detail3": "詐欺とセキュリティ脅威から保護するリアルタイム異常検出",
+        "detail4": "継続的なモデルトレーニング、デプロイメント、監視のためのMLOpsインフラ"
+      },
+      "securityCompliance": {
+        "title": "セキュリティ＆コンプライアンス",
+        "description": "基盤レベルでの保護。ゼロトラストアーキテクチャと多層防御により、速度を損なうことなくデータを保護。",
+        "detail1": "継続的な検証と最小権限アクセスを備えたゼロトラストセキュリティアーキテクチャ",
+        "detail2": "AES-256とTLS 1.3を使用した保存時および転送時のデータのエンドツーエンド暗号化",
+        "detail3": "FedRAMP、SOC 2、HIPAA、PCI-DSS要件のためのコンプライアンス自動化",
+        "detail4": "24時間365日の脅威監視と対応を備えたセキュリティオペレーションセンター（SOC）統合"
+      }
+    },
+    "privacy": {
+      "sectionLabel": "法的情報",
+      "title": "プライバシーポリシー",
+      "lastUpdated": "最終更新日：2024年1月1日"
+    },
+    "terms": {
+      "sectionLabel": "法的情報",
+      "title": "利用規約",
+      "lastUpdated": "最終更新日：2024年1月1日"
+    },
+    "security": {
+      "sectionLabel": "法的情報",
+      "title": "セキュリティ",
+      "lastUpdated": "最終更新日：2024年1月1日"
+    }
+  },
+  "common": {
+    "learnMore": "詳細を見る",
+    "readMore": "続きを読む",
+    "viewAll": "すべて見る"
+  },
+  "partners": {
+    "title": "パートナー＆クライアント",
+    "strategicPartners": "戦略的パートナー",
+    "enterpriseClients": "エンタープライズクライアント",
+    "countriesServed": "サービス提供国",
+    "dataManaged": "管理データ",
+    "uptimeSLA": "稼働率SLA",
+    "yearsExperience": "経験年数"
+  },
+  "categories": {
+    "architecture": "アーキテクチャ",
+    "cloud": "クラウド",
+    "intelligence": "インテリジェンス",
+    "security": "セキュリティ"
+  }
+}

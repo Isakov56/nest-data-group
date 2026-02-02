@@ -1,105 +1,146 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Link from 'next/link'
-
-interface Insight {
-  id: string
-  category: string
-  title: string
-  description: string
-  details: string[]
-  icon: JSX.Element
-  image: string
-  features: string[]
-}
-
-const insights: Insight[] = [
-  {
-    id: 'data-architecture',
-    category: 'Architecture',
-    title: 'Data Architecture',
-    description: 'Systems that scale with your mission. We design resilient data foundations that transform complexity into clarity.',
-    details: [
-      'Enterprise-grade data modeling and schema design optimized for performance and scalability',
-      'Real-time data pipelines processing millions of events per second with sub-millisecond latency',
-      'Hybrid cloud architectures that seamlessly bridge on-premises and cloud environments',
-      'Data governance frameworks ensuring compliance with GDPR, HIPAA, and federal regulations',
-    ],
-    icon: (
-      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7c0 1.657-3.582 3-8 3S4 8.657 4 7m16 0c0-1.657-3.582-3-8-3S4 5.343 4 7m16 0v10c0 1.657-3.582 3-8 3s-8-1.343-8-3V7m16 5c0 1.657-3.582 3-8 3s-8-1.343-8-3" />
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1470&auto=format&fit=crop',
-    features: ['Data Modeling', 'ETL Pipelines', 'Data Lakes', 'Data Mesh'],
-  },
-  {
-    id: 'cloud-strategy',
-    category: 'Cloud',
-    title: 'Cloud Strategy',
-    description: 'Infrastructure designed for permanence. Cloud ecosystems with flexibility and reliability your mission demands.',
-    details: [
-      'Multi-cloud and hybrid cloud strategies tailored to your security and performance requirements',
-      'Infrastructure as Code (IaC) enabling reproducible, version-controlled environments',
-      'Cost optimization achieving 40-60% reduction in cloud spend without compromising performance',
-      'Zero-downtime migration strategies for legacy system modernization',
-    ],
-    icon: (
-      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1470&auto=format&fit=crop',
-    features: ['AWS', 'Azure', 'GCP', 'Kubernetes'],
-  },
-  {
-    id: 'analytics-ai',
-    category: 'Intelligence',
-    title: 'Analytics & AI',
-    description: 'Intelligence embedded, not bolted on. ML and analytics woven into systems, surfacing insights where they matter.',
-    details: [
-      'Predictive analytics models with 95%+ accuracy for demand forecasting and risk assessment',
-      'Natural language processing for automated document analysis and entity extraction',
-      'Real-time anomaly detection protecting against fraud and security threats',
-      'MLOps infrastructure for continuous model training, deployment, and monitoring',
-    ],
-    icon: (
-      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop',
-    features: ['Machine Learning', 'Predictive Analytics', 'NLP', 'Computer Vision'],
-  },
-  {
-    id: 'security',
-    category: 'Security',
-    title: 'Security & Compliance',
-    description: 'Protection at the foundation. Zero-trust architectures and defense-in-depth securing data without compromising velocity.',
-    details: [
-      'Zero-trust security architectures with continuous verification and least-privilege access',
-      'End-to-end encryption for data at rest and in transit using AES-256 and TLS 1.3',
-      'Compliance automation for FedRAMP, SOC 2, HIPAA, and PCI-DSS requirements',
-      'Security operations center (SOC) integration with 24/7 threat monitoring and response',
-    ],
-    icon: (
-      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop',
-    features: ['Zero Trust', 'Encryption', 'Compliance', 'Threat Detection'],
-  },
-]
-
-const stats = [
-  { value: '99.99%', label: 'System Uptime' },
-  { value: '10M+', label: 'Events/Second' },
-  { value: '340+', label: 'Systems Integrated' },
-  { value: '50ms', label: 'Avg. Latency' },
-]
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function InsightsPage() {
+  const t = useTranslations('pages.insights')
+  const tCat = useTranslations('categories')
+  const tInsights = useTranslations('insights')
+
+  const localizedInsights = [
+    {
+      id: 'data-architecture',
+      category: tCat('architecture'),
+      title: t('dataArchitecture.title'),
+      description: t('dataArchitecture.description'),
+      details: [
+        t('dataArchitecture.detail1'),
+        t('dataArchitecture.detail2'),
+        t('dataArchitecture.detail3'),
+        t('dataArchitecture.detail4'),
+      ],
+      icon: (
+        <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20 7c0 1.657-3.582 3-8 3S4 8.657 4 7m16 0c0-1.657-3.582-3-8-3S4 5.343 4 7m16 0v10c0 1.657-3.582 3-8 3s-8-1.343-8-3V7m16 5c0 1.657-3.582 3-8 3s-8-1.343-8-3" />
+        </svg>
+      ),
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1470&auto=format&fit=crop',
+      features: ['Data Modeling', 'ETL Pipelines', 'Data Lakes', 'Data Mesh'],
+    },
+    {
+      id: 'cloud-strategy',
+      category: tCat('cloud'),
+      title: t('cloudStrategy.title'),
+      description: t('cloudStrategy.description'),
+      details: [
+        t('cloudStrategy.detail1'),
+        t('cloudStrategy.detail2'),
+        t('cloudStrategy.detail3'),
+        t('cloudStrategy.detail4'),
+      ],
+      icon: (
+        <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
+        </svg>
+      ),
+      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1470&auto=format&fit=crop',
+      features: ['AWS', 'Azure', 'GCP', 'Kubernetes'],
+    },
+    {
+      id: 'analytics-ai',
+      category: tCat('intelligence'),
+      title: t('analyticsAI.title'),
+      description: t('analyticsAI.description'),
+      details: [
+        t('analyticsAI.detail1'),
+        t('analyticsAI.detail2'),
+        t('analyticsAI.detail3'),
+        t('analyticsAI.detail4'),
+      ],
+      icon: (
+        <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+        </svg>
+      ),
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop',
+      features: ['Machine Learning', 'Predictive Analytics', 'NLP', 'Computer Vision'],
+    },
+    {
+      id: 'security',
+      category: tCat('security'),
+      title: t('securityCompliance.title'),
+      description: t('securityCompliance.description'),
+      details: [
+        t('securityCompliance.detail1'),
+        t('securityCompliance.detail2'),
+        t('securityCompliance.detail3'),
+        t('securityCompliance.detail4'),
+      ],
+      icon: (
+        <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      ),
+      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop',
+      features: ['Zero Trust', 'Encryption', 'Compliance', 'Threat Detection'],
+    },
+  ]
+
+  const localizedStats = [
+    { value: '99.99%', label: t('stats.systemUptime') },
+    { value: '10M+', label: t('stats.eventsPerSecond') },
+    { value: '340+', label: t('stats.systemsIntegrated') },
+    { value: '50ms', label: t('stats.avgLatency') },
+  ]
+
+  const localizedIndustries = [
+    {
+      name: tInsights('defense'),
+      description: t('defenseDesc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8">
+          <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3" />
+        </svg>
+      ),
+    },
+    {
+      name: tInsights('finance'),
+      description: t('financeDesc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8">
+          <rect x="3" y="6" width="18" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      ),
+    },
+    {
+      name: tInsights('healthcare'),
+      description: t('healthcareDesc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      ),
+    },
+    {
+      name: tInsights('government'),
+      description: t('governmentDesc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8">
+          <path d="M4 9L12 4L20 9" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="6" y1="11" x2="6" y2="18" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="12" y1="11" x2="12" y2="18" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="18" y1="11" x2="18" y2="18" stroke="currentColor" strokeWidth="1.5" />
+          <rect x="3" y="18" width="18" height="2" rx="0.5" fill="currentColor" opacity="0.3" />
+        </svg>
+      ),
+    },
+  ]
+
   return (
     <>
       <Header />
@@ -143,15 +184,13 @@ export default function InsightsPage() {
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-4 font-body text-body-sm text-teal-400 font-medium tracking-wider uppercase mb-4">
                 <span className="w-24 h-[1px] bg-gradient-to-r from-transparent to-teal-500/50" />
-                Our Capabilities
+                {t('sectionLabel')}
               </span>
               <h1 className="font-display text-display-lg lg:text-display-xl text-white mb-6">
-                Where Failure Is Not an Option
+                {t('title')}
               </h1>
               <p className="font-body text-body-lg text-navy-200 leading-relaxed">
-                Trusted by organizations operating in the most demanding environments,
-                where data integrity and system reliability are mission-critical. Our
-                capabilities span the full spectrum of enterprise data needs.
+                {t('description')}
               </p>
             </div>
           </div>
@@ -161,7 +200,7 @@ export default function InsightsPage() {
         <section className="py-14 bg-navy-900 border-y border-navy-700/50">
           <div className="section-container">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-navy-700/50">
-              {stats.map((stat, i) => (
+              {localizedStats.map((stat, i) => (
                 <div
                   key={i}
                   className="group px-8 py-4 text-center relative"
@@ -186,16 +225,15 @@ export default function InsightsPage() {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="font-display text-display text-navy-900 mb-4">
-                Core Capabilities
+                {t('coreCapabilities')}
               </h2>
               <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-                Comprehensive solutions for organizations where every millisecond
-                and every byte matters
+                {t('coreCapabilitiesDesc')}
               </p>
             </div>
 
             <div className="space-y-16">
-              {insights.map((insight, index) => (
+              {localizedInsights.map((insight, index) => (
                 <div
                   key={insight.id}
                   id={insight.id}
@@ -252,10 +290,12 @@ export default function InsightsPage() {
                   <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                     <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl relative group">
                       {/* Image */}
-                      <img
+                      <Image
                         src={insight.image}
                         alt={insight.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                       />
 
                       {/* Gradient overlay for depth */}
@@ -283,59 +323,15 @@ export default function InsightsPage() {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="font-display text-display text-navy-900 mb-4">
-                Industries We Serve
+                {t('industriesWeServe')}
               </h2>
               <p className="font-body text-body-lg text-navy-600 max-w-2xl mx-auto">
-                We partner with organizations where the stakes are highest and the margin for error is zero
+                {t('industriesDesc')}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  name: 'Defense',
-                  description: 'Mission-critical intelligence systems for national security',
-                  icon: (
-                    <svg viewBox="0 0 24 24" className="w-8 h-8">
-                      <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                      <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3" />
-                    </svg>
-                  ),
-                },
-                {
-                  name: 'Finance',
-                  description: 'Regulatory compliance and real-time transaction processing',
-                  icon: (
-                    <svg viewBox="0 0 24 24" className="w-8 h-8">
-                      <rect x="3" y="6" width="18" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5" />
-                    </svg>
-                  ),
-                },
-                {
-                  name: 'Healthcare',
-                  description: 'Patient data interoperability and HIPAA compliance',
-                  icon: (
-                    <svg viewBox="0 0 24 24" className="w-8 h-8">
-                      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  ),
-                },
-                {
-                  name: 'Government',
-                  description: 'FedRAMP-authorized solutions for federal agencies',
-                  icon: (
-                    <svg viewBox="0 0 24 24" className="w-8 h-8">
-                      <path d="M4 9L12 4L20 9" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="6" y1="11" x2="6" y2="18" stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="12" y1="11" x2="12" y2="18" stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="18" y1="11" x2="18" y2="18" stroke="currentColor" strokeWidth="1.5" />
-                      <rect x="3" y="18" width="18" height="2" rx="0.5" fill="currentColor" opacity="0.3" />
-                    </svg>
-                  ),
-                },
-              ].map((industry, i) => (
+              {localizedIndustries.map((industry, i) => (
                 <div
                   key={i}
                   className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 text-center"
@@ -377,17 +373,17 @@ export default function InsightsPage() {
                   </div>
 
                   <h3 className="font-display text-2xl text-white mb-3">
-                    View Case Studies
+                    {t('viewCaseStudies')}
                   </h3>
                   <p className="font-body text-navy-300 mb-8 leading-relaxed">
-                    See how we&apos;ve delivered results for our clients across defense, finance, and healthcare sectors.
+                    {t('viewCaseStudiesDesc')}
                   </p>
 
                   <Link
                     href="/#sectors"
                     className="inline-flex items-center gap-3 px-6 py-3 bg-teal-500 text-navy-950 font-body font-semibold rounded-lg hover:bg-teal-400 transition-all duration-300 group/btn"
                   >
-                    Explore Sectors
+                    {t('exploreSectors')}
                     <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -407,17 +403,17 @@ export default function InsightsPage() {
                   </div>
 
                   <h3 className="font-display text-2xl text-white mb-3">
-                    Start a Conversation
+                    {t('startConversation')}
                   </h3>
                   <p className="font-body text-navy-300 mb-8 leading-relaxed">
-                    Let&apos;s discuss how we can help transform your organization&apos;s data infrastructure.
+                    {t('startConversationDesc')}
                   </p>
 
                   <Link
                     href="/#contact"
                     className="inline-flex items-center gap-3 px-6 py-3 border border-navy-600 text-white font-body font-semibold rounded-lg hover:border-teal-500/50 hover:bg-teal-500/10 transition-all duration-300 group/btn"
                   >
-                    Contact Us
+                    {t('contactUs')}
                     <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

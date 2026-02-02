@@ -2,8 +2,11 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function HeroEnterprise() {
+  const t = useTranslations('hero')
   const [isLoaded, setIsLoaded] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const heroRef = useRef<HTMLElement>(null)
@@ -113,16 +116,29 @@ export default function HeroEnterprise() {
   useEffect(() => {
     setIsLoaded(true)
 
+    let rafId: number | null = null
+    let lastX = 0
+    let lastY = 0
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!heroRef.current) return
       const rect = heroRef.current.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width - 0.5
-      const y = (e.clientY - rect.top) / rect.height - 0.5
-      setMousePosition({ x, y })
+      lastX = (e.clientX - rect.left) / rect.width - 0.5
+      lastY = (e.clientY - rect.top) / rect.height - 0.5
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          setMousePosition({ x: lastX, y: lastY })
+          rafId = null
+        })
+      }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   // Typing animation effect for card 1
@@ -255,8 +271,8 @@ export default function HeroEnterprise() {
   const carouselSlides = [
     {
       type: 'headline' as const,
-      title: ['We Engineer Mission-Critical Data Infrastructure That Powers Tomorrow\u2019s Enterprises'],
-      highlight: 'Enterprises',
+      title: [t('headline')],
+      highlight: t('highlightWord'),
       quote: '',
       name: '',
       role: '',
@@ -267,9 +283,9 @@ export default function HeroEnterprise() {
       type: 'testimonial' as const,
       title: [] as string[],
       highlight: '',
-      quote: 'They transformed our entire data architecture in months, not years. The ROI has been extraordinary.',
-      name: 'Sarah Chen',
-      role: 'CTO, Fortune 500 Healthcare',
+      quote: t('testimonial1.quote'),
+      name: t('testimonial1.name'),
+      role: t('testimonial1.role'),
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&h=200&auto=format&fit=crop',
       video: '',
     },
@@ -277,9 +293,9 @@ export default function HeroEnterprise() {
       type: 'ceo' as const,
       title: [] as string[],
       highlight: '',
-      quote: 'We don\u2019t just build systems. We build the foundation for your next decade of growth.',
-      name: 'Michael Torres',
-      role: 'CEO & Founder',
+      quote: t('testimonial2.quote'),
+      name: t('testimonial2.name'),
+      role: t('testimonial2.role'),
       image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&h=200&auto=format&fit=crop',
       video: '',
     },
@@ -641,7 +657,7 @@ export default function HeroEnterprise() {
                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-navy-700/50 border border-teal-500/30 relative z-30">
                   <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                   <span className="text-teal-400 text-xs font-medium tracking-wider uppercase">
-                    Enterprise Solutions
+                    {t('badge')}
                   </span>
                 </div>
               </div>
@@ -762,11 +778,13 @@ export default function HeroEnterprise() {
                                 <div className="text-white font-semibold text-lg">{slide.name}</div>
                                 <div className={`text-base ${slide.type === 'ceo' ? 'text-teal-400' : 'text-teal-400/80'}`}>{slide.role}</div>
                               </div>
-                              <div className={`w-16 h-16 rounded-full overflow-hidden border-2 ${slide.type === 'ceo' ? 'border-teal-400/50' : 'border-teal-500/30'}`}>
-                                <img
+                              <div className={`w-16 h-16 rounded-full overflow-hidden border-2 relative ${slide.type === 'ceo' ? 'border-teal-400/50' : 'border-teal-500/30'}`}>
+                                <Image
                                   src={slide.image}
                                   alt={slide.name}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
+                                  sizes="64px"
                                 />
                               </div>
                             </div>
@@ -886,9 +904,7 @@ export default function HeroEnterprise() {
               <p
                 className={`mt-14 font-body text-[17px] text-navy-300 leading-relaxed max-w-lg ml-auto text-right transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
-                From real-time analytics to distributed systems architecture,
-                we deliver end-to-end IT solutions that transform how
-                organizations harness their data at scale.
+                {t('description')}
               </p>
 
               <div
@@ -898,7 +914,7 @@ export default function HeroEnterprise() {
                   href="#contact"
                   className="group relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden rounded-sm bg-teal-500 text-navy-950 font-body font-semibold text-body transition-all duration-300 hover:bg-teal-400"
                 >
-                  <span>Get Started</span>
+                  <span>{t('getStarted')}</span>
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
@@ -913,7 +929,7 @@ export default function HeroEnterprise() {
                   href="#capabilities"
                   className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm border border-navy-600 text-white hover:text-teal-400 hover:border-teal-500/50 font-body font-medium text-body transition-all duration-300"
                 >
-                  <span>View Solutions</span>
+                  <span>{t('viewSolutions')}</span>
                 </Link>
               </div>
 
@@ -921,9 +937,9 @@ export default function HeroEnterprise() {
                 className={`mt-10 flex items-center justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {[
-                  { value: '500+', label: 'Enterprises' },
-                  { value: '99.99%', label: 'Uptime' },
-                  { value: '50PB+', label: 'Data Processed' },
+                  { value: '500+', label: t('enterprises') },
+                  { value: '99.99%', label: t('uptime') },
+                  { value: '50PB+', label: t('dataProcessed') },
                 ].map((stat, i) => (
                   <div key={i} className="group px-6 first:pl-0 last:pr-0 text-right">
                     <div className="font-display text-2xl font-semibold text-white tracking-tight">{stat.value}</div>
@@ -939,7 +955,7 @@ export default function HeroEnterprise() {
             className={`mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 transition-all duration-700 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
             <div className="flex items-center gap-6">
-              <span className="text-teal-500/60 text-xs uppercase tracking-wider">Compliant</span>
+              <span className="text-teal-500/60 text-xs uppercase tracking-wider">{t('compliant')}</span>
               <div className="flex items-center gap-6">
                 {['SOC2 Type II', 'HIPAA', 'GDPR', 'ISO 27001'].map((cert, i) => (
                   <span

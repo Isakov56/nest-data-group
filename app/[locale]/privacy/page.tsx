@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { useTranslations } from 'next-intl'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Nest Data Group',
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPolicy() {
+  const t = useTranslations('pages.privacy')
   return (
     <>
       <Header />
@@ -18,14 +20,14 @@ export default function PrivacyPolicy() {
             <div className="mb-16">
               <span className="inline-flex items-center gap-3 font-body text-body-sm text-teal-600 font-medium tracking-wider uppercase mb-6">
                 <span className="w-8 h-px bg-teal-400" />
-                Legal
+                {t('sectionLabel')}
                 <span className="w-8 h-px bg-teal-400" />
               </span>
               <h1 className="font-display text-display md:text-display-lg text-navy-900 mb-6">
-                Privacy Policy
+                {t('title')}
               </h1>
               <p className="font-body text-body-lg text-navy-500">
-                Last updated: January 28, 2026
+                {t('lastUpdated')}
               </p>
             </div>
 
