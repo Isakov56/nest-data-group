@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -62,6 +63,17 @@ export default function Insights() {
   const headingRef = useRef<HTMLDivElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Localized insights for the cards
   const localizedInsights: Insight[] = [
@@ -166,8 +178,8 @@ export default function Insights() {
 
         {/* Two column layout - 3D panel on left, cards on right */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-          {/* Left side - 3D holographic data panel */}
-          <div className="hidden lg:flex lg:w-1/2 items-start justify-start pl-8 pt-16">
+          {/* Left side - 3D holographic data panel (shows on mobile above cards, on desktop left side) */}
+          <div className="flex w-full lg:w-1/2 items-start justify-center lg:justify-start lg:pl-8 pt-8 lg:pt-16 order-1 lg:order-none">
             <div 
               className="relative"
               style={{ 
@@ -184,14 +196,16 @@ export default function Insights() {
                 }}
               >
                 {/* Main panel with mask fade on right and bottom */}
-                <div 
-                  className="relative w-[500px] bg-gradient-to-br from-navy-800/95 to-navy-900/95 backdrop-blur-md rounded-tl-2xl rounded-tr-lg rounded-bl-lg overflow-hidden transition-transform duration-500 group-hover:scale-[1.01]"
+                <div
+                  className="relative w-full max-w-[600px] bg-gradient-to-br from-navy-800/95 to-navy-900/95 backdrop-blur-md rounded-2xl lg:rounded-tl-2xl lg:rounded-tr-lg lg:rounded-bl-lg overflow-hidden transition-transform duration-500 group-hover:scale-[1.01]"
                   style={{
                     boxShadow: 'inset 0 1px 0 rgba(93, 201, 201, 0.2), inset 1px 0 0 rgba(93, 201, 201, 0.1)',
-                    maskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
-                    maskComposite: 'intersect',
-                    WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
-                    WebkitMaskComposite: 'source-in',
+                    ...(isMobile ? {} : {
+                      maskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
+                      maskComposite: 'intersect',
+                      WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
+                      WebkitMaskComposite: 'source-in',
+                    }),
                   }}
                 >
                   {/* Panel header */}
@@ -214,30 +228,30 @@ export default function Insights() {
                   </div>
 
                   {/* Panel content - sectors grid */}
-                  <div className="p-6 space-y-6">
+                  <div className="p-8 space-y-8">
                     {/* Sector icons grid */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-5">
                       {[
                         { name: t('defense'), icon: (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6">
+                          <svg viewBox="0 0 24 24" className="w-7 h-7">
                             <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <circle cx="12" cy="12" r="2" fill="currentColor" />
                           </svg>
                         )},
                         { name: t('finance'), icon: (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6">
+                          <svg viewBox="0 0 24 24" className="w-7 h-7">
                             <rect x="3" y="6" width="18" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5" />
                           </svg>
                         )},
                         { name: t('healthcare'), icon: (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6">
+                          <svg viewBox="0 0 24 24" className="w-7 h-7">
                             <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                           </svg>
                         )},
                         { name: t('government'), icon: (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6">
+                          <svg viewBox="0 0 24 24" className="w-7 h-7">
                             <path d="M4 9L12 4L20 9" fill="none" stroke="currentColor" strokeWidth="1.5" />
                             <line x1="6" y1="11" x2="6" y2="18" stroke="currentColor" strokeWidth="1.5" />
                             <line x1="12" y1="11" x2="12" y2="18" stroke="currentColor" strokeWidth="1.5" />
@@ -246,7 +260,7 @@ export default function Insights() {
                           </svg>
                         )},
                       ].map((sector, i) => (
-                        <div key={i} className="flex items-center gap-3 p-4 bg-navy-800/50 rounded-lg border border-navy-700/50 hover:border-teal-500/20 transition-colors">
+                        <div key={i} className="flex items-center gap-4 p-5 bg-navy-800/50 rounded-lg border border-navy-700/50 hover:border-teal-500/20 transition-colors">
                           <div className="text-teal-400">{sector.icon}</div>
                           <span className="text-sm text-white font-medium">{sector.name}</span>
                         </div>
@@ -267,9 +281,9 @@ export default function Insights() {
                   </div>
                 </div>
 
-                {/* Top-left corner accent border */}
-                <div 
-                  className="absolute -top-px -left-px w-16 h-16 border-t-2 border-l-2 border-teal-500/30 rounded-tl-2xl pointer-events-none"
+                {/* Top-left corner accent border - hidden on mobile for cleaner look */}
+                <div
+                  className="hidden lg:block absolute -top-px -left-px w-16 h-16 border-t-2 border-l-2 border-teal-500/30 rounded-tl-2xl pointer-events-none"
                   style={{
                     maskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
                     maskComposite: 'intersect',
@@ -286,124 +300,125 @@ export default function Insights() {
             <div className="w-px h-72 bg-gradient-to-b from-transparent via-teal-500/40 to-transparent" />
           </div>
           
-          {/* Right side - 3D card stack */}
-          <div 
+          {/* Right side - 3D card stack (order-2 on mobile to appear below panel) */}
+          <div
             ref={stackRef}
-            className="relative h-[340px] lg:h-[420px] lg:w-1/2 lg:pl-24"
-            style={{ 
+            className="relative h-[420px] sm:h-[380px] lg:h-[420px] lg:w-1/2 lg:pl-24 order-2 lg:order-none"
+            style={{
               perspective: '1200px',
-              perspectiveOrigin: '100% 50%',
+              perspectiveOrigin: isMobile ? '50% 50%' : '100% 50%',
             }}
           >
-            <div 
-              className="absolute inset-0 flex items-end justify-end pr-2 lg:pr-4 pb-4"
+            <div
+              className="absolute inset-0 flex items-center justify-center lg:items-end lg:justify-end pr-0 lg:pr-4 pb-4"
               style={{
                 transformStyle: 'preserve-3d',
                 pointerEvents: 'none',
               }}
             >
               {[...localizedInsights].reverse().map((insight, index) => {
-                // index 0 = front card (closest), index 2 = back card (furthest)
+                // index 0 = front card (closest), index 3 = back card (furthest)
                 const isHovered = hoveredIndex === insight.id
-                const baseX = index * -85 // Horizontal offset
-                const baseY = index * -65 // Vertical offset - spread up (negative = up)
-                const baseZ = index * -90 // Depth
-                const baseRotateY = 45 // Angle - even more tilt for stronger 3D effect
-                
-                // Calculate brightness - front card full, back cards dimmed for depth
-                // Using brightness instead of opacity so cards stay opaque and cover cards behind
+
+                // Base positions (without hover offset)
+                const mobileY = index * -35
+                const mobileZ = index * -25
+                const baseX = index * -85
+                const baseY = index * -65
+                const baseZ = index * -90
+                const baseRotateY = 45
+
+                // Container transform (stable position for hover detection)
+                const containerTransform = isMobile
+                  ? `translateY(${mobileY}px) translateZ(${mobileZ}px) rotateY(12deg)`
+                  : `translateX(${baseX}px) translateY(${baseY}px) translateZ(${baseZ}px) rotateY(${baseRotateY}deg)`
+
+                // Inner card transform (only the hover lift)
+                const hoverLift = isHovered ? (isMobile ? -15 : -35) : 0
+
+                // Calculate brightness
                 const cardBrightness = isHovered ? 1 : (index === 0 ? 1 : 0.82 - index * 0.06)
-                
+
                 return (
                   <div
                     key={insight.id}
-                    className="insight-card absolute origin-right"
+                    className="insight-card absolute"
                     style={{
-                      width: '410px',
-                      maxWidth: '85vw',
-                      right: '0',
-                      bottom: '0',
+                      width: isMobile ? 'min(340px, 85vw)' : '410px',
                       transformStyle: 'preserve-3d',
-                      transform: `
-                        translateX(${baseX}px)
-                        translateY(${baseY + (isHovered ? -35 : 0)}px)
-                        translateZ(${baseZ}px)
-                        rotateY(${baseRotateY}deg)
-                      `,
-                      zIndex: index, // Keep natural stacking order
-                      transition: 'transform 0.4s ease-out, filter 0.3s ease-out',
+                      transform: containerTransform,
+                      transformOrigin: isMobile ? 'center center' : 'right center',
+                      zIndex: isHovered ? 100 : index,
                       pointerEvents: 'auto',
-                      filter: `brightness(${cardBrightness})`,
                     }}
                     onMouseEnter={() => setHoveredIndex(insight.id)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    <div 
-                      className={`
-                        relative overflow-hidden rounded-lg px-5 py-5
-                        bg-gradient-to-bl from-navy-800 via-navy-850 to-navy-900
-                        transition-all duration-150
-                        ${isHovered ? 'shadow-2xl shadow-teal-500/20' : 'shadow-lg'}
-                      `}
-                      style={{
-                        maskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
-                      }}
-                  >
-                    {/* Single continuous border that fades - using box with inset shadow */}
-                    <div 
-                      className="absolute inset-0 rounded-lg pointer-events-none"
-                      style={{
-                        maskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
-                        WebkitMaskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
-                        boxShadow: isHovered 
-                          ? 'inset 0 0 0 1px rgba(94, 201, 201, 0.4)'
-                          : 'inset 0 0 0 1px rgba(94, 201, 201, 0.2)',
-                      }}
-                    />
-                    
-                    {/* Main content layout */}
-                    <div className="flex items-start gap-4 relative z-10">
-                      {/* Icon */}
-                      <div className="shrink-0 w-12 h-12 bg-navy-700/50 border border-teal-500/10 rounded-lg flex items-center justify-center">
-                        <IconComponent type={insight.icon} />
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        {/* Top row: Category + Date */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-flex items-center px-2.5 py-0.5 bg-teal-500/15 rounded text-[10px] font-medium text-teal-400 uppercase tracking-wider">
-                            {insight.category}
-                          </span>
-                          <span className="text-[11px] text-navy-400 font-medium">{insight.date}</span>
-                        </div>
-                        
-                        {/* Title */}
-                        <h3 className="font-body text-sm font-medium text-white leading-tight mb-1.5 line-clamp-1 tracking-wide">
-                          {insight.title}
-                        </h3>
-                        
-                        {/* Description */}
-                        <p className="text-xs text-navy-400 leading-relaxed line-clamp-2 mb-3">
-                          {insight.description}
-                        </p>
-                        
-                        {/* Bottom row: Learn more */}
-                        <div className="flex items-center text-[10px] text-navy-500 font-medium">
-                          <span className={`flex items-center gap-1 transition-colors duration-200 ${isHovered ? 'text-teal-400' : ''}`}>
-                            {t('learnMore')}
-                            <svg className={`w-3 h-3 transition-transform duration-200 ${isHovered ? 'translate-x-0.5' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </span>
+                    <Link href="/insights">
+                      <div
+                        style={{
+                          transform: `translateY(${hoverLift}px)`,
+                          transition: 'transform 0.4s ease-out, filter 0.3s ease-out',
+                          filter: `brightness(${cardBrightness})`,
+                        }}
+                      >
+                        <div
+                          className={`
+                            relative overflow-hidden rounded-lg px-5 py-5 cursor-pointer
+                            bg-gradient-to-bl from-navy-800 via-navy-850 to-navy-900
+                          transition-all duration-150
+                          ${isHovered ? 'shadow-2xl shadow-teal-500/20' : 'shadow-lg'}
+                        `}
+                        style={isMobile ? {} : {
+                          maskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
+                        }}
+                      >
+                        <div
+                          className="absolute inset-0 rounded-lg pointer-events-none"
+                          style={{
+                            ...(isMobile ? {} : {
+                              maskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
+                              WebkitMaskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
+                            }),
+                            boxShadow: isHovered
+                              ? 'inset 0 0 0 1px rgba(94, 201, 201, 0.4)'
+                              : 'inset 0 0 0 1px rgba(94, 201, 201, 0.2)',
+                          }}
+                        />
+                        <div className="flex items-start gap-4 relative z-10">
+                          <div className="shrink-0 w-12 h-12 bg-navy-700/50 border border-teal-500/10 rounded-lg flex items-center justify-center">
+                            <IconComponent type={insight.icon} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="inline-flex items-center px-2.5 py-0.5 bg-teal-500/15 rounded text-[10px] font-medium text-teal-400 uppercase tracking-wider">
+                                {insight.category}
+                              </span>
+                              <span className="text-[11px] text-navy-400 font-medium">{insight.date}</span>
+                            </div>
+                            <h3 className="font-body text-sm font-medium text-white leading-tight mb-1.5 line-clamp-1 tracking-wide">
+                              {insight.title}
+                            </h3>
+                            <p className="text-xs text-navy-400 leading-relaxed line-clamp-2 mb-3">
+                              {insight.description}
+                            </p>
+                            <div className="flex items-center text-[10px] text-navy-500 font-medium">
+                              <span className={`flex items-center gap-1 transition-colors duration-200 ${isHovered ? 'text-teal-400' : ''}`}>
+                                {t('learnMore')}
+                                <svg className={`w-3 h-3 transition-transform duration-200 ${isHovered ? 'translate-x-0.5' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    </Link>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
             </div>
           </div>
         </div>

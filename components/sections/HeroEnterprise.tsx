@@ -32,6 +32,11 @@ export default function HeroEnterprise() {
   const elapsedTimeRef = useRef<number>(0)
   const startTimeRef = useRef<number>(Date.now())
 
+  // Touch swipe state for carousel
+  const touchStartRef = useRef<number>(0)
+  const touchEndRef = useRef<number>(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
+
   const codeContainerRef2 = useRef<HTMLDivElement>(null)
   const codeContainerRef3 = useRef<HTMLDivElement>(null)
 
@@ -356,6 +361,32 @@ export default function HeroEnterprise() {
     startTimeRef.current = Date.now()
   }, [currentSlide])
 
+  // Touch swipe handlers for carousel
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndRef.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50
+    const diff = touchStartRef.current - touchEndRef.current
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next slide
+        setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
+      } else {
+        // Swiped right - go to previous slide
+        setCurrentSlide((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length)
+      }
+    }
+    touchStartRef.current = 0
+    touchEndRef.current = 0
+  }
+
   const getPreTypedLines = (index: number) => {
     if (index === 0) return preTypedLines1
     if (index === 1) return preTypedLines2
@@ -649,10 +680,10 @@ export default function HeroEnterprise() {
               </div>
             </div>
 
-            {/* Content Section - Right aligned */}
-            <div className="max-w-2xl relative z-20 ml-auto text-right overflow-visible">
+            {/* Content Section - Right aligned on desktop, centered on mobile */}
+            <div className="max-w-2xl relative z-20 lg:ml-auto text-center lg:text-right overflow-visible mx-auto lg:mx-0">
               <div
-                className={`flex items-center justify-end gap-4 mb-10 transition-all duration-700 relative z-30 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`flex items-center justify-center lg:justify-end gap-4 mb-10 transition-all duration-700 relative z-30 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-navy-700/50 border border-teal-500/30 relative z-30">
                   <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
@@ -664,9 +695,13 @@ export default function HeroEnterprise() {
 
               {/* 3D Carousel */}
               <div
+                ref={carouselRef}
                 className={`relative h-[280px] overflow-visible transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
                 onMouseEnter={() => setIsHoveringCarousel(true)}
                 onMouseLeave={() => setIsHoveringCarousel(false)}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
                 style={{ perspective: '800px', perspectiveOrigin: '70% 50%' }}
               >
                 {carouselSlides.map((slide, index) => {
@@ -677,7 +712,7 @@ export default function HeroEnterprise() {
                   return (
                     <div
                       key={index}
-                      className="absolute inset-0 flex items-center justify-end overflow-visible"
+                      className="absolute inset-0 flex items-center justify-center lg:justify-end overflow-visible"
                       style={{
                         transform: isActive
                           ? 'translateZ(0) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(1)'
@@ -693,7 +728,7 @@ export default function HeroEnterprise() {
                       }}
                     >
                       {slide.type === 'headline' ? (
-                        <h1 className="text-right">
+                        <h1 className="text-center lg:text-right">
                           {slide.title.map((line, i) => (
                             <span
                               key={i}
@@ -761,10 +796,10 @@ export default function HeroEnterprise() {
                           </div>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-8 justify-end -mt-8">
-                          <div className="text-right max-w-xl">
+                        <div className="flex items-center gap-8 justify-center lg:justify-end -mt-8">
+                          <div className="text-center lg:text-right max-w-xl px-4 lg:px-0">
                             <svg
-                              className={`w-10 h-10 ml-auto mb-5 ${slide.type === 'ceo' ? 'text-teal-400/60' : 'text-teal-500/40'}`}
+                              className={`w-10 h-10 mx-auto lg:ml-auto lg:mr-0 mb-5 ${slide.type === 'ceo' ? 'text-teal-400/60' : 'text-teal-500/40'}`}
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -773,7 +808,7 @@ export default function HeroEnterprise() {
                             <p className={`text-[clamp(1.5rem,3.5vw,2.25rem)] font-display leading-snug mb-8 ${slide.type === 'ceo' ? 'text-white italic' : 'text-white'}`}>
                               {slide.quote}
                             </p>
-                            <div className="flex items-center gap-5 justify-end">
+                            <div className="flex items-center gap-5 justify-center lg:justify-end">
                               <div>
                                 <div className="text-white font-semibold text-lg">{slide.name}</div>
                                 <div className={`text-base ${slide.type === 'ceo' ? 'text-teal-400' : 'text-teal-400/80'}`}>{slide.role}</div>
@@ -796,7 +831,7 @@ export default function HeroEnterprise() {
                 })}
 
                 {/* Elegant Node Indicators */}
-                <div className="absolute -bottom-12 right-0 flex items-center gap-1">
+                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 flex items-center gap-1">
                   {/* Connecting line behind */}
                   <div
                     className="absolute top-1/2 left-3 right-3 h-[1px] -translate-y-1/2 rounded-full"
@@ -902,13 +937,13 @@ export default function HeroEnterprise() {
               </div>
 
               <p
-                className={`mt-14 font-body text-[17px] text-navy-300 leading-relaxed max-w-lg ml-auto text-right transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-14 font-body text-[17px] text-navy-300 leading-relaxed max-w-lg mx-auto lg:ml-auto lg:mr-0 text-center lg:text-right transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {t('description')}
               </p>
 
               <div
-                className={`mt-8 flex flex-wrap items-center justify-end gap-4 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-8 flex flex-wrap items-center justify-center lg:justify-end gap-4 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 <Link
                   href="#contact"
@@ -934,14 +969,14 @@ export default function HeroEnterprise() {
               </div>
 
               <div
-                className={`mt-10 flex items-center justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-10 flex items-center justify-center lg:justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {[
                   { value: '500+', label: t('enterprises') },
                   { value: '99.99%', label: t('uptime') },
                   { value: '50PB+', label: t('dataProcessed') },
                 ].map((stat, i) => (
-                  <div key={i} className="group px-6 first:pl-0 last:pr-0 text-right">
+                  <div key={i} className="group px-4 lg:px-6 first:pl-0 last:pr-0 text-center lg:text-right">
                     <div className="font-display text-2xl font-semibold text-white tracking-tight">{stat.value}</div>
                     <div className="font-body text-sm text-navy-400 group-hover:text-teal-400 transition-colors duration-300">{stat.label}</div>
                   </div>

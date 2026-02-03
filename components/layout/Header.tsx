@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import Logo from '@/components/ui/Logo'
-import { useHeroVariant } from '@/hooks/useHeroVariant'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import LanguageSwitcherMobile from '@/components/LanguageSwitcherMobile'
 import { useTranslations } from 'next-intl'
@@ -17,20 +16,6 @@ export default function Header({ className = '' }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isDarkSection, setIsDarkSection] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false)
-  const { variant, setVariant } = useHeroVariant()
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsThemeDropdownOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -150,118 +135,6 @@ export default function Header({ className = '' }: HeaderProps) {
               </Link>
             ))}
 
-            {/* Hero Theme Dropdown */}
-            <div ref={dropdownRef} className="relative">
-              <button
-                onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
-                className={`flex items-center gap-2 font-body text-body-sm transition-colors duration-300 ${
-                  useDarkMode
-                    ? 'text-white/90 hover:text-white'
-                    : 'text-navy-600 hover:text-navy-900'
-                }`}
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
-                {t('theme')}
-                <svg className={`w-3 h-3 transition-transform duration-200 ${isThemeDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {/* Dropdown Menu */}
-              <div className={`absolute top-full right-0 mt-2 w-48 rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${
-                isThemeDropdownOpen
-                  ? 'opacity-100 translate-y-0 pointer-events-auto'
-                  : 'opacity-0 -translate-y-2 pointer-events-none'
-              } ${useDarkMode ? 'bg-navy-800 border border-navy-700' : 'bg-white border border-gray-200'}`}>
-                <div className={`px-3 py-2 text-xs font-medium uppercase tracking-wider ${useDarkMode ? 'text-white/50' : 'text-gray-400'}`}>
-                  {t('heroStyle')}
-                </div>
-                <button
-                  onClick={() => { setVariant('classic'); setIsThemeDropdownOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`w-full flex items-center gap-3 px-3 py-3 text-left transition-colors ${
-                    variant === 'classic'
-                      ? useDarkMode ? 'bg-teal-500/20 text-teal-300' : 'bg-teal-50 text-teal-700'
-                      : useDarkMode ? 'text-white/80 hover:bg-navy-700' : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                    variant === 'classic'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-navy-600' : 'bg-gray-100'
-                  }`}>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm">{t('classic')}</div>
-                    <div className={`text-xs ${useDarkMode ? 'text-white/50' : 'text-gray-400'}`}>{t('globeNetwork')}</div>
-                  </div>
-                  {variant === 'classic' && (
-                    <svg className="w-4 h-4 ml-auto text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </button>
-                <button
-                  onClick={() => { setVariant('minimal'); setIsThemeDropdownOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`w-full flex items-center gap-3 px-3 py-3 text-left transition-colors ${
-                    variant === 'minimal'
-                      ? useDarkMode ? 'bg-teal-500/20 text-teal-300' : 'bg-teal-50 text-teal-700'
-                      : useDarkMode ? 'text-white/80 hover:bg-navy-700' : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                    variant === 'minimal'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-navy-600' : 'bg-gray-100'
-                  }`}>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm">{t('minimal')}</div>
-                    <div className={`text-xs ${useDarkMode ? 'text-white/50' : 'text-gray-400'}`}>{t('cleanModern')}</div>
-                  </div>
-                  {variant === 'minimal' && (
-                    <svg className="w-4 h-4 ml-auto text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </button>
-                <button
-                  onClick={() => { setVariant('enterprise'); setIsThemeDropdownOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`w-full flex items-center gap-3 px-3 py-3 text-left transition-colors ${
-                    variant === 'enterprise'
-                      ? useDarkMode ? 'bg-teal-500/20 text-teal-300' : 'bg-teal-50 text-teal-700'
-                      : useDarkMode ? 'text-white/80 hover:bg-navy-700' : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                    variant === 'enterprise'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-navy-600' : 'bg-gray-100'
-                  }`}>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm">{t('enterprise')}</div>
-                    <div className={`text-xs ${useDarkMode ? 'text-white/50' : 'text-gray-400'}`}>{t('fourPillars')}</div>
-                  </div>
-                  {variant === 'enterprise' && (
-                    <svg className="w-4 h-4 ml-auto text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </button>
-              </div>
-            </div>
-
             {/* Language Switcher */}
             <LanguageSwitcher useDarkMode={useDarkMode} />
           </div>
@@ -315,54 +188,6 @@ export default function Header({ className = '' }: HeaderProps) {
                 {t(link.labelKey)}
               </Link>
             ))}
-
-            {/* Mobile Theme Selector */}
-            <div className={`pt-4 border-t ${useDarkMode ? 'border-white/10' : 'border-navy-100'}`}>
-              <span className={`block text-xs font-medium uppercase tracking-wider mb-3 ${useDarkMode ? 'text-white/50' : 'text-navy-400'}`}>
-                {t('heroStyle')}
-              </span>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => { setVariant('classic'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`flex flex-col items-center justify-center gap-1 px-3 py-3 rounded-lg transition-colors ${
-                    variant === 'classic'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-white/10 text-white/80' : 'bg-navy-100 text-navy-700'
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                  <span className="text-xs">{t('classic')}</span>
-                </button>
-                <button
-                  onClick={() => { setVariant('minimal'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`flex flex-col items-center justify-center gap-1 px-3 py-3 rounded-lg transition-colors ${
-                    variant === 'minimal'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-white/10 text-white/80' : 'bg-navy-100 text-navy-700'
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z" />
-                  </svg>
-                  <span className="text-xs">{t('minimal')}</span>
-                </button>
-                <button
-                  onClick={() => { setVariant('enterprise'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`flex flex-col items-center justify-center gap-1 px-3 py-3 rounded-lg transition-colors ${
-                    variant === 'enterprise'
-                      ? 'bg-teal-500 text-white'
-                      : useDarkMode ? 'bg-white/10 text-white/80' : 'bg-navy-100 text-navy-700'
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                  <span className="text-xs">{t('enterprise')}</span>
-                </button>
-              </div>
-            </div>
 
             {/* Mobile Language Switcher */}
             <LanguageSwitcherMobile

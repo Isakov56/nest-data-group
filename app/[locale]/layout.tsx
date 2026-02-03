@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import '../globals.css'
-import { HeroVariantProvider } from '@/hooks/useHeroVariant'
 import { routing } from '@/i18n/routing'
 
 const inter = Inter({
@@ -80,9 +79,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className="min-h-screen bg-white antialiased">
         <NextIntlClientProvider messages={messages}>
-          <HeroVariantProvider>
-            {children}
-          </HeroVariantProvider>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

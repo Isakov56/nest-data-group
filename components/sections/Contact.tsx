@@ -155,7 +155,7 @@ export default function Contact() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="group p-6 bg-white rounded-xl border border-gray-100 hover:border-navy-200 hover:shadow-lg transition-all duration-300"
+                className="group p-6 bg-white rounded-xl border border-gray-100 hover:border-navy-200 hover:shadow-lg transition-all duration-300 overflow-hidden"
               >
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-navy-50 rounded-lg text-navy-600 group-hover:bg-teal-50 group-hover:text-teal-600 transition-colors duration-300">
@@ -168,7 +168,7 @@ export default function Contact() {
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="font-body text-body text-navy-800 hover:text-teal-600 transition-colors duration-300"
+                        className="font-body text-body text-navy-800 hover:text-teal-600 transition-colors duration-300 break-all"
                       >
                         {item.value}
                       </a>

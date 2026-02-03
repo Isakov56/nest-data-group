@@ -115,10 +115,10 @@ export default function Philosophy() {
           </blockquote>
 
           {/* Attribution */}
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-2">
             <Logo size={20} animated={false} />
             <span className="font-body text-body text-navy-300 tracking-wide">
-              &mdash; Nest Data Group
+              Nest Data Group
             </span>
           </div>
         </div>

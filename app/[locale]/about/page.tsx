@@ -197,37 +197,73 @@ export default function AboutPage() {
         </section>
 
         {/* CTA section */}
-        <section className="py-20 bg-navy-900">
-          <div className="section-container">
+        <section className="py-20 bg-navy-900 relative overflow-hidden">
+          {/* Background elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-navy-600/20 rounded-full blur-3xl" />
+          </div>
+
+          <div className="section-container relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-navy-800 rounded-xl p-8 text-center">
-                <h3 className="font-display text-xl text-white mb-3">
-                  {t('meetOurTeam')}
-                </h3>
-                <p className="font-body text-navy-300 mb-6">
-                  {t('meetOurTeamDesc')}
-                </p>
-                <Link
-                  href="/team"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-body font-medium rounded-sm hover:bg-teal-400 transition-colors"
-                >
-                  {t('viewTeam')}
-                </Link>
+              {/* Meet Our Team Card */}
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-teal-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative bg-gradient-to-br from-navy-800 to-navy-850 rounded-2xl p-10 border border-navy-700/50 group-hover:border-teal-500/30 transition-all duration-500">
+                  {/* Icon */}
+                  <div className="w-14 h-14 mb-6 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:bg-teal-500/20 transition-all duration-300">
+                    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                  </div>
+
+                  <h3 className="font-display text-2xl text-white mb-3">
+                    {t('meetOurTeam')}
+                  </h3>
+                  <p className="font-body text-navy-300 mb-8 leading-relaxed">
+                    {t('meetOurTeamDesc')}
+                  </p>
+
+                  <Link
+                    href="/team"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-teal-500 text-navy-950 font-body font-semibold rounded-lg hover:bg-teal-400 transition-all duration-300 group/btn"
+                  >
+                    {t('viewTeam')}
+                    <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
 
-              <div className="bg-navy-800 rounded-xl p-8 text-center">
-                <h3 className="font-display text-xl text-white mb-3">
-                  {t('startConversation')}
-                </h3>
-                <p className="font-body text-navy-300 mb-6">
-                  {t('startConversationDesc')}
-                </p>
-                <Link
-                  href="/#contact"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-body font-medium rounded-sm hover:bg-white/10 transition-colors"
-                >
-                  {t('contactUs')}
-                </Link>
+              {/* Start a Conversation Card */}
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-navy-600/20 to-teal-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative bg-gradient-to-br from-navy-800 to-navy-850 rounded-2xl p-10 border border-navy-700/50 group-hover:border-teal-500/30 transition-all duration-500">
+                  {/* Icon */}
+                  <div className="w-14 h-14 mb-6 rounded-xl bg-navy-700/50 border border-navy-600/50 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:bg-teal-500/20 group-hover:border-teal-500/20 transition-all duration-300">
+                    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                    </svg>
+                  </div>
+
+                  <h3 className="font-display text-2xl text-white mb-3">
+                    {t('startConversation')}
+                  </h3>
+                  <p className="font-body text-navy-300 mb-8 leading-relaxed">
+                    {t('startConversationDesc')}
+                  </p>
+
+                  <Link
+                    href="/#contact"
+                    className="inline-flex items-center gap-3 px-6 py-3 border border-navy-600 text-white font-body font-semibold rounded-lg hover:border-teal-500/50 hover:bg-teal-500/10 transition-all duration-300 group/btn"
+                  >
+                    {t('contactUs')}
+                    <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
