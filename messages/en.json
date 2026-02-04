@@ -130,10 +130,11 @@
     "startConversation": "Start a Conversation",
     "scheduleCall": "Schedule a Call",
     "email": "Email",
+    "phone": "Phone",
     "location": "Location",
     "inquiries": "Inquiries",
     "federalEnterprise": "Federal & Enterprise",
-    "washingtonDC": "Washington, D.C."
+    "washingtonDC": "Tashkent, UZ"
   },
   "footer": {
     "tagline": "Architecture for the data that matters. We design enterprise systems that power critical decisions for government, defense, and Fortune 500 organizations.",
@@ -293,7 +294,14 @@
     "countriesServed": "Countries Served",
     "dataManaged": "Data Managed",
     "uptimeSLA": "Uptime SLA",
-    "yearsExperience": "Years Experience"
+    "yearsExperience": "Years Experience",
+    "aspirationalTitle": "Who We Work With",
+    "aspirationalSubtitle": "Enterprise-grade data solutions for every industry",
+    "sectorsWeServe": "Sectors We Serve",
+    "industriesWeServe": "Industries We Serve",
+    "becomePartner": "Become a Partner",
+    "becomePartnerDesc": "Interested in working with us?",
+    "partnerCTA": "Let's Talk"
   },
   "categories": {
     "architecture": "Architecture",

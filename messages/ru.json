@@ -130,10 +130,11 @@
     "startConversation": "Начать разговор",
     "scheduleCall": "Запланировать звонок",
     "email": "Электронная почта",
+    "phone": "Телефон",
     "location": "Расположение",
     "inquiries": "Запросы",
     "federalEnterprise": "Федеральные и корпоративные",
-    "washingtonDC": "Вашингтон, округ Колумбия"
+    "washingtonDC": "Ташкент, Узбекистан"
   },
   "footer": {
     "tagline": "Архитектура для данных, которые имеют значение. Мы проектируем корпоративные системы, обеспечивающие критически важные решения для государственных, оборонных и Fortune 500 организаций.",
@@ -293,7 +294,14 @@
     "countriesServed": "Стран обслужено",
     "dataManaged": "Данных управляется",
     "uptimeSLA": "SLA по времени работы",
-    "yearsExperience": "Лет опыта"
+    "yearsExperience": "Лет опыта",
+    "aspirationalTitle": "С кем мы работаем",
+    "aspirationalSubtitle": "Корпоративные решения для данных в любой отрасли",
+    "sectorsWeServe": "Секторы, которые мы обслуживаем",
+    "industriesWeServe": "Отрасли, которые мы обслуживаем",
+    "becomePartner": "Стать партнёром",
+    "becomePartnerDesc": "Хотите сотрудничать с нами?",
+    "partnerCTA": "Свяжитесь с нами"
   },
   "categories": {
     "architecture": "Архитектура",

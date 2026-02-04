@@ -130,10 +130,11 @@
     "startConversation": "会話を始める",
     "scheduleCall": "通話を予約",
     "email": "メール",
+    "phone": "電話",
     "location": "所在地",
     "inquiries": "お問い合わせ",
     "federalEnterprise": "連邦＆エンタープライズ",
-    "washingtonDC": "ワシントンD.C."
+    "washingtonDC": "タシケント、ウズベキスタン"
   },
   "footer": {
     "tagline": "重要なデータのためのアーキテクチャ。政府、防衛、フォーチュン500組織の重要な意思決定を支えるエンタープライズシステムを設計します。",
@@ -293,7 +294,14 @@
     "countriesServed": "サービス提供国",
     "dataManaged": "管理データ",
     "uptimeSLA": "稼働率SLA",
-    "yearsExperience": "経験年数"
+    "yearsExperience": "経験年数",
+    "aspirationalTitle": "私たちの協力先",
+    "aspirationalSubtitle": "あらゆる業界向けのデータソリューション",
+    "sectorsWeServe": "対象セクター",
+    "industriesWeServe": "対象業界",
+    "becomePartner": "パートナーになる",
+    "becomePartnerDesc": "パートナーシップに興味がありますか？",
+    "partnerCTA": "お問い合わせ"
   },
   "categories": {
     "architecture": "アーキテクチャ",

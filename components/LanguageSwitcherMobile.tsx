@@ -2,12 +2,18 @@
 
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from 'next/navigation'
-import { locales, localeFlags, type Locale } from '@/i18n/config'
+import { locales, type Locale } from '@/i18n/config'
 import { useTransition } from 'react'
 
 interface LanguageSwitcherMobileProps {
   useDarkMode: boolean
   onSelect?: () => void
+}
+
+const localeLabels: Record<Locale, string> = {
+  en: 'EN',
+  ja: 'JA',
+  ru: 'RU',
 }
 
 export default function LanguageSwitcherMobile({ useDarkMode, onSelect }: LanguageSwitcherMobileProps) {
@@ -17,6 +23,8 @@ export default function LanguageSwitcherMobile({ useDarkMode, onSelect }: Langua
   const [isPending, startTransition] = useTransition()
 
   const handleLocaleChange = (newLocale: Locale) => {
+    if (newLocale === locale) return
+
     // Get the path without the current locale prefix
     const segments = pathname.split('/')
     // Remove empty string and locale from segments
@@ -32,27 +40,27 @@ export default function LanguageSwitcherMobile({ useDarkMode, onSelect }: Langua
   }
 
   return (
-    <div className={`pt-4 border-t ${useDarkMode ? 'border-white/10' : 'border-navy-100'}`}>
-      <span className={`block text-xs font-medium uppercase tracking-wider mb-3 ${useDarkMode ? 'text-white/50' : 'text-navy-400'}`}>
-        Language
-      </span>
-      <div className="grid grid-cols-3 gap-2">
-        {locales.map((loc) => (
+    <div className={`flex items-center gap-1 pt-4 ${isPending ? 'opacity-50' : ''}`}>
+      {locales.map((loc, index) => (
+        <span key={loc} className="flex items-center">
           <button
-            key={loc}
             onClick={() => handleLocaleChange(loc)}
             disabled={isPending}
-            className={`flex flex-col items-center justify-center gap-1 px-3 py-3 rounded-lg transition-colors ${
+            className={`px-3 py-2 font-body text-sm font-medium tracking-wide transition-all duration-300 rounded ${
               locale === loc
-                ? 'bg-teal-500 text-white'
-                : useDarkMode ? 'bg-white/10 text-white/80' : 'bg-navy-100 text-navy-700'
-            } ${isPending ? 'opacity-50' : ''}`}
+                ? 'text-teal-400'
+                : useDarkMode
+                  ? 'text-white/60 hover:text-white'
+                  : 'text-navy-400 hover:text-navy-700'
+            }`}
           >
-            <span className="text-lg">{localeFlags[loc]}</span>
-            <span className="text-xs">{loc.toUpperCase()}</span>
+            {localeLabels[loc]}
           </button>
-        ))}
-      </div>
+          {index < locales.length - 1 && (
+            <span className={`text-sm ${useDarkMode ? 'text-white/30' : 'text-navy-300'}`}>/</span>
+          )}
+        </span>
+      ))}
     </div>
   )
 }

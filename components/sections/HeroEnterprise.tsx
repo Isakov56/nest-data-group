@@ -972,7 +972,7 @@ export default function HeroEnterprise() {
                 className={`mt-10 flex items-center justify-center lg:justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {[
-                  { value: '500+', label: t('enterprises') },
+                  { value: '50+', label: t('enterprises') },
                   { value: '99.99%', label: t('uptime') },
                   { value: '50PB+', label: t('dataProcessed') },
                 ].map((stat, i) => (

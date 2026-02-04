@@ -9,7 +9,13 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const partners = [
+// ============================================
+// TOGGLE: Set to true to show original partners, false for aspirational version
+const SHOW_ORIGINAL_PARTNERS = false
+// ============================================
+
+// Original partners data (kept for future use)
+const originalPartners = [
   { name: 'UNICEF', tier: 'strategic' },
   { name: 'UNESCO', tier: 'strategic' },
   { name: 'World Bank', tier: 'strategic' },
@@ -23,6 +29,24 @@ const partners = [
   { name: 'Accenture', tier: 'enterprise' },
   { name: 'Oracle', tier: 'enterprise' },
 ]
+
+// Aspirational version - Industries we serve
+const aspirationalPartners = [
+  { name: 'Government', tier: 'strategic' },
+  { name: 'Enterprise', tier: 'strategic' },
+  { name: 'NGO', tier: 'strategic' },
+  { name: 'Healthcare', tier: 'enterprise' },
+  { name: 'Finance', tier: 'enterprise' },
+  { name: 'Energy', tier: 'enterprise' },
+  { name: 'Education', tier: 'enterprise' },
+  { name: 'Technology', tier: 'enterprise' },
+  { name: 'Manufacturing', tier: 'enterprise' },
+  { name: 'Logistics', tier: 'enterprise' },
+  { name: 'Retail', tier: 'enterprise' },
+  { name: 'Telecommunications', tier: 'enterprise' },
+]
+
+const partners = SHOW_ORIGINAL_PARTNERS ? originalPartners : aspirationalPartners
 
 function PartnerLogo({ name }: { name: string }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -182,14 +206,21 @@ export default function Partners() {
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-4xl mx-auto px-6 mb-10 md:mb-12">
           <h2 className="animate-item font-display text-3xl md:text-4xl lg:text-5xl text-white font-light">
-            {t('title')}
+            {SHOW_ORIGINAL_PARTNERS ? t('title') : t('aspirationalTitle')}
           </h2>
+          {!SHOW_ORIGINAL_PARTNERS && (
+            <p className="animate-item mt-4 text-navy-400 text-lg max-w-2xl mx-auto">
+              {t('aspirationalSubtitle')}
+            </p>
+          )}
         </div>
 
-        {/* Strategic Partners - Featured row */}
+        {/* Strategic Partners / Sectors - Featured row */}
         <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-6">
-            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">{t('strategicPartners')}</span>
+            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">
+              {SHOW_ORIGINAL_PARTNERS ? t('strategicPartners') : t('sectorsWeServe')}
+            </span>
           </div>
           <div className="flex justify-center items-center px-6">
             {strategicPartners.map((partner, i) => (
@@ -216,10 +247,12 @@ export default function Partners() {
           <div className="w-24 h-[1px] bg-gradient-to-l from-transparent to-navy-700" />
         </div>
 
-        {/* Enterprise Partners - Marquee rows */}
+        {/* Enterprise Partners / Industries - Marquee rows */}
         <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="text-center mb-6">
-            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">{t('enterpriseClients')}</span>
+            <span className="text-xs text-navy-500 tracking-[0.15em] uppercase">
+              {SHOW_ORIGINAL_PARTNERS ? t('enterpriseClients') : t('industriesWeServe')}
+            </span>
           </div>
           
           {/* First marquee row */}
@@ -230,22 +263,47 @@ export default function Partners() {
           />
           
           {/* Second marquee row - opposite direction */}
-          <MarqueeRow 
+          <MarqueeRow
             partnerNames={row2Partners}
-            direction="right" 
+            direction="right"
             duration={40}
           />
         </div>
+
+        {/* Become a Partner CTA - Only show in aspirational mode */}
+        {!SHOW_ORIGINAL_PARTNERS && (
+          <div className={`mt-12 transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 px-6">
+              <span className="text-navy-400 text-sm">
+                {t('becomePartnerDesc')}
+              </span>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 font-medium transition-colors duration-300"
+              >
+                {t('becomePartner')}
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Bottom stats */}
         <div className={`mt-20 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="max-w-4xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 py-8 border-t border-navy-800/50">
               {[
-                { value: '50+', label: t('countriesServed') },
-                { value: '$2B+', label: t('dataManaged') },
-                { value: '99.9%', label: t('uptimeSLA') },
-                { value: '15+', label: t('yearsExperience') },
+                { value: '10+', label: t('countriesServed') },
+                { value: '$10m+', label: t('dataManaged') },
+                { value: '99%', label: t('uptimeSLA') },
+                { value: '10+', label: t('yearsExperience') },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="font-display text-2xl md:text-3xl font-light text-white mb-1">
