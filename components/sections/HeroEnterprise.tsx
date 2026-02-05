@@ -830,7 +830,7 @@ export default function HeroEnterprise() {
                               style={{
                                 filter: 'brightness(0.6) contrast(1.1) saturate(0.8)',
                                 border: 'none',
-                                transform: isMobile ? 'scale(2.5) translate(-10%, -18%)' : 'scale(1.2)',
+                                transform: isMobile ? 'scale(2.8) translate(-10%, -25%)' : 'scale(1.2)',
                                 transformOrigin: 'center top',
                                 pointerEvents: 'none',
                               }}
