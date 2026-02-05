@@ -1030,9 +1030,9 @@ export default function HeroEnterprise() {
                 className={`mt-10 flex items-center justify-center lg:justify-end divide-x divide-navy-700/50 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 {[
-                  { value: '50+', label: t('enterprises') },
-                  { value: '99.99%', label: t('uptime') },
-                  { value: '50PB+', label: t('dataProcessed') },
+                  { value: '10+', label: t('enterprises') },
+                  { value: '99%', label: t('uptime') },
+                  { value: '50TB+', label: t('dataProcessed') },
                 ].map((stat, i) => (
                   <div key={i} className="group px-4 lg:px-6 first:pl-0 last:pr-0 text-center lg:text-right">
                     <div className="font-display text-2xl font-semibold text-white tracking-tight">{stat.value}</div>
