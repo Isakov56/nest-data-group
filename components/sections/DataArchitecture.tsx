@@ -206,7 +206,15 @@ export default function Partners() {
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-4xl mx-auto px-6 mb-10 md:mb-12">
           <h2 className="animate-item font-display text-3xl md:text-4xl lg:text-5xl text-white font-light">
-            {SHOW_ORIGINAL_PARTNERS ? t('title') : t('aspirationalTitle')}
+            {SHOW_ORIGINAL_PARTNERS ? (
+              t('title')
+            ) : (
+              <>
+                Industries
+                <span className="inline-block mx-2">&</span>
+                Sectors
+              </>
+            )}
           </h2>
           {!SHOW_ORIGINAL_PARTNERS && (
             <p className="animate-item mt-4 text-navy-400 text-lg max-w-2xl mx-auto">
@@ -222,11 +230,11 @@ export default function Partners() {
               {SHOW_ORIGINAL_PARTNERS ? t('strategicPartners') : t('sectorsWeServe')}
             </span>
           </div>
-          <div className="flex justify-center items-center px-6">
+          <div className="flex justify-center items-center gap-8 md:gap-12 lg:gap-16 px-6 flex-wrap">
             {strategicPartners.map((partner, i) => (
               <div
                 key={partner.name}
-                className={`w-40 md:w-52 lg:w-64 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                 style={{ transitionDelay: `${300 + i * 100}ms` }}
               >
                 <div className="group relative inline-block">
@@ -298,7 +306,7 @@ export default function Partners() {
         {/* Bottom stats */}
         <div className={`mt-20 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="max-w-4xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 py-8 border-t border-navy-800/50">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-8 border-t border-navy-800/50">
               {[
                 { value: '10+', label: t('countriesServed') },
                 { value: '$10m+', label: t('dataManaged') },

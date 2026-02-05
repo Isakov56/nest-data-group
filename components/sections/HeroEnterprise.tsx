@@ -36,6 +36,16 @@ export default function HeroEnterprise() {
   const touchStartRef = useRef<number>(0)
   const touchEndRef = useRef<number>(0)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const codeContainerRef2 = useRef<HTMLDivElement>(null)
   const codeContainerRef3 = useRef<HTMLDivElement>(null)
@@ -377,15 +387,24 @@ export default function HeroEnterprise() {
     if (Math.abs(diff) > swipeThreshold) {
       if (diff > 0) {
         // Swiped left - go to next slide
+        setSwipeDirection('left')
         setCurrentSlide((prev) => (prev + 1) % carouselSlides.length)
       } else {
         // Swiped right - go to previous slide
+        setSwipeDirection('right')
         setCurrentSlide((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length)
       }
     }
     touchStartRef.current = 0
     touchEndRef.current = 0
   }
+
+  // Reset swipe direction for auto-advance (treat as left swipe)
+  useEffect(() => {
+    if (!isMobile) {
+      setSwipeDirection(null)
+    }
+  }, [currentSlide, isMobile])
 
   const getPreTypedLines = (index: number) => {
     if (index === 0) return preTypedLines1
@@ -709,18 +728,38 @@ export default function HeroEnterprise() {
                   const isPrev = index === (currentSlide - 1 + carouselSlides.length) % carouselSlides.length
                   const isNext = index === (currentSlide + 1) % carouselSlides.length
 
+                  // 3D transforms - on mobile, swap prev/next positions for natural swipe feel
+                  const getTransform = () => {
+                    if (isActive) {
+                      return 'translateZ(0) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(1)'
+                    }
+
+                    // Position for "prev" slide (front-right, scaled up)
+                    const prevTransform = 'translateZ(200px) translateX(150px) translateY(100px) rotateX(-12deg) rotateY(35deg) scale(1.08)'
+                    // Position for "next" slide (back-left, scaled down)
+                    const nextTransform = 'translateZ(-300px) translateX(-60px) translateY(-40px) rotateX(8deg) rotateY(-25deg) scale(0.85)'
+                    const hiddenTransform = 'translateZ(-500px) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(0.7)'
+
+                    if (isMobile) {
+                      // On mobile: swap transforms so swipe left feels like content moves left
+                      // isPrev gets the "next" position (back), isNext gets the "prev" position (front)
+                      if (isPrev) return nextTransform
+                      if (isNext) return prevTransform
+                    } else {
+                      // Desktop: original behavior
+                      if (isPrev) return prevTransform
+                      if (isNext) return nextTransform
+                    }
+
+                    return hiddenTransform
+                  }
+
                   return (
                     <div
                       key={index}
                       className="absolute inset-0 flex items-center justify-center lg:justify-end overflow-visible"
                       style={{
-                        transform: isActive
-                          ? 'translateZ(0) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(1)'
-                          : isPrev
-                            ? 'translateZ(200px) translateX(150px) translateY(100px) rotateX(-12deg) rotateY(35deg) scale(1.08)'
-                            : isNext
-                              ? 'translateZ(-300px) translateX(-60px) translateY(-40px) rotateX(8deg) rotateY(-25deg) scale(0.85)'
-                              : 'translateZ(-500px) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) scale(0.7)',
+                        transform: getTransform(),
                         opacity: isActive ? 1 : 0,
                         pointerEvents: isActive ? 'auto' : 'none',
                         transformStyle: 'preserve-3d',
@@ -728,11 +767,11 @@ export default function HeroEnterprise() {
                       }}
                     >
                       {slide.type === 'headline' ? (
-                        <h1 className="text-center lg:text-right">
+                        <h1 className="text-center lg:text-right -mt-8 lg:-mt-0">
                           {slide.title.map((line, i) => (
                             <span
                               key={i}
-                              className="block text-[clamp(1.75rem,4.5vw,3.25rem)] font-display font-semibold leading-[1.12] tracking-[-0.02em] mt-1.5 first:mt-0"
+                              className="block text-[clamp(2.25rem,4.5vw,3.25rem)] font-display font-semibold leading-[1.12] tracking-[-0.02em] mt-1.5 first:mt-0"
                             >
                               {slide.highlight && line.includes(slide.highlight) ? (
                                 <>
@@ -752,12 +791,12 @@ export default function HeroEnterprise() {
                         </h1>
                       ) : slide.type === 'video' ? (
                         <div
-                          className="absolute flex items-center justify-center overflow-visible"
+                          className="absolute flex items-start justify-center overflow-visible"
                           style={{
-                            left: '-80%',
-                            right: 'calc(-50vw + 50%)',
-                            top: '-41%',
-                            bottom: '-50%',
+                            left: isMobile ? '-50%' : '-80%',
+                            right: isMobile ? '-50%' : 'calc(-50vw + 50%)',
+                            top: isMobile ? '-60%' : '-55%',
+                            bottom: isMobile ? '-80%' : '-50%',
                             width: 'auto',
                             height: 'auto',
                           }}
@@ -773,10 +812,14 @@ export default function HeroEnterprise() {
                           <div
                             className="absolute inset-0 overflow-visible"
                             style={{
-                              maskImage: 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
-                              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
-                              maskComposite: 'intersect',
-                              WebkitMaskComposite: 'source-in',
+                              maskImage: isMobile
+                                ? 'linear-gradient(to bottom, transparent 0%, black 10%, black 60%, transparent 100%)'
+                                : 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
+                              WebkitMaskImage: isMobile
+                                ? 'linear-gradient(to bottom, transparent 0%, black 10%, black 60%, transparent 100%)'
+                                : 'linear-gradient(to right, transparent 0%, transparent 3%, rgba(0,0,0,0.02) 10%, rgba(0,0,0,0.06) 18%, rgba(0,0,0,0.12) 26%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.78) 58%, black 68%, black 100%), linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 10%, black 25%, black 100%)',
+                              maskComposite: isMobile ? 'unset' : 'intersect',
+                              WebkitMaskComposite: isMobile ? 'unset' : 'source-in',
                               opacity: 0.85,
                             }}
                           >
@@ -787,7 +830,8 @@ export default function HeroEnterprise() {
                               style={{
                                 filter: 'brightness(0.6) contrast(1.1) saturate(0.8)',
                                 border: 'none',
-                                transform: 'scale(1.2)',
+                                transform: isMobile ? 'scale(2.5) translate(-10%, -18%)' : 'scale(1.2)',
+                                transformOrigin: 'center top',
                                 pointerEvents: 'none',
                               }}
                               allow="autoplay; encrypted-media"
@@ -831,7 +875,16 @@ export default function HeroEnterprise() {
                 })}
 
                 {/* Elegant Node Indicators */}
-                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 flex items-center gap-1">
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 lg:-bottom-12 lg:left-auto lg:right-0 lg:translate-x-0 flex flex-col items-center gap-3 lg:flex-row lg:gap-1">
+                  {/* Mobile Swipe Indicator - Animated horizontal line */}
+                  <div className="order-2 lg:hidden">
+                    <div className="w-10 h-px bg-gradient-to-r from-transparent via-teal-400/40 to-transparent relative overflow-hidden">
+                      <div className="absolute top-0 left-0 w-3 h-full bg-teal-400/60 animate-[swipeHint_2s_ease-in-out_infinite]" />
+                    </div>
+                  </div>
+
+                  {/* Indicators row */}
+                  <div className="order-1 flex items-center gap-1 relative">
                   {/* Connecting line behind */}
                   <div
                     className="absolute top-1/2 left-3 right-3 h-[1px] -translate-y-1/2 rounded-full"
@@ -922,6 +975,7 @@ export default function HeroEnterprise() {
                       </button>
                     )
                   })}
+                  </div>
                 </div>
 
                 <style jsx>{`
@@ -933,6 +987,10 @@ export default function HeroEnterprise() {
                     from { stroke-dashoffset: 69.115; }
                     to { stroke-dashoffset: 0; }
                   }
+                  @keyframes swipeHint {
+                    0%, 100% { transform: translateX(0); opacity: 0.6; }
+                    50% { transform: translateX(32px); opacity: 1; }
+                  }
                 `}</style>
               </div>
 
@@ -943,11 +1001,11 @@ export default function HeroEnterprise() {
               </p>
 
               <div
-                className={`mt-8 flex flex-wrap items-center justify-center lg:justify-end gap-4 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                className={`mt-8 flex items-center justify-center lg:justify-end gap-3 transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               >
                 <Link
                   href="#contact"
-                  className="group relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden rounded-sm bg-teal-500 text-navy-950 font-body font-semibold text-body transition-all duration-300 hover:bg-teal-400"
+                  className="group relative inline-flex items-center gap-2 px-5 py-3 md:px-8 md:py-4 overflow-hidden rounded-sm bg-teal-500 text-navy-950 font-body font-semibold text-sm md:text-base transition-all duration-300 hover:bg-teal-400"
                 >
                   <span>{t('getStarted')}</span>
                   <svg
@@ -962,7 +1020,7 @@ export default function HeroEnterprise() {
 
                 <Link
                   href="#capabilities"
-                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm border border-navy-600 text-white hover:text-teal-400 hover:border-teal-500/50 font-body font-medium text-body transition-all duration-300"
+                  className="group inline-flex items-center gap-2 px-5 py-3 md:px-8 md:py-4 rounded-sm border border-navy-600 text-white hover:text-teal-400 hover:border-teal-500/50 font-body font-medium text-sm md:text-base transition-all duration-300"
                 >
                   <span>{t('viewSolutions')}</span>
                 </Link>
@@ -989,13 +1047,13 @@ export default function HeroEnterprise() {
           <div
             className={`mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 transition-all duration-700 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            <div className="flex items-center gap-6">
-              <span className="text-teal-500/60 text-xs uppercase tracking-wider">{t('compliant')}</span>
-              <div className="flex items-center gap-6">
-                {['SOC2 Type II', 'HIPAA', 'GDPR', 'ISO 27001'].map((cert, i) => (
+            <div className="flex items-center gap-3 md:gap-6 flex-wrap justify-start">
+              <span className="text-teal-500/60 text-[10px] md:text-xs uppercase tracking-wider">{t('compliant')}</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                {['SOC2', 'HIPAA', 'GDPR', 'ISO27001'].map((cert, i) => (
                   <span
                     key={i}
-                    className="text-slate-400 text-xs font-medium hover:text-teal-400 transition-colors cursor-default"
+                    className="text-slate-400 text-[10px] md:text-xs font-medium hover:text-teal-400 transition-colors cursor-default whitespace-nowrap"
                   >
                     {cert}
                   </span>

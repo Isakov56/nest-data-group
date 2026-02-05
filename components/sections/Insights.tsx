@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -59,11 +59,32 @@ export default function Insights() {
   const t = useTranslations('insights')
   const tCap = useTranslations('capabilities')
   const tCat = useTranslations('categories')
+  const router = useRouter()
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+
+  // Handle card click - first click raises, second click navigates
+  const handleCardClick = (e: React.MouseEvent, insightId: number) => {
+    e.stopPropagation() // Prevent section click from deselecting
+    if (selectedIndex === insightId) {
+      // Second click - navigate to insights page
+      router.push('/insights')
+    } else {
+      // First click - raise the card
+      setSelectedIndex(insightId)
+    }
+  }
+
+  // Deselect card when clicking outside
+  const handleSectionClick = () => {
+    if (selectedIndex !== null) {
+      setSelectedIndex(null)
+    }
+  }
 
   // Detect mobile viewport
   useEffect(() => {
@@ -145,6 +166,7 @@ export default function Insights() {
       ref={sectionRef}
       id="insights"
       className="relative pt-24 lg:pt-32 pb-12 lg:pb-16 bg-navy-950 overflow-hidden"
+      onClick={handleSectionClick}
     >
       {/* Background elements */}
       <div className="absolute inset-0">
@@ -177,9 +199,9 @@ export default function Insights() {
         </div>
 
         {/* Two column layout - 3D panel on left, cards on right */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* Left side - 3D holographic data panel (shows on mobile above cards, on desktop left side) */}
-          <div className="flex w-full lg:w-1/2 items-start justify-center lg:justify-start lg:pl-8 pt-8 lg:pt-16 order-1 lg:order-none">
+          <div className="flex w-full lg:w-1/2 items-start justify-center lg:justify-start lg:pl-8 pt-8 lg:pt-16 pb-8 px-6 lg:px-0 order-1 lg:order-none">
             <div 
               className="relative"
               style={{ 
@@ -200,12 +222,14 @@ export default function Insights() {
                   className="relative w-full max-w-[600px] bg-gradient-to-br from-navy-800/95 to-navy-900/95 backdrop-blur-md rounded-2xl lg:rounded-tl-2xl lg:rounded-tr-lg lg:rounded-bl-lg overflow-hidden transition-transform duration-500 group-hover:scale-[1.01]"
                   style={{
                     boxShadow: 'inset 0 1px 0 rgba(93, 201, 201, 0.2), inset 1px 0 0 rgba(93, 201, 201, 0.1)',
-                    ...(isMobile ? {} : {
-                      maskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
-                      maskComposite: 'intersect',
-                      WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
-                      WebkitMaskComposite: 'source-in',
-                    }),
+                    maskImage: isMobile
+                      ? 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)'
+                      : 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
+                    maskComposite: 'intersect',
+                    WebkitMaskImage: isMobile
+                      ? 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)'
+                      : 'linear-gradient(to right, black 60%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%)',
+                    WebkitMaskComposite: 'source-in',
                   }}
                 >
                   {/* Panel header */}
@@ -228,9 +252,9 @@ export default function Insights() {
                   </div>
 
                   {/* Panel content - sectors grid */}
-                  <div className="p-8 space-y-8">
+                  <div className="p-6 md:p-8 space-y-6 md:space-y-8">
                     {/* Sector icons grid */}
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-2 gap-4 md:gap-5">
                       {[
                         { name: t('defense'), icon: (
                           <svg viewBox="0 0 24 24" className="w-7 h-7">
@@ -260,8 +284,8 @@ export default function Insights() {
                           </svg>
                         )},
                       ].map((sector, i) => (
-                        <div key={i} className="flex items-center gap-4 p-5 bg-navy-800/50 rounded-lg border border-navy-700/50 hover:border-teal-500/20 transition-colors">
-                          <div className="text-teal-400">{sector.icon}</div>
+                        <div key={i} className="flex items-center gap-3 md:gap-4 p-4 md:p-5 bg-navy-800/50 rounded-lg border border-navy-700/50 hover:border-teal-500/20 transition-colors">
+                          <div className="text-teal-400 [&>svg]:w-6 [&>svg]:h-6 md:[&>svg]:w-7 md:[&>svg]:h-7">{sector.icon}</div>
                           <span className="text-sm text-white font-medium">{sector.name}</span>
                         </div>
                       ))}
@@ -303,14 +327,14 @@ export default function Insights() {
           {/* Right side - 3D card stack (order-2 on mobile to appear below panel) */}
           <div
             ref={stackRef}
-            className="relative h-[420px] sm:h-[380px] lg:h-[420px] lg:w-1/2 lg:pl-24 order-2 lg:order-none"
+            className="relative h-[380px] sm:h-[360px] lg:h-[420px] lg:w-1/2 lg:pl-24 order-2 lg:order-none"
             style={{
-              perspective: '1200px',
-              perspectiveOrigin: isMobile ? '50% 50%' : '100% 50%',
+              perspective: '1000px',
+              perspectiveOrigin: isMobile ? '80% 50%' : '100% 50%',
             }}
           >
             <div
-              className="absolute inset-0 flex items-center justify-center lg:items-end lg:justify-end pr-0 lg:pr-4 pb-4"
+              className="absolute inset-0 flex items-center justify-end lg:items-end lg:justify-end pr-4 sm:pr-8 lg:pr-4 pb-4"
               style={{
                 transformStyle: 'preserve-3d',
                 pointerEvents: 'none',
@@ -319,10 +343,13 @@ export default function Insights() {
               {[...localizedInsights].reverse().map((insight, index) => {
                 // index 0 = front card (closest), index 3 = back card (furthest)
                 const isHovered = hoveredIndex === insight.id
+                const isSelected = selectedIndex === insight.id
+                const isActive = isHovered || isSelected
 
                 // Base positions (without hover offset)
-                const mobileY = index * -35
-                const mobileZ = index * -25
+                const mobileX = index * -50 + 80  // More spread between cards, shifted right
+                const mobileY = index * -55
+                const mobileZ = index * -80  // More depth between cards
                 const baseX = index * -85
                 const baseY = index * -65
                 const baseZ = index * -90
@@ -330,31 +357,37 @@ export default function Insights() {
 
                 // Container transform (stable position for hover detection)
                 const containerTransform = isMobile
-                  ? `translateY(${mobileY}px) translateZ(${mobileZ}px) rotateY(12deg)`
+                  ? `translateX(${mobileX}px) translateY(${mobileY}px) translateZ(${mobileZ}px) rotateY(35deg)`
                   : `translateX(${baseX}px) translateY(${baseY}px) translateZ(${baseZ}px) rotateY(${baseRotateY}deg)`
 
-                // Inner card transform (only the hover lift)
-                const hoverLift = isHovered ? (isMobile ? -15 : -35) : 0
+                // Inner card transform (lift on hover OR when selected)
+                // Selected cards lift higher than just hovered
+                const hoverLift = isSelected
+                  ? (isMobile ? -40 : -60)
+                  : isHovered
+                    ? (isMobile ? -15 : -30)
+                    : 0
 
                 // Calculate brightness
-                const cardBrightness = isHovered ? 1 : (index === 0 ? 1 : 0.82 - index * 0.06)
+                const cardBrightness = isActive ? 1 : (index === 0 ? 1 : 0.82 - index * 0.06)
 
                 return (
                   <div
                     key={insight.id}
                     className="insight-card absolute"
                     style={{
-                      width: isMobile ? 'min(340px, 85vw)' : '410px',
+                      width: isMobile ? 'min(380px, 90vw)' : '410px',
                       transformStyle: 'preserve-3d',
                       transform: containerTransform,
-                      transformOrigin: isMobile ? 'center center' : 'right center',
-                      zIndex: isHovered ? 100 : index,
+                      transformOrigin: isMobile ? 'right center' : 'right center',
+                      zIndex: isActive ? 100 : index,
                       pointerEvents: 'auto',
                     }}
                     onMouseEnter={() => setHoveredIndex(insight.id)}
                     onMouseLeave={() => setHoveredIndex(null)}
+                    onClick={(e) => handleCardClick(e, insight.id)}
                   >
-                    <Link href="/insights">
+                    <div className="cursor-pointer">
                       <div
                         style={{
                           transform: `translateY(${hoverLift}px)`,
@@ -367,21 +400,27 @@ export default function Insights() {
                             relative overflow-hidden rounded-lg px-5 py-5 cursor-pointer
                             bg-gradient-to-bl from-navy-800 via-navy-850 to-navy-900
                           transition-all duration-150
-                          ${isHovered ? 'shadow-2xl shadow-teal-500/20' : 'shadow-lg'}
+                          ${isActive ? 'shadow-2xl shadow-teal-500/20' : 'shadow-lg'}
                         `}
-                        style={isMobile ? {} : {
-                          maskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
-                          WebkitMaskImage: 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
+                        style={{
+                          maskImage: isMobile
+                            ? 'linear-gradient(to right, black 0%, black 60%, transparent 100%)'
+                            : 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
+                          WebkitMaskImage: isMobile
+                            ? 'linear-gradient(to right, black 0%, black 60%, transparent 100%)'
+                            : 'linear-gradient(to right, black 0%, black 70%, transparent 100%)',
                         }}
                       >
                         <div
                           className="absolute inset-0 rounded-lg pointer-events-none"
                           style={{
-                            ...(isMobile ? {} : {
-                              maskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
-                              WebkitMaskImage: 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
-                            }),
-                            boxShadow: isHovered
+                            maskImage: isMobile
+                              ? 'linear-gradient(to right, black 0%, black 50%, transparent 85%)'
+                              : 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
+                            WebkitMaskImage: isMobile
+                              ? 'linear-gradient(to right, black 0%, black 50%, transparent 85%)'
+                              : 'linear-gradient(to right, black 0%, black 60%, transparent 90%)',
+                            boxShadow: isActive
                               ? 'inset 0 0 0 1px rgba(94, 201, 201, 0.4)'
                               : 'inset 0 0 0 1px rgba(94, 201, 201, 0.2)',
                           }}
@@ -404,9 +443,9 @@ export default function Insights() {
                               {insight.description}
                             </p>
                             <div className="flex items-center text-[10px] text-navy-500 font-medium">
-                              <span className={`flex items-center gap-1 transition-colors duration-200 ${isHovered ? 'text-teal-400' : ''}`}>
-                                {t('learnMore')}
-                                <svg className={`w-3 h-3 transition-transform duration-200 ${isHovered ? 'translate-x-0.5' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                              <span className={`flex items-center gap-1 transition-colors duration-200 ${isActive ? 'text-teal-400' : ''}`}>
+                                {isSelected ? 'Click to view' : t('learnMore')}
+                                <svg className={`w-3 h-3 transition-transform duration-200 ${isActive ? 'translate-x-0.5' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                               </span>
@@ -415,8 +454,8 @@ export default function Insights() {
                         </div>
                       </div>
                     </div>
-                    </Link>
                   </div>
+                </div>
                 )
               })}
             </div>
@@ -424,7 +463,7 @@ export default function Insights() {
         </div>
 
         {/* View all link */}
-        <div className="text-center mt-32">
+        <div className="text-center mt-0 lg:mt-8">
           <a
             href="/insights"
             className="inline-flex items-center gap-2 font-body text-body font-medium text-teal-400 hover:text-teal-300 transition-colors group"

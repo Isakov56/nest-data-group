@@ -32,7 +32,7 @@
     "dataProcessed": "Data Processed",
     "compliant": "Compliant",
     "testimonial1": {
-      "quote": "They transformed our entire data architecture in months, not years. The ROI has been extraordinary.",
+      "quote": "They transformed our data architecture in months. Extraordinary ROI.",
       "name": "Sarah Chen",
       "role": "CTO, Fortune 500 Healthcare"
     },
@@ -295,7 +295,7 @@
     "dataManaged": "Data Managed",
     "uptimeSLA": "Uptime SLA",
     "yearsExperience": "Years Experience",
-    "aspirationalTitle": "Who We Work With",
+    "aspirationalTitle": "Industries & Sectors",
     "aspirationalSubtitle": "Enterprise-grade data solutions for every industry",
     "sectorsWeServe": "Sectors We Serve",
     "industriesWeServe": "Industries We Serve",
