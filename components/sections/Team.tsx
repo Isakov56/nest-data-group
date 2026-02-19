@@ -13,56 +13,57 @@ interface TeamMember {
   bio: string
   image: string
   linkedin?: string
+  objectPosition?: string
 }
 
 const leadership: TeamMember[] = [
   {
-    name: 'Michael Chen',
+    name: 'Hojiakbar Isakov',
     role: 'Chief Executive Officer',
-    bio: 'Former Director of Data Strategy at Deloitte. 20+ years architecting enterprise data solutions for Fortune 500 companies and federal agencies.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=687&auto=format&fit=crop',
+    bio: 'An engineering and computer science graduate of an Italian university, Hojiakbar has led major IT engagements across Italy and Germany. He combines deep technical foundations with sharp business acumen to steer Nest Data Group\'s global strategy and growth.',
+    image: '/team-ceo-hojiakbar.jpg',
     linkedin: '#',
+    objectPosition: '50% 40%',
   },
   {
-    name: 'Sarah Williams',
+    name: 'Kamronbek Abdumannonov',
     role: 'Chief Technology Officer',
-    bio: 'Ex-AWS Principal Architect. Led cloud infrastructure for three successful IPOs. PhD in Distributed Systems from MIT.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=688&auto=format&fit=crop',
+    bio: 'An exceptionally skilled engineer whose career spans Beeline Uzbekistan, EPAM Systems, and Remo. A graduate of the University of Sharjah, he sets the technical direction and engineering standards across all Nest Data Group solutions.',
+    image: 'https://ui-avatars.com/api/?name=Kamronbek+Abdumannonov&background=1e3a5f&color=4a9b9b&size=400&bold=true',
     linkedin: '#',
+    objectPosition: '50% 65%',
   },
   {
-    name: 'David Park',
+    name: 'Ilyosbek Sulaymanov',
     role: 'Chief Data Officer',
-    bio: 'Former Head of Analytics at Goldman Sachs. Pioneered real-time risk modeling systems processing 10M+ transactions daily.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1470&auto=format&fit=crop',
+    bio: 'A leading expert in big data, analytics, and data engineering, Ilyosbek architects the data strategies and pipelines that power our clients\' most critical decisions, and leads company-wide ML and Data Science integration.',
+    image: '/team-cdo-ilyosbek.jpg',
     linkedin: '#',
+    objectPosition: '50% 65%',
   },
 ]
 
 const team: TeamMember[] = [
   {
-    name: 'Emily Rodriguez',
-    role: 'VP of Engineering',
-    bio: 'Scaling distributed systems at hyper-growth companies for 15 years.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop',
+    name: 'Aziz Abdurakhmonov',
+    role: 'Director of Development & Regional Management',
+    bio: 'Riga Technical University graduate with deep expertise in enterprise IT systems. Led automation initiatives at major European companies. Oversees technical architecture, quality, and innovation.',
+    image: '/team-director-aziz.jpg',
+    objectPosition: '50% 10%',
   },
   {
-    name: 'James Mitchell',
-    role: 'Director of Security',
-    bio: 'Former NSA cybersecurity specialist. CISSP, CISM certified.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=687&auto=format&fit=crop',
+    name: 'Anora',
+    role: 'Head of Global Marketing',
+    bio: 'MDIS Singapore graduate leading Nest Data Group\'s international marketing strategy, brand development, and global market expansion.',
+    image: '/team-marketing-anora.jpg',
+    objectPosition: '50% 40%',
   },
   {
-    name: 'Lisa Thompson',
-    role: 'Head of Client Success',
-    bio: 'Driving enterprise adoption with 98% client retention rate.',
-    image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=687&auto=format&fit=crop',
-  },
-  {
-    name: 'Robert Kim',
-    role: 'Principal Architect',
-    bio: 'Designed data platforms for 3 of the top 10 US banks.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=687&auto=format&fit=crop',
+    name: 'Shukrona Kasimova',
+    role: 'Chief Financial Officer',
+    bio: 'Oversees financial strategy, planning, and operations with disciplined fiscal governance that supports the company\'s global growth.',
+    image: '/team-cfo-shukrona.jpg',
+    objectPosition: '50% 28%',
   },
 ]
 
@@ -182,7 +183,8 @@ export default function Team() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ objectPosition: member.objectPosition ?? '50% 65%' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent" />
                   
@@ -221,7 +223,7 @@ export default function Team() {
           <h3 className="font-display text-heading text-navy-800 mb-8 text-center">
             {t('seniorTeam')}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {team.map((member, i) => (
               <div
                 key={i}
@@ -232,7 +234,8 @@ export default function Team() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ objectPosition: member.objectPosition ?? '50% 65%' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-900/40 to-transparent" />
                 </div>

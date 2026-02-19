@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'videos.pexels.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'ui-avatars.com',
+      },
     ],
   },
 }

@@ -311,7 +311,7 @@ export default function HeroEnterprise() {
       quote: t('testimonial2.quote'),
       name: t('testimonial2.name'),
       role: t('testimonial2.role'),
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&h=200&auto=format&fit=crop',
+      image: '/team-ceo-hojiakbar.jpg',
       video: '',
     },
     {

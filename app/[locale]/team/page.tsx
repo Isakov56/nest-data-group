@@ -11,83 +11,66 @@ interface TeamMember {
   image: string
   linkedin?: string
   expertise?: string[]
+  objectPosition?: string
 }
 
 const leadership: TeamMember[] = [
   {
-    name: 'Michael Chen',
+    name: 'Hojiakbar Isakov',
     role: 'Chief Executive Officer',
-    bio: 'Michael brings over 20 years of experience architecting enterprise data solutions for Fortune 500 companies and federal agencies. As Former Director of Data Strategy at Deloitte, he led digital transformation initiatives that generated over $500M in client value. He holds an MBA from Harvard Business School and a BS in Computer Science from Stanford.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=687&auto=format&fit=crop',
+    bio: 'Hojiakbar Isakov holds engineering and computer science degrees from an Italian university, where he developed the technical foundations that define his approach to building technology organizations. His career has been shaped by leading large-scale IT initiatives across Italy and Germany, where he built deep business insight through direct engagement with European enterprise clients. As CEO of Nest Data Group, he combines engineering clarity with strong strategic thinking to drive the company\'s global vision, market development, and long-term growth.',
+    image: '/team-ceo-hojiakbar.jpg',
     linkedin: '#',
-    expertise: ['Enterprise Strategy', 'Digital Transformation', 'Federal Consulting'],
+    expertise: ['Global Strategy', 'International Business', 'Corporate Leadership'],
+    objectPosition: '50% 40%',
   },
   {
-    name: 'Sarah Williams',
+    name: 'Kamronbek Abdumannonov',
     role: 'Chief Technology Officer',
-    bio: 'Sarah is a former AWS Principal Architect who led cloud infrastructure for three successful IPOs. She holds a PhD in Distributed Systems from MIT and has published over 30 papers on scalable data architectures. Her work has been cited in major technology conferences including re:Invent and KubeCon.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=688&auto=format&fit=crop',
+    bio: 'Kamronbek Abdumannonov is the technical authority at Nest Data Group — an engineer of rare depth whose career spans some of the most demanding technology environments in the region. A graduate of the University of Sharjah, he has built and led high-performance engineering teams at Beeline Uzbekistan, EPAM Systems, and Remo, accumulating mastery across distributed systems, cloud-native architecture, and enterprise platform engineering. As CTO, he defines the technology roadmap, enforces engineering best practices, and ensures that every solution Nest Data Group delivers meets the highest standards of reliability and scalability.',
+    image: 'https://ui-avatars.com/api/?name=Kamronbek+Abdumannonov&background=1e3a5f&color=4a9b9b&size=400&bold=true',
     linkedin: '#',
-    expertise: ['Cloud Architecture', 'Distributed Systems', 'Platform Engineering'],
+    expertise: ['Distributed Systems', 'Cloud Architecture', 'Platform Engineering'],
+    objectPosition: '50% 65%',
   },
   {
-    name: 'David Park',
+    name: 'Ilyosbek Sulaymanov',
     role: 'Chief Data Officer',
-    bio: 'David served as Head of Analytics at Goldman Sachs where he pioneered real-time risk modeling systems processing over 10 million transactions daily. His innovations in data pipeline optimization reduced processing latency by 80% and saved the firm $50M annually.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1470&auto=format&fit=crop',
+    bio: 'Ilyosbek Sulaymanov is a recognized authority in big data, data analytics, and data engineering. As Chief Data Officer, he architects the data strategy that underpins Nest Data Group\'s most complex client engagements — designing analytical platforms, building scalable data pipelines, and embedding data-driven decision-making across organizations. He leads the company-wide integration of Machine Learning and Data Science capabilities, ensuring that AI-driven insights are embedded at every layer of the solutions Nest Data Group delivers.',
+    image: '/team-cdo-ilyosbek.jpg',
     linkedin: '#',
-    expertise: ['Data Analytics', 'Risk Modeling', 'Financial Systems'],
+    expertise: ['Big Data & Analytics', 'Data Engineering', 'Machine Learning Integration'],
+    objectPosition: '50% 65%',
   },
 ]
 
 const seniorTeam: TeamMember[] = [
   {
-    name: 'Emily Rodriguez',
-    role: 'VP of Engineering',
-    bio: 'Emily has spent 15 years scaling distributed systems at hyper-growth companies including Stripe and Datadog. She leads our engineering organization of 50+ engineers across platform, infrastructure, and delivery teams.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop',
+    name: 'Aziz Abdurakhmonov',
+    role: 'Director of Development & Regional Management',
+    bio: 'Aziz Abdurakhmonov is a seasoned technology leader with a degree from Riga Technical University and a proven track record in developing complex enterprise IT systems and platforms. He has contributed to large-scale automation and digitalization projects at prominent European companies, driving engineering initiatives from architecture through delivery. At Nest Data Group, he is accountable for technical architecture, quality assurance, and innovation — ensuring every solution is built with precision and engineered to last.',
+    image: '/team-director-aziz.jpg',
     linkedin: '#',
-    expertise: ['Engineering Leadership', 'Platform Development', 'Team Building'],
+    expertise: ['Technical Architecture', 'Enterprise Systems', 'Regional Operations'],
+    objectPosition: '50% 10%',
   },
   {
-    name: 'James Mitchell',
-    role: 'Director of Security',
-    bio: 'A former NSA cybersecurity specialist with CISSP and CISM certifications, James ensures our solutions meet the highest security standards required by government and enterprise clients.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=687&auto=format&fit=crop',
+    name: 'Anora',
+    role: 'Head of Global Marketing',
+    bio: 'A graduate of the Management Development Institute of Singapore (MDIS), Anora brings a global perspective to Nest Data Group\'s marketing and brand strategy. She leads the company\'s international marketing initiatives — from go-to-market strategy and brand positioning to market expansion across new geographies. Her cross-cultural expertise and strategic communication skills have been instrumental in establishing Nest Data Group\'s presence in competitive global markets.',
+    image: '/team-marketing-anora.jpg',
     linkedin: '#',
-    expertise: ['Cybersecurity', 'Compliance', 'Threat Modeling'],
+    expertise: ['Global Marketing', 'Brand Strategy', 'Market Development'],
+    objectPosition: '50% 45%',
   },
   {
-    name: 'Lisa Thompson',
-    role: 'Head of Client Success',
-    bio: 'Lisa drives enterprise adoption with a remarkable 98% client retention rate. Her background in enterprise software sales at Salesforce and Oracle gives her unique insight into client needs.',
-    image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=687&auto=format&fit=crop',
+    name: 'Shukrona Kasimova',
+    role: 'Chief Financial Officer',
+    bio: 'Shukrona Kasimova oversees Nest Data Group\'s financial strategy, planning, and operations. She brings rigorous fiscal governance and a disciplined approach to risk management that ensures the company maintains the financial resilience required to operate at enterprise scale and invest in long-term growth.',
+    image: '/team-cfo-shukrona.jpg',
     linkedin: '#',
-    expertise: ['Client Relations', 'Enterprise Sales', 'Account Management'],
-  },
-  {
-    name: 'Robert Kim',
-    role: 'Principal Architect',
-    bio: 'Robert has designed data platforms for 3 of the top 10 US banks. His expertise in regulatory compliance and high-availability systems makes him invaluable for our financial services clients.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=687&auto=format&fit=crop',
-    linkedin: '#',
-    expertise: ['System Architecture', 'Financial Services', 'Regulatory Compliance'],
-  },
-  {
-    name: 'Amanda Foster',
-    role: 'Director of Data Science',
-    bio: 'Amanda leads our ML and AI initiatives, bringing experience from Google Brain and DeepMind. She specializes in applying machine learning to enterprise data challenges.',
-    image: 'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?q=80&w=687&auto=format&fit=crop',
-    linkedin: '#',
-    expertise: ['Machine Learning', 'AI Strategy', 'Data Science'],
-  },
-  {
-    name: 'Marcus Johnson',
-    role: 'Head of DevOps',
-    bio: 'Marcus built and scaled infrastructure at Netflix and Uber. He leads our DevOps practice, ensuring reliable deployments and 99.99% uptime for client systems.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=687&auto=format&fit=crop',
-    linkedin: '#',
-    expertise: ['DevOps', 'Site Reliability', 'Infrastructure'],
+    expertise: ['Financial Strategy', 'Risk Management', 'Operations'],
+    objectPosition: '50% 28%',
   },
 ]
 
@@ -198,7 +181,8 @@ export default function TeamPage() {
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ objectPosition: member.objectPosition ?? '50% 65%' }}
                       sizes="(max-width: 1024px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/20 to-transparent" />
@@ -270,7 +254,8 @@ export default function TeamPage() {
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ objectPosition: member.objectPosition ?? '50% 65%' }}
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/50 to-transparent" />
