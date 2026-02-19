@@ -114,7 +114,7 @@ export default function Header({ className = '' }: HeaderProps) {
             <span className={`font-display text-lg font-semibold leading-tight transition-colors duration-500 ${
               useDarkMode ? 'text-white' : 'text-navy-900'
             }`}>
-              nest data group
+              Nest Data Group
             </span>
           </Link>
 

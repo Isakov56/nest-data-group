@@ -77,6 +77,17 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Nest Data Group',
+              url: 'https://nestdatagroup.com',
+            }),
+          }}
+        />
       </head>
       <body className="min-h-screen bg-white antialiased">
         <NextIntlClientProvider messages={messages}>

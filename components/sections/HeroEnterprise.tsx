@@ -1032,7 +1032,7 @@ export default function HeroEnterprise() {
                 {[
                   { value: '10+', label: t('enterprises') },
                   { value: '99%', label: t('uptime') },
-                  { value: '50TB+', label: t('dataProcessed') },
+                  { value: '50T B+', label: t('dataProcessed') },
                 ].map((stat, i) => (
                   <div key={i} className="group px-4 lg:px-6 first:pl-0 last:pr-0 text-center lg:text-right">
                     <div className="font-display text-2xl font-semibold text-white tracking-tight">{stat.value}</div>

@@ -147,8 +147,8 @@
     "privacyPolicy": "プライバシーポリシー",
     "termsOfService": "利用規約",
     "security": "セキュリティ",
-    "soc2Compliant": "SOC 2準拠",
-    "fedRampReady": "FedRAMP対応",
+    "soc2Compliant": "SOC 2対応準備中",
+    "fedRampReady": "NIST 800-53準拠",
     "allRightsReserved": "全著作権所有。"
   },
   "pages": {

@@ -147,8 +147,8 @@
     "privacyPolicy": "Политика конфиденциальности",
     "termsOfService": "Условия использования",
     "security": "Безопасность",
-    "soc2Compliant": "Соответствует SOC 2",
-    "fedRampReady": "Готов к FedRAMP",
+    "soc2Compliant": "Готов к SOC 2",
+    "fedRampReady": "Соответствует NIST 800-53",
     "allRightsReserved": "Все права защищены."
   },
   "pages": {

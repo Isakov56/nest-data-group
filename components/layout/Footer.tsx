@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <Logo size={22} animated={false} />
               <span className="font-display text-lg font-semibold leading-tight">
-                nest data group
+                Nest Data Group
               </span>
             </div>
 

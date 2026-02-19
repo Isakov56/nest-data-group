@@ -147,8 +147,8 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "security": "Security",
-    "soc2Compliant": "SOC 2 Compliant",
-    "fedRampReady": "FedRAMP Ready",
+    "soc2Compliant": "SOC 2 Ready",
+    "fedRampReady": "NIST 800-53 Aligned",
     "allRightsReserved": "All rights reserved."
   },
   "pages": {
